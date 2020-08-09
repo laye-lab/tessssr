@@ -127,11 +127,7 @@ class CalculheureController extends Controller
       ->select('nom')
       ->distinct('nom')
       ->get();
-      $testgit=DB::table('etablissement')
-      ->select('nom')
-      ->distinct('nom')
-      ->get();
-
+     
       $array=DB::table('heures_supp')
       ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
       ->get();
