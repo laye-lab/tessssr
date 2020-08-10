@@ -29,23 +29,20 @@ class HomeSaisieController extends Controller
             ->join('users','users.id' ,'=', 'Role_Account.AccountID')
             ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
             ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-            ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->select('Matricule_agent','Libelle_Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement.nom')
+            ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
             ->get();
+            try {
                 $agent_attribut=DB::table('agent')
-                ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-                ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
                 ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
-                ->join('affectation','affectation.agentMatricule_Agent','=','agent.Matricule_Agent')
-                ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-                ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
                 ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.agentMatricule_Agent','=','agent.Matricule_Agent')
                 ->distinct('Matricule_agent')
-                ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Libelle_Fonction','Statut','Libelle_Affectation','Direction','nom')
+                ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement','fonction','Affectation')
                 ->get();
+                
+            } catch (Throwable $e) {
+                report($e);
+        
+            }
                 
                 return view('homesaisie')->with([
                     'agent_attribut'=> $agent_attribut,
@@ -62,24 +59,18 @@ class HomeSaisieController extends Controller
             ->join('users','users.id' ,'=', 'Role_Account.AccountID')
             ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
             ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-            ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->select('Matricule_agent','Sexe','Libelle_Fonction','Statut','Direction','Role.Nom','Nom_Agent')
+            ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
             ->get();
-                
+
+                $agent_attribut=DB::table('agent')
+                ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
+                ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.agentMatricule_Agent','=','agent.Matricule_Agent')
+                ->distinct('Matricule_agent')
+                ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement','fonction','Affectation')
+                ->get();
             $users=User::all();
             
-            $agent_etablissement=DB::table('agent')
-            ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('affectation','affectation.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->select('agent.Matricule_agent','Nom_Agent','Fonction.Libelle_Fonction','agent.Statut'
-            ,'Direction.Direction','Etablissement.nom','Etablissemt_nom','Libelle_Affectation')
-            ->get();
+           
 
             $service=DB::table('Affectation')
             ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')

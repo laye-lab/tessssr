@@ -21,13 +21,16 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <!-- /.card-header
-             select('agent.Matricule_agent','users.name','Fonction.Libelle_Fonction','agent.Statut','Direction.Direction')-->
+              <div class="card-header">
+                <h3 class="card-title">Heures supplémentaires</h3>
+              </div>
+              <!-- /.card-header -->
               <div class="card-body">
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead  class="table-success">
-                  <tr>
-                    <th>Matricule</th>
+                <table class="table table-striped table-responsive-md btn-table">
+
+                  <thead>
+                    <tr>
+                      <th>Matricule</th>
                     <th>Prenom et Nom</th>
                     <th>Fonction</th>
                     <th>Statut</th>
@@ -35,10 +38,10 @@
                     <th>Direction</th>
                     <th>Etablissemt</th>
                     <th></th>
-                  </tr>
+                    </tr>
                   </thead>
-
                   <tbody>
+                  <tr>
                     {{$servicedr}}
                     @foreach($agent_etablissement as $dr)
                         @if(Auth::user()->id == $dr->Matricule_agent)
@@ -48,8 +51,8 @@
                         @endforeach
                             @foreach($service as $agent_collaborateur)
 
-                                   @if($dr->Etablissemt_nom  == $agent_collaborateur->Etablissemt_nom
-                                    and $servicedr  == $agent_collaborateur->Libelle_Affectation
+                                   @if($dr->Etablissement  == $agent_collaborateur->Etablissemt_nom
+                                    and $servicedr  == $agent_collaborateur->Affectation
                                      and $agent_collaborateur->Statut !='CAD' )                   
 
                                       <td>
@@ -60,13 +63,13 @@
                                         {{$agent_collaborateur->Nom_Agent}}
                                       </td>
                                       <td>
-                                        {{$agent_collaborateur->Libelle_Fonction}}
+                                        {{$agent_collaborateur->Fonction}}
                                       </td>
                                       <td>
                                         {{$agent_collaborateur->Statut}}
                                       </td>
                                       <td>
-                                        {{$agent_collaborateur->Libelle_Affectation}}
+                                        {{$agent_collaborateur->Affectation}}
                                       </td>
                                       <td>
                                         {{$agent_collaborateur->Direction}}
@@ -79,7 +82,7 @@
                                           @csrf
                                         <input type="hidden" name="id"  value="{{$agent_collaborateur->Matricule_agent}}">
                                         <input type="hidden" name="servicedr"  value="{{$servicedr}}">
-                                          <button type="submit" class="btn btn-primary">Commander</button>
+                                          <button type="submit" class="btn btn-danger">Commander</button>
                                         </form>
                                      
                                       </td>

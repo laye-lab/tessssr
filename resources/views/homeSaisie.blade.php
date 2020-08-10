@@ -8,7 +8,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Liste des utilisateurs</h1>
+            <h1>Liste des agents</h1>
           </div>
         
         </div>
@@ -21,13 +21,16 @@
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <!-- /.card-header
-             select('agent.Matricule_agent','users.name','Fonction.Libelle_Fonction','agent.Statut','Direction.Direction')-->
+              <div class="card-header">
+                <h3 class="card-title">Choisissez un agent et affectez lui des heures supplémentaires </h3>
+              </div>
+              <!-- /.card-header -->
               <div class="card-body">
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead  class="table-success">
-                  <tr>
-                    <th>Matricule</th>
+                <table class="table table-striped table-responsive-md btn-table">
+
+                  <thead>
+                    <tr>
+                      <th>Matricule</th>
                     <th>Prenom et Nom</th>
                     <th>Fonction</th>
                     <th>Statut</th>
@@ -35,10 +38,11 @@
                     <th>Direction</th>
                     <th>Etablissemt</th>
                     <th></th>
-                  </tr>
+                    </tr>
                   </thead>
-
                   <tbody>
+                  <tr>
+   
                             @foreach($agent_attribut as $agent_attributs)
 
                                    @if($agent_attributs->n_plus_un ==Auth::user()->id )                   
@@ -51,19 +55,19 @@
                                         {{$agent_attributs->Nom_Agent}}
                                       </td>
                                       <td>
-                                        {{$agent_attributs->Libelle_Fonction}}
+                                        {{$agent_attributs->fonction}}
                                       </td>
                                       <td>
                                         {{$agent_attributs->Statut}}
                                       </td>
                                       <td>
-                                        {{$agent_attributs->Libelle_Affectation}}
+                                        {{$agent_attributs->Affectation}}
                                       </td>
                                       <td>
                                         {{$agent_attributs->Direction}}
                                       </td>
                                       <td>
-                                        {{$agent_attributs->nom}}
+                                        {{$agent_attributs->etablissement}}
                                       </td>
                                 
                                     
@@ -73,7 +77,7 @@
                                         @csrf
                                       <input type="hidden" name="id"  value="{{$agent_attributs->Matricule_agent}}">
                                       <input type="hidden" name="nom"  value=" {{$agent_attributs->Nom_Agent}}">
-                                      <input type="hidden" name="servicedr"  value="{{$agent_attributs->Libelle_Affectation}}">
+                                      <input type="hidden" name="servicedr"  value="{{$agent_attributs->Affectation}}">
                                         <button type="submit" class="btn btn-primary">Saisir</button>
                                       </form>
                                    

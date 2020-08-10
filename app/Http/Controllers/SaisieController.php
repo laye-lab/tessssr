@@ -30,11 +30,7 @@ class SaisieController extends Controller
         ->join('users','users.id' ,'=', 'Role_Account.AccountID')
         ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
         ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-        ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->select('Matricule_agent','Libelle_Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement.nom')
+        ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
         ->get();
 
        return view('Saisie')->with([
@@ -63,15 +59,12 @@ class SaisieController extends Controller
     $collaborateur=request('collaborateur');
     $servicedr=request('servicedr');
     $role_account=DB::table('Role_Account')
-        ->join('users','users.id' ,'=', 'Role_Account.AccountID')
-        ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
-        ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-        ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->select('Matricule_agent','Libelle_Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement.nom')
-        ->get();
+    ->join('users','users.id' ,'=', 'Role_Account.AccountID')
+    ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
+    ->join('agent','agent.Matricule_Agent' ,'=','users.id')
+    ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
+    ->get();
+
 
         $service=DB::table('Affectation')
         ->select('Libelle_Affectation','Etablissemt_nom','agentMatricule_Agent')
@@ -469,7 +462,7 @@ class SaisieController extends Controller
                 if($heure_debut >=5 && $heure_debut<=22 && $heure_fin>=0 && $heure_fin<=5  && $heure_fin<$heure_debut)/// si on est dans un jour ourable et on est le soir
 				{
                              
-                    $diff_heure =$heure_debut-$heure_fin;
+                    $diff_heure =(22-$heure_debut)+ (24+$heure_fin-22);
                     if(!isset($total_heure_latest)){
                     $total_heure_latest =new StdClass;
                     $total_heure_latest=0;
@@ -483,7 +476,7 @@ class SaisieController extends Controller
                                 $nbre_taux_40   =0 ;
                                 $total_taux_40  = $total_taux_40 + $nbre_taux_40;
 
-                                $nbre_taux_60   =(22+$heure_fin) - $heure_debut;
+                                $nbre_taux_60   = 24+$heure_fin - 22;
                                 $total_taux_60  = $total_taux_60 + $nbre_taux_60;
 
                                 $nbre_taux_100  = 0;

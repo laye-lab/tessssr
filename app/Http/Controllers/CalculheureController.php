@@ -17,16 +17,12 @@ use Illuminate\Support\Facades\Validator;
 class CalculheureController extends Controller
 {
     public function index(){
-        $role_account=DB::table('Role_Account')
-        ->join('users','users.id' ,'=', 'Role_Account.AccountID')
-        ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
-        ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-        ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->select('Matricule_agent','Libelle_Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement.nom')
-        ->get();
+      $role_account=DB::table('Role_Account')
+      ->join('users','users.id' ,'=', 'Role_Account.AccountID')
+      ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
+      ->join('agent','agent.Matricule_Agent' ,'=','users.id')
+      ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
+      ->get();
 
         $data = DB::table('heures_supp')
         ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
@@ -92,16 +88,11 @@ class CalculheureController extends Controller
     
 
       $role_account=DB::table('Role_Account')
-      ->join('users','users.id' ,'=', 'Role_Account.AccountID')
-      ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
-      ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-      ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-      ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-      ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-      ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-      ->select('Matricule_agent','Libelle_Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement.nom')
-      ->get();
-
+            ->join('users','users.id' ,'=', 'Role_Account.AccountID')
+            ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
+            ->join('agent','agent.Matricule_Agent' ,'=','users.id')
+            ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
+            ->get();
       $data = DB::table('heures_supp')
         ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
         ->select(

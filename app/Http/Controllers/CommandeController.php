@@ -33,11 +33,25 @@ class CommandeController extends Controller
         ->join('users','users.id' ,'=', 'Role_Account.AccountID')
         ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
         ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-        ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->select('Matricule_agent','Libelle_Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement.nom')
+        ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
+        ->get();
+
+        $agent_attribut=DB::table('agent')
+        ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
+        ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.agentMatricule_Agent','=','agent.Matricule_Agent')
+        ->distinct('Matricule_agent')
+        ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement')
+        ->get();
+
+        $service=DB::table('Affectation')
+        ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')
+        ->select('Matricule_agent','Nom_Agent','Fonction','Statut','Affectation','Direction','Etablissemt_nom')
+        ->distinct('Matricule_agent')
+        ->get();
+
+        $agent_etablissement=DB::table('agent')
+        ->select('agent.Matricule_agent','Nom_Agent','Fonction','agent.Statut'
+        ,'Direction','Etablissement','Affectation')
         ->get();
 
        return view('Commande')->with([
@@ -70,7 +84,6 @@ class CommandeController extends Controller
          [
             'Date_debut' => 'required|after:yesterday',
             'Date_fin' => 'required|after:Date_debut',
-            'nbr_heure' => 'required|digits_between:1,30',
             'travaux_effectuer' => 'required',
             'Observations' => 'required',
          ]
@@ -88,11 +101,7 @@ class CommandeController extends Controller
             ->join('users','users.id' ,'=', 'Role_Account.AccountID')
             ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
             ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-            ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->select('Matricule_agent','Libelle_Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement.nom')
+            ->select('Matricule_agent','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
             ->get();
 
             $service=DB::table('Affectation')

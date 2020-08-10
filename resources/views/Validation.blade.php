@@ -23,7 +23,7 @@
                               
                               @foreach($heurre_a_faire as $heure)
     
-                                      @if($agent_unite->Matricule_agent ==$heure->Matricule_agent and $heure->Statut==2 and $heure->nom==$role->nom )    
+                                      @if($agent_unite->Matricule_agent ==$heure->Matricule_agent and $heure->Statut==2 and $heure->nom==$role->etablissement )    
                                       
                                       <section class="content">
                                         <div class="card">
@@ -53,7 +53,7 @@
                                 @csrf
                               <input type="hidden" name="id"  value="{{$heure->id_heure_a_faire}}">
                               <input type="hidden" name="role"  value="{{$role->Nom}}">
-                              <input type="hidden" name="etablissement"  value="{{$role->nom}}">
+                              <input type="hidden" name="etablissement"  value="{{$role->etablissement}}">
                               <button style=" background-color:white; /* Green */
                               border: none;
                               color: white;">
@@ -83,7 +83,7 @@
                                     <tbody>
                                       @foreach($heurre_a_faire as $heure)
     
-                                      @if($agent_unite->Matricule_agent ==$heure->Matricule_agent  and $heure->Statut==2 and $heure->nom==$role->nom )     
+                                      @if($agent_unite->Matricule_agent ==$heure->Matricule_agent  and $heure->Statut==2 and $heure->nom==$role->etablissement )     
                                       <tr>     
                                         <td>
                                           {{$heure->Date_Heure}}
@@ -296,9 +296,9 @@
                                                   </tr>
                                                 </thead>
                                                 <tbody>
-                                                  @foreach($heure_supp as $heure)
-                
-                                                  @if($agent_unite->Matricule_agent ==$heure->Agent_Matricule_Agent and $heure->Statut ==3)    
+                                                  @foreach($heurre_a_faire as $heure)
+            
+                                                  @if($agent_unite->Matricule_agent ==$heure->Matricule_agent and $heure->Statut==3)    
                                                   <tr>     
                                                     <td>
                                                       {{$heure->Date_Heure}}
@@ -316,10 +316,7 @@
                                                       {{$heure->observations}}
                                                     </td>
                                                 </tr>
-                                               
                                                   @endif
-                                                  
-                                                
                                         @endforeach
                                         @break
                                         

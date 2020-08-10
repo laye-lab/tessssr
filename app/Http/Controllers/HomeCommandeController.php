@@ -29,20 +29,25 @@ class HomeCommandeController extends Controller
             ->join('users','users.id' ,'=', 'Role_Account.AccountID')
             ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
             ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-            ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->select('Matricule_agent','Libelle_Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement.nom')
+            ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
+            ->get();
+
+            $agent_attribut=DB::table('agent')
+            ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
+            ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.agentMatricule_Agent','=','agent.Matricule_Agent')
+            ->distinct('Matricule_agent')
+            ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement')
             ->get();
 
             $service=DB::table('Affectation')
-            ->select('Libelle_Affectation','Etablissemt_nom','agentMatricule_Agent')
-            ->distinct('Libelle_Affectation')
-            ->select('Libelle_Affectation','Etablissemt_nom')
+            ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')
+            ->select('Matricule_agent','Nom_Agent','Fonction','Statut','Libelle_Affectation','Direction','Etablissemt_nom')
+            ->distinct('Matricule_agent')
             ->get();
+
             $affectation=DB::table('Affectation')
             ->select('Libelle_Affectation','Etablissemt_nom','agentMatricule_Agent')
+            ->distinct('agentMatricule_Agent')
             ->get();
              /**
          *print_r($service)
@@ -58,50 +63,34 @@ class HomeCommandeController extends Controller
         );
         }
         public function showForm()
-        {
+        {  $users=User::all();
             $servicedr=request('service');
             $role_account=DB::table('Role_Account')
             ->join('users','users.id' ,'=', 'Role_Account.AccountID')
             ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
             ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-            ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->select('Matricule_agent','Sexe','Libelle_Fonction','Statut','Direction','Role.Nom','Nom_Agent')
+            ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
             ->get();
-        
 
-       
-            $users=User::all();
             $agent_attribut=DB::table('agent')
-            ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
             ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('affectation','affectation.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->select('agent.Matricule_agent','Nom_Agent','Fonction.Libelle_Fonction','agent.Statut'
-            ,'Direction.Direction','Etablissement.id','Etablissement.nom','n_plus_un','Libelle_Affectation')
-            ->get();
-            
-            $agent_etablissement=DB::table('agent')
-            ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('affectation','affectation.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->select('agent.Matricule_agent','Nom_Agent','Fonction.Libelle_Fonction','agent.Statut'
-            ,'Direction.Direction','Etablissement.nom','Etablissemt_nom','Libelle_Affectation')
+            ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.agentMatricule_Agent','=','agent.Matricule_Agent')
+            ->distinct('Matricule_agent')
+            ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement')
             ->get();
 
             $service=DB::table('Affectation')
             ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')
-            ->join('Direction','Direction.agentMatricule_Agent','=','affectation.agentMatricule_Agent')
-            ->join('Fonction','Fonction.agentMatricule_Agent','=','affectation.agentMatricule_Agent')
-            ->select('Matricule_agent','Nom_Agent','Libelle_Fonction','Statut','Libelle_Affectation','Direction','Etablissemt_nom')
+            ->select('Matricule_agent','Nom_Agent','Fonction','Statut','Affectation','Direction','Etablissemt_nom')
             ->distinct('Matricule_agent')
             ->get();
+
+            $agent_etablissement=DB::table('agent')
+            ->select('agent.Matricule_agent','Nom_Agent','Fonction','agent.Statut'
+            ,'Direction','Etablissement','Affectation')
+            ->get();
+
+           
             
             return view('homeCommande')->with([
                 'service'=> $service,

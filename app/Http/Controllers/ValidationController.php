@@ -18,33 +18,24 @@ class ValidationController extends Controller
     {
         $service=DB::table('Affectation')
             ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')
-            ->join('Direction','Direction.agentMatricule_Agent','=','affectation.agentMatricule_Agent')
-            ->join('Fonction','Fonction.agentMatricule_Agent','=','affectation.agentMatricule_Agent')
-            ->select('Matricule_agent','Nom_Agent','Libelle_Fonction','Statut','Libelle_Affectation','Direction','Etablissemt_nom')
+            ->select('Matricule_agent','Nom_Agent','Fonction','Statut','Libelle_Affectation','Direction','Etablissemt_nom')
             ->distinct('Matricule_agent')
             ->get();
-        $role_account=DB::table('Role_Account')
-        ->join('users','users.id' ,'=', 'Role_Account.AccountID')
-        ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
-        ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-        ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-        ->select('Matricule_agent','Libelle_Fonction','Statut','Direction','Role.Nom','Nom_Agent','Etablissement.nom')
-        ->get();
-            $agent_attribut=DB::table('agent')
-            ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Direction','Direction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('affectation','affectation.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Service','Service.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('Fonction','Fonction.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->distinct('Matricule_Agent')
-            ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Libelle_Fonction','agent.Statut','Libelle_Affectation',
-            'Direction','nom')
+
+            $role_account=DB::table('Role_Account')
+            ->join('users','users.id' ,'=', 'Role_Account.AccountID')
+            ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
+            ->join('agent','agent.Matricule_Agent' ,'=','users.id')
+            ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
             ->get();
+
+            $agent_attribut=DB::table('agent')
+            ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
+            ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.agentMatricule_Agent','=','agent.Matricule_Agent')
+            ->distinct('Matricule_agent')
+            ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement')
+            ->get();
+
             $heure_supp=DB::table('heures_supp')
             ->get();
             $nbr_heure=DB::table('Heures_supp_a_faire')
@@ -109,7 +100,7 @@ class ValidationController extends Controller
           
         return back();
               break;
-        case 'n+3':
+        case 'n+3' or 'dcm' or 'dto' :
             $Heures_supp=DB::table('heures_supp')
             ->where('id_heure_a_faire', '=', $id )
             ->update(['Statut' => 4]);
