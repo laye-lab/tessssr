@@ -26,6 +26,13 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
+      <li class="nav-item"> 
+        <a class="nav-link"  href="{{ URL::previous() }}">
+        <i class="fas fa-backspace fa-2x "> </i>
+     
+        
+    </a>
+    </li>
 </ul>
 
     <!-- SEARCH FORM -->
@@ -60,13 +67,13 @@
                   <a class="dropdown-item" href="{{ route('logout') }}"
                      onclick="event.preventDefault();
                                    document.getElementById('logout-form').submit();">
-                      {{ __('Logout') }}
+                      {{ __('Se deconnecter') }}
                   </a>
                
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                       @csrf
                   </form>
-                  <a href=" {{ route('admin.user.index') }}" class="dropdown-item">lister les utilisateurs</a>
+                 
               </div>
           </li>
         

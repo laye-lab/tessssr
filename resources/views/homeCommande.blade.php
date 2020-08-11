@@ -37,6 +37,7 @@
                     <th>Secteur/Service</th>
                     <th>Direction</th>
                     <th>Etablissemt</th>
+                    <th>Responsable</th>
                     <th></th>
                     </tr>
                   </thead>
@@ -76,6 +77,16 @@
                                       </td>
                                       <td>
                                         {{$agent_collaborateur->Etablissemt_nom}}
+                                      </td>
+                                      <td>
+                                        @foreach($agent_etablissement as $agent_etablissements)
+
+                                        @if($agent_etablissements->Matricule_agent  == $agent_collaborateur->n_plus_un)
+                                        {{$agent_etablissements->Nom_Agent}} <br>
+                                        {{$agent_etablissements->Matricule_agent}}
+                                        @break
+                                        @endif
+                                        @endforeach
                                       </td>
                                       <td>
                                         <form method="POST" action="{{'Commandeindex'}}">

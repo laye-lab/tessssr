@@ -22,7 +22,7 @@
        
         <div class="row" >
           <!-- left column -->
-          <div class="col-md-4" >
+          <div class="col-md-6" >
             <form method="POST" action="{{route('CalculheureMois')}}">
               @csrf
             <!-- general form elements disabled -->
@@ -70,27 +70,27 @@
       
           <!--/.col (left) -->
           <!-- right column -->
-          <div class="col-md-4">
-            <form method="POST" action="{{route('CalculheureSecteur')}}">
-              @csrf
+           <!--    <div class="col-md-4">
+         <form method="POST" action="">
+          
            
-            <!-- general form elements disabled -->
+      
             <div class="card card-secondary" >
               <div class="card-header col-md-6">
                 <h3 class="card-title card-info"> Par Etablissememt</h3>
               </div>
-              <!-- /.card-header -->
+    
               <div class="card-body">
                 <form role="form">
                   <div class="row">
                     <div class="col-sm-6">
-                      <!-- text input -->
+      
                       <div class="form-group">
                       
                         <select class="form-control" name="etablissement" id="">
-                          @foreach ($etablissement as $etablissements)
-                          <option value="{{$etablissements->nom}}">{{$etablissements->nom}}</option>
-                          @endforeach
+                       
+                          <option value=""></option>
+                       
                       </select>
                       </div>
                     </div>
@@ -105,12 +105,13 @@
                 </form>
               </div>
               
-              <!-- /.card-body -->
+
             </div>
             
-          </div>
-          <div class="col-md-4">
-          
+          </div>-->
+          <div class="col-md-6">
+            <form method="POST" action="{{route('CalculheureSecteur')}}">
+              @csrf
             <!-- general form elements disabled -->
             <div class="card card-danger">
               <div class="card-header col-md-5">

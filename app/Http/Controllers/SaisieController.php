@@ -89,7 +89,8 @@ class SaisieController extends Controller
             'Magal de Touba'=>'2019-10-18',
             'Toussaint'=>'2019-11-01',
             'Maouloud'=>'2019-11-09',
-            'Noël'=>'2019-12-25'
+            'Noël'=>'2019-12-25',
+            'Noël'=>'2020-08-16'
         );
 
     $total_heure_latest=DB::table('heures_supp')
@@ -165,7 +166,7 @@ class SaisieController extends Controller
                                                             
                                                               
                         
-                                          if($heure_debut >=0 && $heure_fin<=7   && $heure_fin>$heure_debut)/// si  on est le soir
+                                          if($heure_debut >=0 && $heure_fin<=5   && $heure_fin>$heure_debut)/// si  on est le soir
                                         {
                                                      
                                             $diff_heure =$heure_fin-$heure_debut;
@@ -196,11 +197,14 @@ class SaisieController extends Controller
                                             $Heures_supp->Total =$Total;
                                             $Heures_supp->save();
                                 }
+
+                    
+
                                 if($heure_debut >=5 && $heure_debut<=22 && $heure_fin>=0 && $heure_fin<=5  && $heure_fin<$heure_debut)/// si on est dans le matin et le soir  et on est le soir
                                 {
                                              
                                     $diff_heure =$heure_debut-$heure_fin;
-                                        }
+                                        
                                            
                                                 $nbre_taux_15   = 0;
                                                 $total_taux_15  = $total_taux_15 + $nbre_taux_15;
@@ -211,7 +215,7 @@ class SaisieController extends Controller
                                                 $nbre_taux_60   =22 - $heure_debut;
                                                 $total_taux_60  = $total_taux_60 + $nbre_taux_60;
                 
-                                                $nbre_taux_100  = (22+$heure_fin) - $heure_debut;
+                                                $nbre_taux_100  = (24+$heure_fin) - $heure_debut;
                                                 $total_taux_100 = $total_taux_100 + $nbre_taux_100;										
                 
                                                 $total_heures_saisie = $total_taux_100+$nbre_taux_60+ $nbre_taux_40+ $nbre_taux_15 ;
@@ -226,6 +230,142 @@ class SaisieController extends Controller
                                                                 $Heures_supp->Total = $diff_heure;
                                                                 $Heures_supp->save();
                                         
+                                            }
+                                            if($heure_debut >=0 && $heure_debut<=5 && $heure_fin>=5 && $heure_fin<=22 && $heure_fin>$heure_debut)/// debut dans le matin et fin dans le soir avec soir date de debut 
+                                            {
+                                                         
+                                                $diff_heure =$heure_fin-$heure_debut;
+                                                if(!isset($total_heure_latest)){
+                                                $total_heure_latest =new StdClass;
+                                                $total_heure_latest=0;
+                                                    }
+                                                        
+                                                            $nbre_taux_15   =0;
+                                                            $total_taux_15  = $total_taux_15 + $nbre_taux_15;
+                                                            
+                                                            $nbre_taux_40   =0 ;
+                                                            $total_taux_40  = $total_taux_40 + $nbre_taux_40;
+                            
+                                                            $nbre_taux_60   =$heure_fin-(5-$heure_debut);
+                                                            $total_taux_60  = $total_taux_60 + $nbre_taux_60;
+                            
+                                                            $nbre_taux_100  =  $diff_heure -  $nbre_taux_60 ; 
+                                                            $total_taux_100 = $total_taux_100 + $nbre_taux_100;										
+                            
+                                                            $total_heures_saisie = $total_taux_100+$nbre_taux_60+ $nbre_taux_40+ $nbre_taux_15 ;
+                                                                            $Total  = $diff_heure;
+                                                                            $Heures_supp->total_taux_15 =$total_taux_15;
+                                                                            $Heures_supp->total_taux_40 =$total_taux_40;
+                            
+                                                                            $Heures_supp->total_taux_60 =$total_taux_60;
+                                                                            $Heures_supp->total_taux_100 =$total_taux_100;
+                                                                            $Heures_supp->total_heures_saisie =$total_heures_saisie ;
+                                                                            
+                                                                            $Heures_supp->Total = $diff_heure;
+                                                                            $Heures_supp->save();
+                                                       
+                                        }
+                                                                
+                                        
+                                    
+                                 }
+/// fin jour ferie
+
+
+
+                                            if($heure_debut >=0 && $heure_debut <=5  && $heure_fin>=0  && $heure_fin<=7   && $heure_fin>$heure_debut)/// si on est dans un jour ourable et on est le soir
+                                            {
+                                                         
+                                                $diff_heure =$heure_fin-$heure_debut;
+                                                if(!isset($total_heure_latest)){
+                                                $total_heure_latest =new StdClass;
+                                                $total_heure_latest=0;
+                                                    }
+                                                   
+                                                            if($heure_fin<=5){
+                                                                $nbre_taux_15=0;
+                                                            }else{
+                                                                $nbre_taux_15   = $heure_fin-$heure_debut-(5-$heure_debut);
+                                                            }
+                                                            $total_taux_15  = $total_taux_15 + $nbre_taux_15;
+                                                            
+                                                            $nbre_taux_40   = 0;
+                                                            $total_taux_40  = $total_taux_40 + $nbre_taux_40;
+                            
+                                                            if($heure_fin<=5){$nbre_taux_60 = $heure_fin-$heure_debut;}else{$nbre_taux_60   = 5-$heure_debut;}
+                                                            $total_taux_60  = $total_taux_60 + $nbre_taux_60;
+                            
+                                                            $nbre_taux_100  = 0;
+                                                            $total_taux_100 = $total_taux_100 + $nbre_taux_100;										
+                            
+                                                            $total_heures_saisie = $nbre_taux_15 + $nbre_taux_40 + $nbre_taux_60 + $nbre_taux_100;
+                                                            $Total  =$total_heure_latest+$diff_heure;
+                                                            $Heures_supp->total_taux_15 =$total_taux_15;
+                                                            $Heures_supp->total_taux_40 =$total_taux_40;
+                            
+                                                            $Heures_supp->total_taux_60 =$total_taux_60;
+                                                            $Heures_supp->total_taux_100 =$total_taux_100;
+                                                            $Heures_supp->total_heures_saisie =$total_heures_saisie ;
+                                                            
+                                                            $Heures_supp->Total =$Total;
+                                                            $Heures_supp->save();
+                                                            if($heure_debut>5 && $heure_fin<=7)
+                                                            {
+                                                                if($total_heure_latest<=8)
+                                                                {
+                                                                $diff_heure =$heure_fin-$heure_debut;
+                                                            
+                                                                $nbre_taux_15   = $diff_heure;
+                                                                $total_taux_15  = $total_taux_15 + $nbre_taux_15;
+                                                                
+                                                                $nbre_taux_40   = 0;
+                                                                $total_taux_40  = $total_taux_40 + $nbre_taux_40;
+                            
+                                                                $nbre_taux_60   = 0;
+                                                                $total_taux_60  = $total_taux_60 + $nbre_taux_60;
+                            
+                                                                $nbre_taux_100  = 0;
+                                                                $total_taux_100 = $total_taux_100 + $nbre_taux_100;										
+                            
+                                                                $total_heures_saisie = $nbre_taux_15 + $nbre_taux_40 + $nbre_taux_60 + $nbre_taux_100;
+                                                                $Total  =$total_heure_latest+$diff_heure;
+                                                                $Heures_supp->total_taux_15 =$total_taux_15;
+                                                                $Heures_supp->total_taux_40 =$total_taux_40;
+                            
+                                                                $Heures_supp->total_taux_60 =$total_taux_60;
+                                                                $Heures_supp->total_taux_100 =$total_taux_100;
+                                                                $Heures_supp->total_heures_saisie =$total_heures_saisie ;
+                                                                
+                                                                $Heures_supp->Total =$Total;
+                                                                $Heures_supp->save();
+                                                                }
+                                                                else {
+                                                                    $diff_heure =$heure_fin-$heure_debut;
+                                                            
+                                                                    $nbre_taux_40   = $diff_heure;
+                                                                    $total_taux_40  = $total_taux_40 + $nbre_taux_40;
+                                                                    
+                                                                    $nbre_taux_15   = 0;
+                                                                    $total_taux_15  = $total_taux_15 + $nbre_taux_15;
+                                
+                                                                    $nbre_taux_60   = 0;
+                                                                    $total_taux_60  = $total_taux_60 + $nbre_taux_60;
+                                
+                                                                    $nbre_taux_100  = 0;
+                                                                    $total_taux_100 = $total_taux_100 + $nbre_taux_100;										
+                                                                    $total_heures_saisie = $nbre_taux_15 + $nbre_taux_40 + $nbre_taux_60 + $nbre_taux_100;
+                                                                    $Total  =$total_heure_latest+$diff_heure;
+                                                                    $Heures_supp->total_taux_15 =$total_taux_15;
+                                                                    $Heures_supp->total_taux_40 =$total_taux_40;
+                            
+                                                                    $Heures_supp->total_taux_60 =$total_taux_60;
+                                                                    $Heures_supp->total_taux_100 =$total_taux_100;
+                                                                    $Heures_supp->total_heures_saisie =$total_heures_saisie ;
+                                                                    
+                                                                    $Heures_supp->Total =$Total;
+                                                                    $Heures_supp->save();
+                                                                }
+                                                            }
                                             }
                                                     
                             
@@ -364,102 +504,9 @@ class SaisieController extends Controller
 
                                 }
 
-                                if($heure_debut >=0 && $heure_fin<=7   && $heure_fin>$heure_debut)/// si on est dans un jour ourable et on est le soir
-				{
-                             
-                    $diff_heure =$heure_fin-$heure_debut;
-                    if(!isset($total_heure_latest)){
-                    $total_heure_latest =new StdClass;
-                    $total_heure_latest=0;
-                        }
-                       
-                                if($heure_fin<=5){
-                                    $nbre_taux_15=0;
-                                }else{
-                                    $nbre_taux_15   = $heure_fin-$heure_debut-(5-$heure_debut);
-                                }
-                                $total_taux_15  = $total_taux_15 + $nbre_taux_15;
-                                
-                                $nbre_taux_40   = 0;
-                                $total_taux_40  = $total_taux_40 + $nbre_taux_40;
-
-                                if($heure_fin<=5){$nbre_taux_60 = $heure_fin-$heure_debut;}else{$nbre_taux_60   = 5-$heure_debut;}
-                                $total_taux_60  = $total_taux_60 + $nbre_taux_60;
-
-                                $nbre_taux_100  = 0;
-                                $total_taux_100 = $total_taux_100 + $nbre_taux_100;										
-
-                                $total_heures_saisie = $nbre_taux_15 + $nbre_taux_40 + $nbre_taux_60 + $nbre_taux_100;
-                                $Total  =$total_heure_latest+$diff_heure;
-                                $Heures_supp->total_taux_15 =$total_taux_15;
-                                $Heures_supp->total_taux_40 =$total_taux_40;
-
-                                $Heures_supp->total_taux_60 =$total_taux_60;
-                                $Heures_supp->total_taux_100 =$total_taux_100;
-                                $Heures_supp->total_heures_saisie =$total_heures_saisie ;
-                                
-                                $Heures_supp->Total =$Total;
-                                $Heures_supp->save();
-                                if($heure_debut>5 && $heure_fin<=7)
-                                {
-                                    if($total_heure_latest<=8)
-                                    {
-                                    $diff_heure =$heure_fin-$heure_debut;
-                                
-                                    $nbre_taux_15   = $diff_heure;
-                                    $total_taux_15  = $total_taux_15 + $nbre_taux_15;
+                
                                     
-                                    $nbre_taux_40   = 0;
-                                    $total_taux_40  = $total_taux_40 + $nbre_taux_40;
-
-                                    $nbre_taux_60   = 0;
-                                    $total_taux_60  = $total_taux_60 + $nbre_taux_60;
-
-                                    $nbre_taux_100  = 0;
-                                    $total_taux_100 = $total_taux_100 + $nbre_taux_100;										
-
-                                    $total_heures_saisie = $nbre_taux_15 + $nbre_taux_40 + $nbre_taux_60 + $nbre_taux_100;
-                                    $Total  =$total_heure_latest+$diff_heure;
-                                    $Heures_supp->total_taux_15 =$total_taux_15;
-                                    $Heures_supp->total_taux_40 =$total_taux_40;
-
-                                    $Heures_supp->total_taux_60 =$total_taux_60;
-                                    $Heures_supp->total_taux_100 =$total_taux_100;
-                                    $Heures_supp->total_heures_saisie =$total_heures_saisie ;
-                                    
-                                    $Heures_supp->Total =$Total;
-                                    $Heures_supp->save();
-                                    }
-                                    else {
-                                        $diff_heure =$heure_fin-$heure_debut;
-                                
-                                        $nbre_taux_40   = $diff_heure;
-                                        $total_taux_40  = $total_taux_40 + $nbre_taux_40;
-                                        
-                                        $nbre_taux_15   = 0;
-                                        $total_taux_15  = $total_taux_15 + $nbre_taux_15;
-    
-                                        $nbre_taux_60   = 0;
-                                        $total_taux_60  = $total_taux_60 + $nbre_taux_60;
-    
-                                        $nbre_taux_100  = 0;
-                                        $total_taux_100 = $total_taux_100 + $nbre_taux_100;										
-                                        $total_heures_saisie = $nbre_taux_15 + $nbre_taux_40 + $nbre_taux_60 + $nbre_taux_100;
-                                        $Total  =$total_heure_latest+$diff_heure;
-                                        $Heures_supp->total_taux_15 =$total_taux_15;
-                                        $Heures_supp->total_taux_40 =$total_taux_40;
-
-                                        $Heures_supp->total_taux_60 =$total_taux_60;
-                                        $Heures_supp->total_taux_100 =$total_taux_100;
-                                        $Heures_supp->total_heures_saisie =$total_heures_saisie ;
-                                        
-                                        $Heures_supp->Total =$Total;
-                                        $Heures_supp->save();
-                                    }
-                                }
-				}
-                                    
-                if($heure_debut >=5 && $heure_debut<=22 && $heure_fin>=0 && $heure_fin<=5  && $heure_fin<$heure_debut)/// si on est dans un jour ourable et on est le soir
+                if($heure_debut >=5 && $heure_debut<=22 && $heure_fin>=0 && $heure_fin<=5  && $heure_fin<$heure_debut)/// debut dans le matin et fin dans le soir  avec soir date de fin
 				{
                              
                     $diff_heure =(22-$heure_debut)+ (24+$heure_fin-22);
@@ -496,14 +543,13 @@ class SaisieController extends Controller
                             }
                             if($total_heure_latest>8)
                             {
-                                    
                                     $nbre_taux_15   = 0;
                                     $total_taux_15  = $total_taux_15 + $nbre_taux_15;
                                     
                                     $nbre_taux_40   =22 - $heure_debut;
                                     $total_taux_40  = $total_taux_40 + $nbre_taux_40;
     
-                                    $nbre_taux_60   =(22+$heure_fin) - $heure_debut;
+                                    $nbre_taux_60   =(24+$heure_fin) - $heure_debut;
                                     $total_taux_60  = $total_taux_60 + $nbre_taux_60;
     
                                     $nbre_taux_100  = 0;
@@ -521,7 +567,70 @@ class SaisieController extends Controller
                                     $Heures_supp->Total =$Total;
                                     $Heures_supp->save();
                                 }
-				}
+                }
+                
+                if($heure_debut >=0 && $heure_debut<=5 && $heure_fin>=5 && $heure_fin<=22 && $heure_fin>$heure_debut)/// debut dans le matin et fin dans le soir avec soir date de debut 
+				{
+                             
+                    $diff_heure =$heure_fin-$heure_debut;
+                    if(!isset($total_heure_latest)){
+                    $total_heure_latest =new StdClass;
+                    $total_heure_latest=0;
+                        }
+                        if($total_heure_latest<=8)
+                        {
+                                
+                                $nbre_taux_15   = $heure_fin-(5-$heure_debut);
+                                $total_taux_15  = $total_taux_15 + $nbre_taux_15;
+                                
+                                $nbre_taux_40   =0 ;
+                                $total_taux_40  = $total_taux_40 + $nbre_taux_40;
+
+                                $nbre_taux_60   =  $diff_heure -  $nbre_taux_15 ;
+                                $total_taux_60  = $total_taux_60 + $nbre_taux_60;
+
+                                $nbre_taux_100  = 0;
+                                $total_taux_100 = $total_taux_100 + $nbre_taux_100;										
+
+                                $total_heures_saisie = $total_taux_100+$nbre_taux_60+ $nbre_taux_40+ $nbre_taux_15 ;
+                                                $Total  = $diff_heure;
+                                                $Heures_supp->total_taux_15 =$total_taux_15;
+                                                $Heures_supp->total_taux_40 =$total_taux_40;
+
+                                                $Heures_supp->total_taux_60 =$total_taux_60;
+                                                $Heures_supp->total_taux_100 =$total_taux_100;
+                                                $Heures_supp->total_heures_saisie =$total_heures_saisie ;
+                                                
+                                                $Heures_supp->Total = $diff_heure;
+                                                $Heures_supp->save();
+                            }
+                            if($total_heure_latest>8)
+                            {
+                                $nbre_taux_15   =0;
+                                $total_taux_15  = $total_taux_15 + $nbre_taux_15;
+                                
+                                $nbre_taux_40   =$heure_fin-(5-$heure_debut) ;
+                                $total_taux_40  = $total_taux_40 + $nbre_taux_40;
+
+                                $nbre_taux_60   =  $diff_heure -  $nbre_taux_15 ;
+                                $total_taux_60  = $total_taux_60 + $nbre_taux_60;
+
+                                $nbre_taux_100  = 0;
+                                $total_taux_100 = $total_taux_100 + $nbre_taux_100;										
+
+                                $total_heures_saisie = $total_taux_100+$nbre_taux_60+ $nbre_taux_40+ $nbre_taux_15 ;
+                                                $Total  = $diff_heure;
+                                                $Heures_supp->total_taux_15 =$total_taux_15;
+                                                $Heures_supp->total_taux_40 =$total_taux_40;
+
+                                                $Heures_supp->total_taux_60 =$total_taux_60;
+                                                $Heures_supp->total_taux_100 =$total_taux_100;
+                                                $Heures_supp->total_heures_saisie =$total_heures_saisie ;
+                                                
+                                                $Heures_supp->Total = $diff_heure;
+                                                $Heures_supp->save();
+                }
+            }
                                     
 			
         

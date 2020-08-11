@@ -81,7 +81,8 @@ class HomeCommandeController extends Controller
 
             $service=DB::table('Affectation')
             ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')
-            ->select('Matricule_agent','Nom_Agent','Fonction','Statut','Affectation','Direction','Etablissemt_nom')
+            ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
+            ->select('Matricule_agent','Nom_Agent','Fonction','Statut','Affectation','Direction','Etablissemt_nom','n_plus_un')
             ->distinct('Matricule_agent')
             ->get();
 

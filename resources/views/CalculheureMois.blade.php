@@ -14,99 +14,7 @@
         </div>
       </div><!-- /.container-fluid -->
     </section>
-    <center>
-    <section class="content" >
-      <div class="container-fluid">
-       
-        <div class="row" >
-          
-          <!-- left column -->
-          <div class="col-md-3" >
-            <!-- general form elements disabled -->
-            <div class="card card-dark" style="position:relative;left:25%">
-              <div class="card-header col-md-5">
-                <h3 class="card-title"> Par Année </h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <form role="form">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <!-- text input -->
-                      <div class="form-group">
-                        <select class="form-control" name="" id="">
-                          @foreach ($anne as $annes)
-                          <option value="{{$annes->year}}">{{$annes->year}}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                  
-                        <button class=" btn  btn-lg btn-dark form-control">Lister</button>
-                      </div>
-                    </div>
-                  </div>
-             
-                </form>
-              </div>
-            </div>
-            <!-- /.card -->
 
-            <!-- Form Element sizes -->
-         
-            <!-- /.card -->
-
-         
-            <!-- Input addon -->
-          
-           
-           
-            <!-- /.card -->
-
-          </div>
-      
-          <!--/.col (left) -->
-          <!-- right column -->
-          <div class="col-md-3">
-            <!-- general form elements disabled -->
-            <div class="card card-info" style="position:relative;left:100%">
-              <div class="card-header col-md-5">
-                <h3 class="card-title card-info"> Par secteur </h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <form role="form">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <!-- text input -->
-                      <div class="form-group">
-                      
-                        <select class="form-control" name="etablissement" id="">
-                          @foreach ($etablissement as $etablissements)
-                          <option value="{{$etablissements->nom}}">{{$etablissements->nom}}</option>
-                          @endforeach
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                      
-                        <button class=" btn  btn-lg btn-info form-control">  Lister </button>
-                      </div>
-                    </div>
-                  </div>
-             
-                </form>
-              </div>
-              <!-- /.card-body -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </center>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -137,7 +45,9 @@
                   <tr>
                  
                     @foreach ($data as  $datas)         
-                         
+                         @if ($datas->month == $mois)
+                             
+                       
                                     </tr>
                                     <td>{{$datas->year}}</td>
                                     <td>{{$datas->month}}</td>
@@ -149,6 +59,7 @@
                                     <td>{{$datas->sum100}}</td>
                                     <td><button class=" btn btn-lg btn-danger">{{$datas->total}}</button></td>
                                     </tr>
+                           @endif
                      @endforeach
                     
                                     
