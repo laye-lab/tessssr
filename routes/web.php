@@ -47,7 +47,7 @@ Route::post('/Saisiestore', 'SaisieController@store')->name('Saisiestore');
 
 Route::get('/Acceuil', 'AcceuilController@index')->name('Acceuil');
 
-Route::post('/Commandeindex', 'CommandeController@index')->name('Commandeindex');
+Route::any('/Commandeindex', 'CommandeController@index')->name('Commandeindex');
 
 Route::get('/Commande', 'CommandeController@index');
 

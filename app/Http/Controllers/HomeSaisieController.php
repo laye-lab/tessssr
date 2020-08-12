@@ -32,11 +32,14 @@ class HomeSaisieController extends Controller
             ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
             ->get();
             try {
-                $agent_attribut=DB::table('agent')
-                ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
-                ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.agentMatricule_Agent','=','agent.Matricule_Agent')
+        
+                $agent_attribut=DB::table('agent_Heures_supp_a_faire')
+                ->join('equipe','equipe.agentMatricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+                ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+                ->join('Heures_supp_a_faire','Heures_supp_a_faire.ID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
                 ->distinct('Matricule_agent')
-                ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement','fonction','Affectation')
+                ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement'
+                ,'fonction','Affectation','Date_debut','Date_fin','travaux_effectuer')
                 ->get();
                 
             } catch (Throwable $e) {

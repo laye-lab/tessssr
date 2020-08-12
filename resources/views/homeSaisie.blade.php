@@ -1,4 +1,4 @@
-@extends('../../layouts.template_dashbord')
+@extends('../../layouts.template_dashbord_collapsed')
 
 @section('content')
  <!-- Content Wrapper. Contains page content -->
@@ -37,6 +37,10 @@
                     <th>Secteur/Service</th>
                     <th>Direction</th>
                     <th>Etablissemt</th>
+                    <th>Date début</th>
+                    <th>Date fin</th>
+                    <th>Travaux a éffectuer </th>
+
                     <th></th>
                     </tr>
                   </thead>
@@ -69,12 +73,24 @@
                                       <td>
                                         {{$agent_attributs->etablissement}}
                                       </td>
+                                      <td>
+                                        {{$agent_attributs->Date_debut}}
+                                      </td>
+                                      <td>
+                                        {{$agent_attributs->Date_fin}}
+                                      </td>
+                                      <td>
+                                        {{$agent_attributs->travaux_effectuer}}
+                                      </td>
+                                
                                 
                                     
                                 
                                     <td>
                                       <form method="POST" action="{{'Saisie'}}">
                                         @csrf
+                                        <input type="hidden" name="Date_debut"  value="{{$agent_attributs->Date_debut}}">
+                                        <input type="hidden" name="Date_fin"  value=" {{$agent_attributs->Date_fin}}">
                                       <input type="hidden" name="id"  value="{{$agent_attributs->Matricule_agent}}">
                                       <input type="hidden" name="nom"  value=" {{$agent_attributs->Nom_Agent}}">
                                       <input type="hidden" name="servicedr"  value="{{$agent_attributs->Affectation}}">
