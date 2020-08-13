@@ -81,31 +81,7 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      @foreach($heurre_a_faire as $heure)
-    
-                                      @if($agent_unite->Matricule_agent ==$heure->Matricule_agent  and $heure->Statut==2 and $heure->nom==$role->etablissement )     
-                                      <tr>     
-                                        <td>
-                                          {{$heure->Date_Heure}}
-                                        </td>
-                                        <td>
-                                          {{$heure->heure_debut}}
-                                        </td>
-                                        <td>
-                                          {{$heure->heure_fin}}
-                                        </td>
-                                        <td>
-                                          {{$heure->travaux_effectuer}}
-                                        </td>
-                                        <td>
-                                          {{$heure->observations}}
-                                        </td>
-                                    </tr>
-                                      @endif
-                            @endforeach
-                            @break
-                                    @endif
-                            @endforeach
+                                  
                           </tbody>
                         </table>
                       </div>

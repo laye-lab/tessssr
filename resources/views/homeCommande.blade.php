@@ -22,7 +22,9 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Heures supplémentaires</h3>
+                <h3 class="card-title">
+                <button type="submit" class="btn btn-danger">  {{$servicedr}}</button>
+              </h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -43,7 +45,7 @@
                   </thead>
                   <tbody>
                   <tr>
-                    {{$servicedr}}
+                 
                     @foreach($agent_etablissement as $dr)
                         @if(Auth::user()->id == $dr->Matricule_agent)
                         @break

@@ -22,7 +22,9 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Choisissez un agent et affectez lui des heures supplémentaires </h3>
+                <h3 class="card-title">
+                  <button type="submit" class="btn btn-danger">Choisissez un agent et affectez lui des heures supplémentaires </button>
+                </h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">

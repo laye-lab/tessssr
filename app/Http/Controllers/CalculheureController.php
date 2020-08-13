@@ -110,6 +110,7 @@ class CalculheureController extends Controller
             DB::raw('Nom_Agent as Nom'),
             DB::raw('SUM(total_heures_saisie) as total'),
             DB::raw('(Agent_Matricule_Agent) as agent'))
+            ->where('heures_supp.Statut', '=', 4)
            ->groupBy('year','month','agent')
            ->get();
 
@@ -185,7 +186,8 @@ class CalculheureController extends Controller
             DB::raw('SUM(total_taux_100) as sum100'),
             DB::raw('Nom_Agent as Nom'),
             DB::raw('SUM(total_heures_saisie) as total'),
-            DB::raw('(Agent_Matricule_Agent) as agent'))
+            DB::raw('(Agent_Matricule_Agent) as agent')
+            )->where('Statut', '>', 4)
            ->groupBy('year','month','agent')
            ->get();
 
