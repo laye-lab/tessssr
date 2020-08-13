@@ -8,7 +8,23 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-            <h1>Liste des utilisateurs</h1>
+            <h4>Commande heure supplémentaire</h4>
+            <center>
+            @if ($errors->any())
+ 
+    
+        @foreach ($errors->all() as $error)
+          
+           <div class="alert alert-danger  col-6 " role="alert">
+            {{ $error }}
+           </div>
+        @endforeach
+     
+     @if ($errors->has('email'))
+     @endif
+
+@endif
+</center>
           </div>
         
         </div>
@@ -16,60 +32,72 @@
     </section>
       <!-- Main content -->
   
-      <center>
-      <section class="content" style="position:relative;left:10%">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-10">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Users</h3>
+  <center>
+    <div class="col-md-6">
+    <div class="card card-info">
+      <div class="card-header">
+        @foreach($agent_etablissement as $agent_etablissements)
+
+            @if($agent_etablissements->Matricule_agent  ==  $collab)
+            <button class=" btn btn-lg btn-info" name="collab">{{$agent_etablissements->Nom_Agent}}</button>
+            @break
+            @endif
+        @endforeach
+      </div>
+      <!-- /.card-header -->
+      <!-- form start -->
+      <form  class="form-horizontal" method="POST" action="{{ route('Commandestore') }}">
+        @csrf
+        <div class="card-body">
+        
+        
+    <div class="form-group row">
+
+
+      <label for="example-datetime-local-input" class="col-3 col-form-label">Date de début</label>
+      <div class="col-8">
+          <input class="form-control"  type="date" name="Date_debut"  value="{{ old('Date_debut') }}" id="example-date-input">
+      </div>
+              
+            </div>
+                  <div class="form-group row">
+                    <label for="example-datetime-local-input" class="col-3 col-form-label">Date de fin</label>
+                    <div class="col-8">
+                        <input class="form-control"  type="date" name="Date_fin"  value="{{ old('Date_fin') }}" id="example-date-input">
+                    </div>
+            </div>
+            <div class="form-group row">
+              <label for="example-datetime-local-input" class="col-3 col-form-label">Nombre d'heure</label>
+              <div class="col-8">
+                  <input class="form-control " type="number" name="nbr_heure"  value="{{ old('nbr_heure') }}" id="example-date-input">
+              </div>
+          
+            </div>
+
+            <div class="form-group row" >
+              <label for="example-datetime-local-input" class="col-3 col-form-label">Travaux à éffectuer </label>
+              <div class="col-8">
+                  <input class="form-control"  type="text" name="travaux_effectuer"  value="{{ old('travaux_effectuer') }}" id="example-date-input">
+              </div>
+            </div>
+            <div class="form-group row" >
+              <label for="example-datetime-local-input" class="col-3 col-form-label">Observations</label>
+              <div class="col-8">
+                  <input class="form-control"  type="text" name="Observations"  value="{{ old('Observations') }}" id="example-date-input">
+              </div>
+          
+            </div>
+            <input class="form-control"  type="hidden"   name="commandeur" value="{{old('commandeur', Auth::user()->id) }}"  id="example-text-input">
+            <input class="form-control"  type="hidden"   name="collaborateur" value="{{old('collaborateur', $collab) }}"  id="example-text-input">
+            <input class="form-control" type="hidden"   name="servicedr" value="{{old('servicedr', $servicedr) }}"id="example-text-input">
                 </div>
-                <div style="position:relative;left:10%">
-                  {{$collab}}
-                  <form method="POST" action="{{ route('Commandestore') }}">
-                    @csrf
-      <div class="form-group row">
-
-        <label for="example-datetime-local-input" class="col-2 col-form-label">Date de debut</label>
-        <div class="col-6">
-            <input class="form-control"  type="date" name="Date_debut"  value="{{ old('Date_debut') }}" id="example-date-input">
-        </div>
-      </div>
-      <div class="form-group row">
-
-        <label for="example-datetime-local-input" class="col-2 col-form-label">Date de fin</label>
-        <div class="col-6">
-            <input class="form-control"  type="date" name="Date_fin"  value="{{ old('Date_fin') }}" id="example-date-input">
-        </div>
-      </div>
-      <div class="form-group row">
-
-        <label for="example-datetime-local-input" class="col-2 col-form-label">Nombre d'heure</label>
-        <div class="col-6">
-            <input class="form-control " type="number" name="nbr_heure"  value="{{ old('nbr_heure') }}" id="example-date-input">
-        </div>
-      </div>
-      <div class="form-group row">
-
-        <label for="example-datetime-local-input" class="col-2 col-form-label">Travaux a effectuer </label>
-        <div class="col-6">
-            <input class="form-control"  type="text" name="travaux_effectuer"  value="{{ old('travaux_effectuer') }}" id="example-date-input">
-        </div>
-      </div>
-      <div class="form-group row">
-
-        <label for="example-datetime-local-input" class="col-2 col-form-label">Observation</label>
-        <div class="col-6">
-            <input class="form-control"  type="text" name="Observations"  value="{{ old('Observations') }}" id="example-date-input">
-        </div>
-      </div>
-      <input class="form-control"  name="commandeur" type="hidden" value="{{Auth::user()->id }}"" id="example-text-input">
-      <input class="form-control"  name="collaborateur"  type="hidden" value="{{$collab}}"  id="example-text-input">
-      <input class="form-control"  name="servicedr" type="hidden" value="{{$servicedr}}" id="example-text-input">
-    <center> <button class=" btn btn-lg btn-info"  style="position:relative;right:10%">Valider commande</button></center> 
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <center>  <center> <button class=" btn btn-lg btn-info">Valider</button></center> 
+                </div>
+                <!-- /.card-footer -->
+              </form>
     </div>
-  </form>
-  </center> 
-
+    </center>
+  
 @endsection

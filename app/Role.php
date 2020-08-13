@@ -32,9 +32,9 @@ class Role extends Model
      */
     protected $fillable = ['Nom', 'Descripttion', 'Created', 'Modified'];
 
-    public function user()
+    public function users()
     {
-        return $this->belongsToMany('App\User','Role_Account', 'id','AccountID');
+        return $this->belongsToMany('App\User','Role_Account', 'RoleID','AccountID');
     }
   
 }

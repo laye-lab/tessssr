@@ -129,7 +129,7 @@
                                             </div>
                                         
                                     <li class="nav-item has-treeview menu-open">
-                                    <a  class="nav-link">
+                                    <a  href="{{route('homeSaisie')}}" class="nav-link">
                                         <i class="nav-icon fas fa-pen-alt"></i>
                                         <p>
                                         Saisie heure
@@ -138,21 +138,21 @@
                                 </li>
         
                                 <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a  class="nav-link">
                                     <i class="nav-icon far fa-circle text-info"></i>
                                     <i class="nav-icon fas fa-user-check"></i>
                                     <p>Choix collaborateur</p>
                                 </a>
                                 </li>
                                 <li class="nav-item">
-                                <a href="#" class="nav-link">
+                                <a  class="nav-link">
                                     <i class="nav-icon far fa-circle text-info"></i>
                                     <i class="nav-icon far fa-calendar-check"></i>
                                     <p>Saisie  </p>
                                 </a>
                                 </li>
                                 <li class="nav-item has-treeview menu-open">
-                                <a  class="nav-link">
+                                <a href="{{route('Validation')}}" class="nav-link">
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
@@ -161,7 +161,7 @@
                                 </a>
                                 </li>
                                 <li class="nav-item has-treeview menu-open">
-                                <a href="#" class="nav-link">
+                                <a href="{{route('Validation')}}" class="nav-link">
                                     <i class="nav-icon fas fa-eye"></i>
                                     <p>
                                     Consulter agent
@@ -184,7 +184,7 @@
                                         </div>
                                     
                                         <li class="nav-item has-treeview menu-open">
-                                        <a  class="nav-link" >
+                                        <a href="{{route('homeCommandeindex')}}" class="nav-link" >
                                             <i class="nav-icon fas fa-user-plus"></i>
                                             <p>
                                             Commande heure 
@@ -193,21 +193,21 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a  class="nav-link">
                                         <i class="nav-icon far fa-circle text-danger"></i>
                                         <i class="nav-icon fas fa-laptop-house"></i>
                                         <p class="text">Choix service</p>
                                     </a>
                                     </li>
                                     <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a class="nav-link">
                                         <i class="nav-icon far fa-circle text-danger"></i>
                                         <i class="nav-icon fas fa-user-check"></i>
                                         <p>Choix collaborateur</p>
                                     </a>
                                     </li>
                                     <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a  class="nav-link">
                                         <i class="nav-icon far fa-circle text-danger"></i>
                                         <i class="nav-icon far fa-calendar-check"></i>
                                         <p>Saisie  </p>
@@ -216,7 +216,7 @@
                                 
                             
                                 <li class="nav-item has-treeview menu-open">
-                                <a  class="nav-link">
+                                <a href="{{route('homeSaisie')}}"   class="nav-link">
                                     <i class="nav-icon fas fa-pen-alt"></i>
                                     <p>
                                     Saisie heure
@@ -239,7 +239,7 @@
                             </a>
                             </li>
                             <li class="nav-item has-treeview menu-open">
-                            <a  class="nav-link">
+                            <a  href="{{route('Validation')}}" class="nav-link">
                                 <i class="nav-icon fas fa-check-double"></i>
                                 <p>
                                 Valider heure
@@ -248,7 +248,7 @@
                             </a>
                             </li>
                             <li class="nav-item has-treeview menu-open">
-                            <a href="#" class="nav-link">
+                            <a  href="{{route('Validation')}}"class="nav-link">
                                 <i class="nav-icon fas fa-eye"></i>
                                 <p>
                                 Consulter agent
@@ -271,7 +271,7 @@
                                         </div>
                                     
                                         <li class="nav-item has-treeview menu-open">
-                                        <a  class="nav-link">
+                                        <a  href="{{route('Validation')}}" class="nav-link">
                                             <i class="nav-icon fas fa-check-double"></i>
                                             <p>
                                             Valider heure
@@ -280,7 +280,7 @@
                                         </a>
                                         </li>
                                         <li class="nav-item has-treeview menu-open">
-                                        <a href="#" class="nav-link">
+                                        <a href="{{route('Validation')}}" class="nav-link">
                                             <i class="nav-icon fas fa-eye"></i>
                                             <p>
                                             Consulter agent
@@ -304,7 +304,7 @@
                     </div>
                 
                     <li class="nav-item has-treeview menu-open">
-                    <a  class="nav-link">
+                    <a  href="{{route('Validation')}}"  class="nav-link">
                         <i class="nav-icon fas fa-check-double"></i>
                         <p>
                         Valider heure
@@ -313,7 +313,7 @@
                     </a>
                     </li>
                     <li class="nav-item has-treeview menu-open">
-                    <a href="#" class="nav-link">
+                    <a  href="{{route('Validation')}}" href="#" class="nav-link">
                         <i class="nav-icon fas fa-eye"></i>
                         <p>
                         Consulter agent
@@ -336,7 +336,7 @@
                                 </div>
                             
                                 <li class="nav-item has-treeview menu-open">
-                                <a  class="nav-link">
+                                <a  href="{{route('Validation')}}"  class="nav-link">
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
@@ -345,7 +345,7 @@
                                 </a>
                                 </li>
                                 <li class="nav-item has-treeview menu-open">
-                                <a href="#" class="nav-link">
+                                <a  href="{{route('Validation')}}" href="#" class="nav-link">
                                     <i class="nav-icon fas fa-eye"></i>
                                     <p>
                                     Consulter agent
@@ -368,7 +368,7 @@
                                     </div>
                                 
                                     <li class="nav-item has-treeview menu-open">
-                                    <a  class="nav-link">
+                                    <a   href="{{route('Validation')}}" class="nav-link">
                                         <i class="nav-icon fas fa-check-double"></i>
                                         <p>
                                         Valider heure
@@ -377,7 +377,7 @@
                                     </a>
                                     </li>
                                     <li class="nav-item has-treeview menu-open">
-                                    <a href="#" class="nav-link">
+                                    <a  href="{{route('Validation')}}" href="#" class="nav-link">
                                         <i class="nav-icon fas fa-eye"></i>
                                         <p>
                                         Consulter agent

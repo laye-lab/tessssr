@@ -39,19 +39,29 @@ class User extends Authenticatable
 
             public function roles()
             {
-                return $this->belongsToMany('App\Role','Role_Account','AccountID', 'id');
+                return $this->belongsToMany('App\Role','Role_Account','AccountID', 'RoleID');
             }
-            public function hasrole($role)
+            public function hasAnyRole($roles)
             {
-                foreach ($this->roles()->get() as $role)
-                {
-                    if ($role->name == $roleName)
-                    {
+                if (is_array($roles)) {
+                    foreach ($roles as $role) {
+                        if ($this->hasRole($role)) {
+                            return true;
+                        }
+                    }
+                } else {
+                    if ($this->hasRole($roles)) {
                         return true;
-
                     }
                 }
-
+                return false;
+            }
+            
+            public function hasRole($role)
+            {
+                if ($this->roles()->where('Nom', $role)->first()) {
+                    return true;
+                }
                 return false;
             }
 }

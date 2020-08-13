@@ -10,6 +10,7 @@ use App\Step;
 use DateTime;
 use StdClass;
 use Carbon\Carbon;
+use App\Http\Requests\StoreSaisieRequest;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB ;
@@ -17,12 +18,18 @@ use Illuminate\Support\Facades\Validator;
 
 
 class SaisieController extends Controller
-{
+{ public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     public function index(Request $request)
     {
                 
       
-
+        $Date_debut=request('Date_debut');
+        $Date_fin=request('Date_fin');
         $collab=request('id');
         $nom=request('nom');
         $servicedr=request('servicedr');
@@ -32,13 +39,21 @@ class SaisieController extends Controller
         ->join('agent','agent.Matricule_Agent' ,'=','users.id')
         ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
         ->get();
+        $agent_etablissement=DB::table('agent')
+        ->select('agent.Matricule_agent','Nom_Agent','Fonction','agent.Statut'
+        ,'Direction','Etablissement','Affectation')
+        ->get();
 
        return view('Saisie')->with([
                 'role_account'=>$role_account,
                 'collab'=>$collab,
                 'nom'=>$nom,
-                'servicedr'=>$servicedr]
-            );
+                'agent_etablissement'=>$agent_etablissement,
+                'servicedr'=>$servicedr,
+                'Date_debut'=>$Date_debut,
+                'Date_fin'=>$Date_fin,
+
+                ] );
     }
 
 
@@ -46,7 +61,7 @@ class SaisieController extends Controller
 
 
 
-    public function store(Request $request)
+    public function store(StoreSaisieRequest $request)
     { 
     $date1=strtotime(request('Date_Heure'));
     $date=date('Y-m-d',$date1);
@@ -636,10 +651,9 @@ class SaisieController extends Controller
         
       
       
-        return redirect()->route('homeSaisie')->with([
-            'role_account'=>$role_account,
-            'collab'=>$collaborateur,
-            'servicedr'=>$servicedr]);
+            return back()
+            ->with('success','Heure supplémentaire enregistrée!')
+            ->withInput();
 
         }
 }

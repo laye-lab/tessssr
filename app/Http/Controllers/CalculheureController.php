@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Validator;
 
 class CalculheureController extends Controller
 {
+  public function __construct()
+  {
+      $this->middleware('auth');
+  }
+
     public function index(){
       $role_account=DB::table('Role_Account')
       ->join('users','users.id' ,'=', 'Role_Account.AccountID')

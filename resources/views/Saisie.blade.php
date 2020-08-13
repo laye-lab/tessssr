@@ -9,6 +9,29 @@
           <div class="row">
             <div class="col-12">
             <h1>Saisir heure</h1>
+              <center>
+                @if ($message = Session::get('success'))
+<div class="alert alert-success alert-block">
+	<button type="button" class="close" data-dismiss="alert">×</button>	
+        <strong>{{ $message }}</strong>
+</div>
+@endif
+          @if ($errors->any())
+ 
+    
+          @foreach ($errors->all() as $error)
+            
+             <div class="alert alert-danger  col-6 " role="alert">
+              {{ $error }}
+             </div>
+          @endforeach
+       
+       @if ($errors->has('email'))
+       @endif
+  
+  @endif
+
+            </center>
           </div>
         
         </div>
@@ -20,15 +43,19 @@
 <div class="col-md-6">
 <div class="card card-dark">
   <div class="card-header">
+    @foreach($agent_etablissement as $agent_etablissements)
 
+    @if($agent_etablissements->Matricule_agent  ==  $collab)
+    <button  name="collab" class=" btn btn-lg btn-dark">{{old('collab',$agent_etablissements->Nom_Agent)}}</button>
+    @break
+    @endif
+@endforeach
   </div>
   <!-- /.card-header -->
   <!-- form start -->
   <form  class="form-horizontal" method="POST" action="{{ route('Saisiestore') }}">
     @csrf
     <div class="card-body">
-     
-     
 <div class="form-group row">
 
 
@@ -83,9 +110,12 @@
 </span>
 @enderror
 </div>
-<input class="form-control"  name="commandeur" type="hidden" value="{{Auth::user()->id }}"" id="example-text-input">
-<input class="form-control"  name="collaborateur"  type="hidden" value="{{$collab}}"  id="example-text-input">
-<input class="form-control"  name="servicedr" type="hidden" value="{{$servicedr}}" id="example-text-input">
+<input type="hidden" name="Date_debut"  value="{{old('Date_debut',$Date_debut)}}">
+<input type="hidden" name="Date_fin"  value=" {{old('Date_fin',$Date_fin)}}">
+<input class="form-control"  name="commandeur" type="hidden" value="{{old('commandeur',Auth::user()->id)}}"" id="example-text-input">
+<input class="form-control"  name="collaborateur"  type="hidden" value="{{old('collaborateur',$collab)}}"  id="example-text-input">
+<input class="form-control"  name="servicedr" type="hidden" value="{{old('servicedr',$servicedr)}}" id="example-text-input">
+
     </div>
     <!-- /.card-body -->
     <div class="card-footer">

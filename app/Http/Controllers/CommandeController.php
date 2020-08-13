@@ -6,6 +6,8 @@ use App\User;
 use App\Heures_supp_a_faire;
 use App\Agent_Heures_supp_a_faire;
 use App\Step;
+use App\Http\Requests\StoreCommandeRequest;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB ;
 use Illuminate\Support\Facades\Validator;
@@ -57,7 +59,8 @@ class CommandeController extends Controller
        return view('Commande')->with([
                 'role_account'=>$role_account,
                 'collab'=>$collab,
-                'servicedr'=>$servicedr]
+                'servicedr'=>$servicedr,
+                'agent_etablissement'=>$agent_etablissement]
             );
     }
     
@@ -78,24 +81,9 @@ class CommandeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCommandeRequest $request)
     { 
-        $validator = Validator::make($request->all(),
-         [
-            'Date_debut' => 'required|after:yesterday',
-            'Date_fin' => 'required|after:Date_debut',
-            'travaux_effectuer' => 'required',
-            'Observations' => 'required',
-         ]
-        );
-    
-        if ($validator->fails()) {
-            return redirect('Commande')
-                        ->withErrors($validator)
-                        ->withInput($request->input());
-                        
-        }
-        else{
+       
         $servicedr=request('service');
         $role_account=DB::table('Role_Account')
             ->join('users','users.id' ,'=', 'Role_Account.AccountID')
@@ -103,7 +91,7 @@ class CommandeController extends Controller
             ->join('agent','agent.Matricule_Agent' ,'=','users.id')
             ->select('Matricule_agent','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
             ->get();
-
+            
             $service=DB::table('Affectation')
             ->select('Libelle_Affectation','Etablissemt_nom','agentMatricule_Agent')
             ->distinct('Libelle_Affectation')
@@ -112,7 +100,11 @@ class CommandeController extends Controller
             $affectation=DB::table('Affectation')
             ->select('Libelle_Affectation','Etablissemt_nom','agentMatricule_Agent')
             ->get();
-        
+  
+            $agent_etablissement=DB::table('agent')
+            ->select('agent.Matricule_agent','Nom_Agent','Fonction','agent.Statut'
+            ,'Direction','Etablissement','Affectation')
+            ->get();
         $Heures_supp_a_faire = new Heures_supp_a_faire;
         $Step = new Step;
         $Agent_Heures_supp_a_faire = new Agent_Heures_supp_a_faire;
@@ -140,8 +132,20 @@ class CommandeController extends Controller
 
         $Agent_Heures_supp_a_faire->save();
         session()->flash('notif', 'Heure supplémentaire enregistré!');
-     
-        return redirect()->route('homeCommandeindex')->with([
+        if (null ==request('commandeur') ){
+
+            return view('homeCommandeindex')->with([
+                'role_account'=> $role_account,
+                'service'=> $service,
+                'affectation'=> $affectation,
+                'role_account'=> $role_account,
+                'servicedr'=> $servicedr
+    
+            ]
+            );
+    
+        }
+        return view('homeCommandeindex')->with([
             'role_account'=> $role_account,
             'service'=> $service,
             'affectation'=> $affectation,
@@ -150,7 +154,7 @@ class CommandeController extends Controller
 
         ]
         );
-    }
+    
     }
 
     /**
