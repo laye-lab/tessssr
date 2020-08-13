@@ -21,6 +21,7 @@ Route::get('/testlogin', function () {
 });
 Auth::routes();
 
+<<<<<<< Updated upstream
 Route::get('/home', 'AcceuilController@index')->name('Acceuil');
 
 Route::get('/homeCommandeindex', 'HomeCommandeController@index')->name('homeCommandeindex');
@@ -58,5 +59,107 @@ Route::resource('admin/user', 'Admin\UsersController');
 Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function(){
 
 Route::resource('user', 'UsersController');
+=======
+        Route::get('/home', 'AcceuilController@index')->name('Acceuil');
+
+        Route::get('/homeCommandeindex', [
+            'uses' =>'HomeCommandeController@index',
+            'as' => 'homeCommandeindex',
+            'middleware' => 'roles',
+            'roles' => ['n+2']
+        ]);
+
+        Route::post('/homeCommande',[
+            'uses' =>'HomeCommandeController@showForm',
+            'as' => 'homeCommandepost',
+            'middleware' => 'roles',
+            'roles' => ['n+2']
+        ]);
+
+
+        Route::get('/homeCommande',[
+            'uses' =>'HomeCommandeController@showForm',
+            'as' => 'homeCommande',
+            'middleware' => 'roles',
+            'roles' => ['n+2']
+        ]);
+
+        Route::get('/homeSaisie',[
+            'uses' =>'HomeSaisieController@index',
+            'as' => 'homeSaisie',
+            'middleware' => 'roles',
+            'roles' => ['n+2','n+1']
+        ]);
+
+        Route::get('/Calculheure',[
+            'uses' =>'CalculheureController@index',
+            'as' => 'Calculheure',
+            'middleware' => 'roles',
+            'roles' => ['drh','dto']
+        ]);
+
+        Route::any('/CalculheureMois',
+        [
+            'uses' =>'CalculheureController@Showpermonth',
+            'as' => 'CalculheureMois',
+            'middleware' => 'roles',
+            'roles' => ['drh','dto']
+        ]);
+
+        Route::any('/CalculheureSecteur',
+        [
+            'uses' =>'CalculheureController@Showpersecteur',
+            'as' => 'CalculheureSecteur',
+            'middleware' => 'roles',
+            'roles' => ['drh','dto']
+        ]);
+
+        Route::any('/Saisie',
+        [
+            'uses' =>'SaisieController@index',
+            'as' => 'Saisie',
+            'middleware' => 'roles',
+            'roles' => ['n+2','n+1']
+        ]);
+
+        Route::get('/Validation', 'ValidationController@index')->name('Validation');
+
+        Route::post('/Validationstore', 'ValidationController@store');
+
+        Route::post('/Saisiestore', 'SaisieController@store')->name('Saisiestore');
+
+        Route::get('/Acceuil', 'AcceuilController@index')->name('Acceuil');
+
+        Route::any('/Commandeindex', 
+        [
+            'uses' =>'CommandeController@index',
+            'as' => 'Commandeindex',
+            'middleware' => 'roles',
+            'roles' => ['n+2']
+        ]);
+
+        Route::get('/Commande', 
+        [
+            'uses' =>'CommandeController@index',
+            'as' => 'Commande',
+            'middleware' => 'roles',
+            'roles' => ['n+2']
+        ]);
+
+        Route::post('/Commandes',
+        [
+            'uses' =>'CommandeController@store',
+            'as' => 'Commandestore',
+            'middleware' => 'roles',
+            'roles' => ['n+2']
+        ]);
+
+
+        Route::resource('admin/user', 'Admin\UsersController');
+
+        Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function(){
+
+        Route::resource('user', 'UsersController');
+>>>>>>> Stashed changes
 
 });

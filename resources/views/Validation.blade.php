@@ -190,7 +190,7 @@
                                             <tbody>
                                               @foreach($heurre_a_faire as $heure)
             
-                                              @if($agent_unite->Matricule_agent ==$heure->Matricule_agent and $heure->Statut==1)    
+                                              @if($agent_unite->Matricule_agent ==$heure->Matricule_agent)    
                                               <tr>     
                                                 <td>
                                                   {{$heure->Date_Heure}}
