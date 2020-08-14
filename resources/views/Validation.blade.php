@@ -81,7 +81,28 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                  
+                                      @foreach($heurre_a_faire as $heure)
+    
+                                      @if($agent_unite->Matricule_agent ==$heure->Matricule_agent  and $heure->Statut==2 and $heure->nom==$role->etablissement )     
+                                      <tr>     
+                                        <td>
+                                          {{$heure->Date_Heure}}
+                                        </td>
+                                        <td>
+                                          {{$heure->heure_debut}} :00
+                                        </td>
+                                        <td>
+                                          {{$heure->heure_fin}}:00
+                                        </td>
+                                        <td>
+                                          {{$heure->travaux_effectuer}}
+                                        </td>
+                                        <td>
+                                          {{$heure->observations}}
+                                        </td>
+                                    </tr>
+                                    @endif
+                                    @endforeach
                           </tbody>
                         </table>
                       </div>
@@ -97,8 +118,10 @@
     
         </section>
   
-                                           
-    
+  
+        @break
+                @endif
+        @endforeach
         @endforeach
     @break
         @case('n+1')
@@ -172,10 +195,10 @@
                                                   {{$heure->Date_Heure}}
                                                 </td>
                                                 <td>
-                                                  {{$heure->heure_debut}}
+                                                  {{$heure->heure_debut}} :00
                                                 </td>
                                                 <td>
-                                                  {{$heure->heure_fin}}
+                                                  {{$heure->heure_fin}} :00
                                                 </td>
                                                 <td>
                                                   {{$heure->travaux_effectuer}}
@@ -186,9 +209,7 @@
                                             </tr>
                                               @endif
                                     @endforeach
-                                    @break
-                                            @endif
-                                    @endforeach
+                                  
                                   </tbody>
                                 </table>
                               </div>
@@ -203,13 +224,14 @@
                   <!-- /.card -->
             
                 </section>
-          
-                                                   
+                @break
+                @endif
+        @endforeach                                  
                 @endif  
                 @endforeach
             @break
            
-            @case('n+3' or 'dto' or 'dcm')
+            @case('n+3' or 'dto' or 'dcm'or 'drh')
             @foreach($agent_attribut as $agent_unite)
     
           
@@ -280,10 +302,10 @@
                                                       {{$heure->Date_Heure}}
                                                     </td>
                                                     <td>
-                                                      {{$heure->heure_debut}}
+                                                      {{$heure->heure_debut}}  :00
                                                     </td>
                                                     <td>
-                                                      {{$heure->heure_fin}}
+                                                      {{$heure->heure_fin}}:00
                                                     </td>
                                                     <td>
                                                       {{$heure->travaux_effectuer}}
@@ -294,10 +316,7 @@
                                                 </tr>
                                                   @endif
                                         @endforeach
-                                        @break
                                         
-                                                @endif
-                                        @endforeach
                                       </tbody>
                                     </table>
                                   </div>
@@ -314,7 +333,10 @@
                     </section>
               
                                                        
-                  
+                    @break
+                                        
+                    @endif
+            @endforeach
                     @endforeach
                 @break
                     @default

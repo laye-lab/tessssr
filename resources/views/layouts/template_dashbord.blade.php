@@ -105,7 +105,7 @@
     <a href="index3.html" class="brand-link">
       <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">easyAdmin</span>
+      <span class="brand-text font-weight-light">sen'Admin</span>
     </a>
 
     <!-- Sidebar -->
@@ -303,20 +303,11 @@
                     </div>
                     </div>
                 
-                    <li class="nav-item has-treeview menu-open">
-                    <a  href="{{route('Validation')}}"  class="nav-link">
-                        <i class="nav-icon fas fa-check-double"></i>
-                        <p>
-                        Valider heure
-                        <span class="badge badge-info right">6</span>
-                        </p>
-                    </a>
-                    </li>
-                    <li class="nav-item has-treeview menu-open">
-                    <a  href="{{route('Validation')}}" href="#" class="nav-link">
+                    <li class="nav-item has-treeview menu-open">  
+                    <a  href="{{route('Calculheure')}}" href="#" class="nav-link">
                         <i class="nav-icon fas fa-eye"></i>
                         <p>
-                        Consulter agent
+                        Heure supplémentaire
                         </p>
                     </a>
                     </li>

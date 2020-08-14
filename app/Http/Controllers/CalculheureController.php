@@ -264,6 +264,7 @@ class CalculheureController extends Controller
             DB::raw('Nom_Agent as Nom'),
             DB::raw('SUM(total_heures_saisie) as total'),
             DB::raw('(Agent_Matricule_Agent) as agent'))
+            ->where('heures_supp.Statut', '=', 4)
            ->groupBy('year','month','agent')
            ->get();
 

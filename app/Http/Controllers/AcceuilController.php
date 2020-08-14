@@ -22,6 +22,22 @@ class AcceuilController extends Controller
     {
     
         $users=User::all();
+        $data = DB::table('heures_supp')
+        ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
+        ->select(
+            DB::raw('YEAR(Date_Heure) as year'),
+            DB::raw('MONTH(Date_Heure) as month'),
+            DB::raw('SUM(total_taux_15) as sum15'),
+            DB::raw('SUM(total_taux_40) as sum40'),
+            DB::raw('SUM(total_taux_60) as sum60'),
+            DB::raw('SUM(total_taux_100) as sum100'),
+            DB::raw('Nom_Agent as Nom'),
+            DB::raw('heures_supp.Statut as statut'),
+            DB::raw('SUM(total_heures_saisie) as total'),
+            DB::raw('(Agent_Matricule_Agent) as agent'))
+           ->groupBy('year','month','agent','statut')
+           ->get();
+
         $role_account=DB::table('Role_Account')
         ->join('users','users.id' ,'=', 'Role_Account.AccountID')
         ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
@@ -30,6 +46,8 @@ class AcceuilController extends Controller
         ->get();
         return view('Acceuil')->with([
             'users'=>$users,
+            'data'=>$data,
+
             'role_account'=>$role_account]);
 }
     
