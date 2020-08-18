@@ -94,11 +94,11 @@
 </div>
 
 <div class="form-group row" >
-<label for="example-text-input" class="col-2 col-form-label">Travaux réalisés</label>
-<div class="col-sm-10">
-<input class="form-control" type="text"  name="travaux_effectuer" value="" id="example-text-input">
-</div>
-</div>
+  <label for="example-text-input" class="col-2 col-form-label">Travaux réalisés</label>
+  <div class="col-sm-10">
+  <input class="form-control" type="text"  name="travaux_effectuer" value="" id="example-text-input">
+  </div>
+  </div>
 <div class="form-group row" >
 <label for="example-text-input"  name="Observations" class="col-2 col-form-label">Observations</label>
 <div class="col-sm-10">
@@ -112,7 +112,13 @@
 </div>
 <input type="hidden" name="Date_debut"  value="{{old('Date_debut',$Date_debut)}}">
 <input type="hidden" name="Date_fin"  value=" {{old('Date_fin',$Date_fin)}}">
-<input class="form-control"  name="commandeur" type="hidden" value="{{old('commandeur',Auth::user()->id)}}"" id="example-text-input">
+@foreach($equipe as $equipes)
+
+        @if($equipes->agentMatricule_Agent  ==  Auth::user()->id))
+        <input class="form-control"  name="commandeur" type="hidden" value="{{old('commandeur',$equipes->n_plus_un)}}"" id="example-text-input">
+        @break
+    @endif
+@endforeach
 <input class="form-control"  name="collaborateur"  type="hidden" value="{{old('collaborateur',$collab)}}"  id="example-text-input">
 <input class="form-control"  name="servicedr" type="hidden" value="{{old('servicedr',$servicedr)}}" id="example-text-input">
 

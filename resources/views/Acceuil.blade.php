@@ -1,4 +1,4 @@
-@extends('layouts.template_dashbord_collapsed')
+@extends('layouts.template_dashbord')
 
 @section('content')
  <!-- Content Wrapper. Contains page content -->

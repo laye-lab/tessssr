@@ -43,6 +43,8 @@ class SaisieController extends Controller
         ->select('agent.Matricule_agent','Nom_Agent','Fonction','agent.Statut'
         ,'Direction','Etablissement','Affectation')
         ->get();
+        $equipe=DB::table('equipe')
+        ->get();
 
        return view('Saisie')->with([
                 'role_account'=>$role_account,
@@ -52,6 +54,7 @@ class SaisieController extends Controller
                 'servicedr'=>$servicedr,
                 'Date_debut'=>$Date_debut,
                 'Date_fin'=>$Date_fin,
+                'equipe'=>$equipe
 
                 ] );
     }
@@ -137,7 +140,8 @@ class SaisieController extends Controller
         $Heures_supp->Agent_Matricule_Agent =$collaborateur;
         $Heures_supp->travaux_effectuer =request('travaux_effectuer');
         $Heures_supp->Observations =request('Observations');
-		$Heures_supp->Statut =1;
+        $Heures_supp->Statut =1;
+		$Heures_supp->commandeur =request('commandeur');
         $Heures_supp->semaine =$semaine;
         $Heures_supp->id_step =1;
 		$Heures_supp->id_heure_a_faire= $id_heure->Heures_supp_a_faireID;

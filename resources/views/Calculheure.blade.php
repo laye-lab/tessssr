@@ -1,4 +1,3 @@
-@extends('../../layouts.template_dashbord_collapsed')
 
 @section('content')
  <!-- Content Wrapper. Contains page content -->
@@ -10,16 +9,16 @@
           <div class="col-sm-6">
             <h1>Heures supplémentaires</h1>
           </div>
-        
+
         </div>
       </div><!-- /.container-fluid -->
     </section>
     <center>
-   
-    
+
+
     <section class="content" style="position:relative; top:100px;">
       <div class="container-fluid">
-       
+
         <div class="row" >
           <!-- left column -->
           <div class="col-md-6" >
@@ -55,59 +54,59 @@
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
-                        
-                      
-                     
+
+
+
                         <button class=" btn  btn-lg btn-dark form-control">Lister</button>
                       </div>
                     </div>
                   </div>
-             
+
               </div>
             </div>
           </form>
           </div>
-      
+
           <!--/.col (left) -->
           <!-- right column -->
            <!--    <div class="col-md-4">
          <form method="POST" action="">
-          
-           
-      
+
+
+
             <div class="card card-secondary" >
               <div class="card-header col-md-6">
                 <h3 class="card-title card-info"> Par Etablissememt</h3>
               </div>
-    
+
               <div class="card-body">
                 <form role="form">
                   <div class="row">
                     <div class="col-sm-6">
-      
+
                       <div class="form-group">
-                      
+
                         <select class="form-control" name="etablissement" id="">
-                       
+
                           <option value=""></option>
-                       
+
                       </select>
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
-                      
+
                         <button class=" btn  btn-lg btn-secondary form-control">  Lister </button>
                       </div>
                     </div>
                   </div>
-             
+
                 </form>
               </div>
-              
+
 
             </div>
-            
+
           </div>-->
           <div class="col-md-6">
             <form method="POST" action="{{route('CalculheureSecteur')}}">
@@ -124,7 +123,7 @@
                     <div class="col-sm-6">
                       <!-- text input -->
                       <div class="form-group">
-                      
+
                         <select class="form-control" name="year" id="">
                           @foreach ($anne as $annes)
                           <option value="{{$annes->year}}">{{$annes->year}}</option>
@@ -134,12 +133,12 @@
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
-                      
+
                         <button class=" btn  btn-lg btn-danger form-control">  Lister </button>
                       </div>
                     </div>
                   </div>
-             
+
                 </form>
               </div>
         </div>
@@ -147,7 +146,7 @@
     </section>
   </center>
     <!-- Main content -->
-  
+
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

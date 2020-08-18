@@ -22,6 +22,7 @@ Route::get('/testlogin', function () {
 Auth::routes();
 
         Route::get('/home', 'AcceuilController@index')->name('Acceuil');
+        Route::get('/exportheure', 'CalculheureController@export')->name('exportheure');
 
         Route::get('/homeCommandeindex', [
             'uses' =>'HomeCommandeController@index',
@@ -67,6 +68,14 @@ Auth::routes();
             'roles' => ['drh','dto']
         ]);
 
+        Route::any('/PrintCalculheureMois',
+        [
+            'uses' =>'CalculheureController@Printpermonth',
+            'as' => 'PrintCalculheureMois',
+            'middleware' => 'roles',
+            'roles' => ['drh']
+        ]);
+
         Route::any('/CalculheureSecteur',
         [
             'uses' =>'CalculheureController@Showpersecteur',
@@ -91,7 +100,7 @@ Auth::routes();
 
         Route::get('/Acceuil', 'AcceuilController@index')->name('Acceuil');
 
-        Route::any('/Commandeindex', 
+        Route::any('/Commandeindex',
         [
             'uses' =>'CommandeController@index',
             'as' => 'Commandeindex',
@@ -99,7 +108,7 @@ Auth::routes();
             'roles' => ['n+2']
         ]);
 
-        Route::get('/Commande', 
+        Route::get('/Commande',
         [
             'uses' =>'CommandeController@index',
             'as' => 'Commande',

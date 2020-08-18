@@ -35,7 +35,9 @@ class ValidationController extends Controller
             ->distinct('Matricule_agent')
             ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement')
             ->get();
-
+            $equipe=DB::table('equipe')
+            ->get();
+    
             $heure_supp=DB::table('heures_supp')
             ->get();
             $nbr_heure=DB::table('Heures_supp_a_faire')
@@ -55,6 +57,7 @@ class ValidationController extends Controller
                 'nbr_heure'=> $nbr_heure,
                 'heure_supp'=> $heure_supp,
                 'heurre_a_faire'=>$heurre_a_faire,
+                'equipe'=>$equipe,
                 'service'=>$service
                 
 
@@ -69,36 +72,29 @@ class ValidationController extends Controller
         switch ($role){
             case 'n+1':
         $Heures_supp=DB::table('heures_supp')
-        ->where('id_heure_a_faire', '=', $id )
+        ->where('commandeur', '=', $id )
         ->update(['Statut' => 2]);
 
-        $Step=DB::table('Step')
-        ->where('Heures_supp_a_faireID', '=', $id )
-        ->update(['etape' => 2]);
         return back();
           break;
         case 'n+2':
             $etablissement=request('etablissement');
             if ($etablissement == 'Hann') {
                 $Heures_supp=DB::table('heures_supp')
-                ->where('id_heure_a_faire', '=', $id )
+                ->where('commandeur', '=', $id )
                 ->update(['Statut' => 4]);
         
-                $Step=DB::table('Step')
-                ->where('Heures_supp_a_faireID', '=', $id )
-                ->update(['etape' => 4]);
+              
             }
             else {
                 $Heures_supp=DB::table('heures_supp')
-                ->where('id_heure_a_faire', '=', $id )
+                ->where('commandeur', '=', $id )
                 ->update(['Statut' => 3]);
         
-                $Step=DB::table('Step')
-                ->where('Heures_supp_a_faireID', '=', $id )
-                ->update(['etape' => 3]);
+               
             }
           
-        return back();
+        return back()->with('success','Toutes les heure Supplémentaire sont maintenant validées ');
               break;
         case 'n+3' or 'dcm' or 'dto' :
             $Heures_supp=DB::table('heures_supp')
