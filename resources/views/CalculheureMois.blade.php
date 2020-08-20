@@ -27,25 +27,29 @@
 
                 </h3>
 
-                <form method="POST"  style="position:relative; left:50px;" action="{{route('PrintCalculheureMois')}}">
-                  @csrf
-                  <input type="hidden" name="month" value="{{$mois}}">
-                <button class=" btn btn-lg btn-dark">
-                  <i class="fa fa-print" aria-hidden="true"></i>
-                </button>
-                </form>
-                <form method="GET"  style="position:relative; left:50px;" action="{{route('exportheure')}}">
+                <a class=" btn btn-lg btn-success"  style="position:relative; left:100px;"  href="{{route('exportheure')}}">
+
+                    <i class="fas fa-file-excel"></i>
+                </a>
+
+
+                    <form method="POST"  action="{{route('PrintCalculheureMois')}}">
                     @csrf
-                  <button class=" btn btn-lg btn-dark">
-                    <i class="fa fa-print" aria-hidden="true"></i>
-                  </button>
-                  </form>
-                  <a href="{{route('exportheure')}}">
-                    <i class="fa fa-print" aria-hidden="true"></i></a>
+                    <input type="hidden" name="month" value="{{$mois}}">
+                    <button  style="position:relative; left:400px;bottom:47px;" class=" btn btn-lg btn-dark ">
+
+                        <i class="fa fa-print" aria-hidden="true"></i>
+                    </button>
+                    </form>
+
+
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-             @include('Calculheuremoistable',$mois)
+
+                @include('Calculheuremoistable',$data )
+
+
               </div>
               <!-- /.card-body
             <tfoot>

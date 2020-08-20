@@ -10,7 +10,7 @@
           <div class="col-sm-6">
             <h1>Liste des agents</h1>
           </div>
-        
+
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -48,15 +48,15 @@
                   </thead>
                   <tbody>
                   <tr>
-   
+
                             @foreach($agent_attribut as $agent_attributs)
 
-                                   @if($agent_attributs->n_plus_un ==Auth::user()->id )                   
+                                   @if($agent_attributs->n_plus_un ==Auth::user()->id )
 
                                       <td>
                                         {{$agent_attributs->Matricule_agent}}
                                       </td>
-                                      
+
                                       <td>
                                         {{$agent_attributs->Nom_Agent}}
                                       </td>
@@ -84,32 +84,35 @@
                                       <td>
                                         {{$agent_attributs->travaux_effectuer}}
                                       </td>
-                                
-                                
-                                    
-                                
+
+
+
+
                                     <td>
                                       <form method="POST" action="{{'Saisie'}}">
                                         @csrf
                                         <input type="hidden" name="Date_debut"  value="{{$agent_attributs->Date_debut}}">
                                         <input type="hidden" name="Date_fin"  value=" {{$agent_attributs->Date_fin}}">
+                                        <input type="hidden" name="nbr_heure"  value=" {{$agent_attributs->nbr_heure}}">
                                       <input type="hidden" name="id"  value="{{$agent_attributs->Matricule_agent}}">
                                       <input type="hidden" name="nom"  value=" {{$agent_attributs->Nom_Agent}}">
+                                      <input type="hidden" name="id_heure"  value=" {{$agent_attributs->ID}}">
+
                                       <input type="hidden" name="servicedr"  value="{{$agent_attributs->Affectation}}">
                                         <button type="submit" class="btn btn-primary">Saisir</button>
                                       </form>
-                                   
+
                                     </td>
 
                                   </tr>
-                          
+
                                     @endif
-                              
+
                               @endforeach
-                      
+
                 </table>
               </div>
-              <!-- /.card-body 
+              <!-- /.card-body
             <tfoot>
                   <tr>
                     <th>Rendering engine</th>
@@ -120,7 +123,7 @@
                   </tr>
                   </tfoot> -->
             </div>
-          
+
           </div>
           <!-- /.col -->
         </div>

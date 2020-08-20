@@ -21,8 +21,10 @@ Route::get('/testlogin', function () {
 });
 Auth::routes();
 
+        Route::get('/users', 'ChartController@index')->name('users');
+
+
         Route::get('/home', 'AcceuilController@index')->name('Acceuil');
-        Route::get('/exportheure', 'CalculheureController@export')->name('exportheure');
 
         Route::get('/homeCommandeindex', [
             'uses' =>'HomeCommandeController@index',
@@ -68,14 +70,6 @@ Auth::routes();
             'roles' => ['drh','dto']
         ]);
 
-        Route::any('/PrintCalculheureMois',
-        [
-            'uses' =>'CalculheureController@Printpermonth',
-            'as' => 'PrintCalculheureMois',
-            'middleware' => 'roles',
-            'roles' => ['drh']
-        ]);
-
         Route::any('/CalculheureSecteur',
         [
             'uses' =>'CalculheureController@Showpersecteur',
@@ -91,10 +85,26 @@ Auth::routes();
             'middleware' => 'roles',
             'roles' => ['n+2','n+1']
         ]);
+        Route::any('/ModifSaisieindex',
+        [
+            'uses' =>'SaisieController@Updateindex',
+            'as' => 'ModifSaisieindex',
+            'middleware' => 'roles',
+            'roles' => ['n+1']
+        ]);
+        Route::any('/ModifSaisie',
+        [
+            'uses' =>'SaisieController@Update',
+            'as' => 'ModifSaisie',
+            'middleware' => 'roles',
+            'roles' => ['n+1']
+        ]);
 
         Route::get('/Validation', 'ValidationController@index')->name('Validation');
 
         Route::post('/Validationstore', 'ValidationController@store');
+
+        Route::post('/ValidationInvalideur', 'ValidationController@Invalideur');
 
         Route::post('/Saisiestore', 'SaisieController@store')->name('Saisiestore');
 

@@ -12,9 +12,9 @@ class ValidationController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
-    
+
     {
         $service=DB::table('Affectation')
             ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')
@@ -37,7 +37,7 @@ class ValidationController extends Controller
             ->get();
             $equipe=DB::table('equipe')
             ->get();
-    
+
             $heure_supp=DB::table('heures_supp')
             ->get();
             $nbr_heure=DB::table('Heures_supp_a_faire')
@@ -48,7 +48,7 @@ class ValidationController extends Controller
             ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
             ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
             ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
-            ->select('agent.Matricule_agent','Nom_Agent','Etablissement.nom','Date_Heure','heure_debut','heure_fin','travaux_effectuer','observations','heures_supp.Statut','id_heure_a_faire')
+            ->select('agent.Matricule_agent','Nom_Agent','Etablissement.nom','Date_Heure','heure_debut','heure_fin','travaux_effectuer','observations','heures_supp.id','heures_supp.Statut','id_heure_a_faire')
             ->get();
 
             return view('Validation')->with([
@@ -59,14 +59,14 @@ class ValidationController extends Controller
                 'heurre_a_faire'=>$heurre_a_faire,
                 'equipe'=>$equipe,
                 'service'=>$service
-                
+
 
             ]);;
-        
+
 
     }
     public function store(Request $request)
-    { 
+    {
         $role=request('role');
         $id=request('id');
         switch ($role){
@@ -83,30 +83,45 @@ class ValidationController extends Controller
                 $Heures_supp=DB::table('heures_supp')
                 ->where('commandeur', '=', $id )
                 ->update(['Statut' => 4]);
-        
-              
+
+
             }
             else {
                 $Heures_supp=DB::table('heures_supp')
                 ->where('commandeur', '=', $id )
                 ->update(['Statut' => 3]);
-        
-               
+
+
             }
-          
+
         return back()->with('success','Toutes les heure Supplémentaire sont maintenant validées ');
               break;
         case 'n+3' or 'dcm' or 'dto' :
             $Heures_supp=DB::table('heures_supp')
-            ->where('id_heure_a_faire', '=', $id )
+            ->where('Statut', '=',3)
             ->update(['Statut' => 4]);
-    
-            $Step=DB::table('Step')
-            ->where('Heures_supp_a_faireID', '=', $id )
-            ->update(['etape' => 4]);
+
+
             return back();
-              break;    
-           
+              break;
+
+        }
+
+    }
+    public function Invalideur(Request $request)
+    {
+        $role=request('role');
+        $id=request('id');
+        switch ($role){
+
+        case 'n+2':
+                $Heures_supp=DB::table('heures_supp')
+                ->where('id_heure_a_faire', '=', $id )
+                ->update(['Statut' => 1]);
+
+
+        return back()->with('success','Toutes les heure Supplémentaire sont maintenant validées ');
+              break;
         }
 
     }

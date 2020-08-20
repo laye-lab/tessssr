@@ -92,13 +92,13 @@ class CalculheureController extends Controller
     public function export()
     {
         $type='xls';
-        return Excel::download(new CalculheuremoisExport, 'posts.' . $type);
+        return Excel::download(new CalculheuremoisExport, 'heuresupp.' . $type);
     }
 
     public function Showpermonth(Request $request){
     if (null !=request('month')){
 
-
+$mois=request('month');
       $role_account=DB::table('Role_Account')
             ->join('users','users.id' ,'=', 'Role_Account.AccountID')
             ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
@@ -118,7 +118,8 @@ class CalculheureController extends Controller
             DB::raw('SUM(total_heures_saisie) as total'),
             DB::raw('(Agent_Matricule_Agent) as agent'))
             ->where('heures_supp.Statut', '=', 4)
-           ->groupBy('year','month','agent')
+            ->whereMonth('Date_Heure', '=', $mois)
+            ->groupBy('year','month','agent')
            ->get();
 
       $anne=DB::table('heures_supp')
@@ -140,6 +141,8 @@ class CalculheureController extends Controller
       ->distinct('Agent_Matricule_Agent')
       ->get();
       $mois=request('month');
+      $newCollection = collect([$mois,$data]);
+
       $agent = json_decode(json_encode($array_agent), true);//transformer le stdclass en array
       $heure_supp = json_decode(json_encode($array), true);//transformer le stdclass en array
           return view('CalculheureMois')->with([

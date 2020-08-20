@@ -50,9 +50,9 @@
                               @foreach($heurre_a_faire as $heure)
 
                                       @if($agent_unite->Matricule_agent ==$heure->Matricule_agent and $heure->Statut==2 and $heure->nom==$role->etablissement )
-
+<center>
                                       <section class="content">
-                                        <div class="card">
+                                        <div class="card col-8">
                                           <div class="card-header">
                                             <h3 class="card-title"> Details</h3>
                                           </div>
@@ -75,7 +75,7 @@
                                                     </div>
                                                   </div>
                                                 </div>
-                                                <form method="POST" action="{{'Validationstore'}}" class="col-12 col-sm-4" style="position:relative;left:80%; top:100px;" >
+                                                <form method="POST" action="{{'ValidationInvalideur'}}" class="col-12 col-sm-4" style="position:relative;left:80%; top:100px;" >
                                                   @csrf
                                                 <input type="hidden" name="id"  value="{{$heure->id_heure_a_faire}}">
                                                 <input type="hidden" name="role"  value="{{$role->Nom}}">
@@ -200,9 +200,11 @@
                                       @foreach($heurre_a_faire as $heure)
 
                                               @if($agent_unite->Matricule_agent ==$heure->Matricule_agent and $heure->Statut==1 )
+<center>
+
 
                                               <section class="content">
-                                                <div class="card">
+                                                <div class="card col-8" >
                                                   <div class="card-header">
                                                     <h3 class="card-title"> Details</h3>
                                                   </div>
@@ -224,24 +226,9 @@
                                           </div>
                                         </div>
                                       </div>
-                                      <form method="POST" action="{{'Validationstore'}}" class="col-12 col-sm-4" style="position:relative;left:80%; top:100px;" >
-                                        @csrf
-                                      <input type="hidden" name="id"  value="{{$heure->id_heure_a_faire}}">
-                                      <input type="hidden" name="role"  value="{{$role->Nom}}">
-                                      <button style=" background-color:white; /* Green */
-                                      border: none;
-                                      color: white;">
-                                        <div class="info-box bg-dark" style="width:100%;">
-                                          <div class="info-box-content">
-                                            <span class="info-box-text text-center ">Invalider</span>
-                                            <span class="info-box-number text-center mb-0">Heure supplémentaire</span>
-                                          </div>
-                                        </div>
-                                      </button>
-                                    </form>
                                     </div>
                                     <div class="row">
-                                      <div class="col-12">
+                                      <div >
                                       <h4>{{$agent_unite->Nom_Agent}}</h4>
                                         <div class="card-body table-responsive p-0">
                                           <table class="table table-hover text-nowrap">
@@ -274,6 +261,17 @@
                                                 <td>
                                                   {{$heure->observations}}
                                                 </td>
+                                                <td>
+                                                    <form method="POST" action="{{'ModifSaisieindex'}}">
+                                                      @csrf
+
+                                                    <input type="hidden" name="id"  value="{{$heure->id}}">
+                                                    <input type="hidden" name="id"  value="{{$heure->id}}">
+                                                      <button type="submit" class="btn btn-primary">Modifier</button>
+                                                    </form>
+
+                                                  </td>
+
                                             </tr>
                                               @endif
                                     @endforeach
@@ -318,7 +316,8 @@
 
                               <form method="POST" action="{{'Validationstore'}}" >
                                 @csrf
-
+                                <input type="hidden" name="id"  value="">
+                                <input type="hidden" name="role"  value="{{$role->Nom}}">
                               <button style=" background-color:white; /* Green */
                               border: none;
                               color: white;">
@@ -366,21 +365,7 @@
                                               </div>
                                             </div>
                                           </div>
-                                          <form method="POST" action="{{'Validationstore'}}" class="col-12 col-sm-4" style="position:relative;left:80%; top:100px;" >
-                                            @csrf
-                                          <input type="hidden" name="id"  value="{{$heure->id_heure_a_faire}}">
-                                          <input type="hidden" name="role"  value="{{$role->Nom}}">
-                                          <button style=" background-color:white; /* Green */
-                                          border: none;
-                                          color: white;">
-                                            <div class="info-box bg-danger" style="width:100%;">
-                                              <div class="info-box-content">
-                                                <span class="info-box-text text-center ">Valider</span>
-                                                <span class="info-box-number text-center mb-0">Heure supplémentaire</span>
-                                              </div>
-                                            </div>
-                                          </button>
-                                        </form>
+
                                         </div>
                                         <div class="row">
                                           <div class="col-12">
@@ -394,6 +379,7 @@
                                                     <th>A</th>
                                                     <th>Travaux réalisés</th>
                                                     <th>Observations</td>
+
                                                   </tr>
                                                 </thead>
                                                 <tbody>
