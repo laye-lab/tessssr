@@ -38,13 +38,13 @@
   <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      
+
       </li>
-      <li class="nav-item"> 
+      <li class="nav-item">
         <a class="nav-link"  href="{{ URL::previous() }}">
         <i class="fas fa-backspace fa-2x "> </i>
-     
-        
+
+
     </a>
     </li>
 </ul>
@@ -61,7 +61,7 @@
             </li>
         @endif
     @else
-       
+
     <li class="nav-item dropdown">
       <div class="user-block">
         <img class="img-circle img-bordered-sm" src="{{asset('../../dist/img/icone2.png')}}" alt="user image">
@@ -69,7 +69,7 @@
         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
           <span class="username">
           @foreach($role_account as $role)
-          @if(Auth::user()->id == $role->Matricule_agent) 
+          @if(Auth::user()->id == $role->Matricule_agent)
           {{$role->Nom_Agent}}
           @break
           @else
@@ -84,18 +84,18 @@
                              document.getElementById('logout-form').submit();">
                 {{ __('Se deconnecter') }}
             </a>
-         
+
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
-           
+
         </div>
     </li>
     @endguest
-  
+
 </ul>
 
-    <!-- 
+    <!--
   </nav>
  <!-- /.navbar -->
 
@@ -105,12 +105,12 @@
     <a href="index3.html" class="brand-link">
       <img src="{{ asset('dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">easyAdmin</span>
+      <span class="brand-text font-weight-light">sen'Admin</span>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) --> 
+      <!-- Sidebar user panel (optional) -->
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         @foreach($role_account as $role)
@@ -121,13 +121,13 @@
                                         <!-- Add icons to the links using the .nav-icon class
                                             with font-awesome or any other icon font library -->
                                             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                                            
+
                                             <div class="nav-link" style="color:white;">
                                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                             <p > Navigateur</p>
                                             </div>
                                             </div>
-                                        
+
                                     <li class="nav-item has-treeview menu-open">
                                     <a  href="{{route('homeSaisie')}}" class="nav-link">
                                         <i class="nav-icon fas fa-pen-alt"></i>
@@ -136,7 +136,7 @@
                                         </p>
                                     </a>
                                 </li>
-        
+
                                 <li class="nav-item">
                                 <a  class="nav-link">
                                     <i class="nav-icon far fa-circle text-info"></i>
@@ -169,25 +169,25 @@
                                 </a>
                                 </li>
                                     </ul>
-                                        
+
                 @break
             @case('n+2')
                                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                                     <!-- Add icons to the links using the .nav-icon class
                                         with font-awesome or any other icon font library -->
                                         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                                        
+
                                         <div class="nav-link" style="color:white;">
                                             <i class="nav-icon fas fa-tachometer-alt"></i>
                                         <p > Navigateur</p>
                                         </div>
                                         </div>
-                                    
+
                                         <li class="nav-item has-treeview menu-open">
                                         <a href="{{route('homeCommandeindex')}}" class="nav-link" >
                                             <i class="nav-icon fas fa-user-plus"></i>
                                             <p>
-                                            Commande heure 
+                                            Commande heure
                                             <span class="badge badge-info right">6</span>
                                             </p>
                                         </a>
@@ -213,8 +213,8 @@
                                         <p>Saisie  </p>
                                     </a>
                                     </li>
-                                
-                            
+
+
                                 <li class="nav-item has-treeview menu-open">
                                 <a href="{{route('homeSaisie')}}"   class="nav-link">
                                     <i class="nav-icon fas fa-pen-alt"></i>
@@ -223,7 +223,7 @@
                                     </p>
                                 </a>
                             </li>
-        
+
                             <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon far fa-circle text-info"></i>
@@ -257,19 +257,19 @@
                             </li>
                                 </ul>
                 @break
-        
+
              @case('n+3')
                                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                                     <!-- Add icons to the links using the .nav-icon class
                                         with font-awesome or any other icon font library -->
                                         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                                        
+
                                         <div class="nav-link" style="color:white;">
                                             <i class="nav-icon fas fa-tachometer-alt"></i>
                                         <p > Navigateur</p>
                                         </div>
                                         </div>
-                                    
+
                                         <li class="nav-item has-treeview menu-open">
                                         <a  href="{{route('Validation')}}" class="nav-link">
                                             <i class="nav-icon fas fa-check-double"></i>
@@ -288,53 +288,44 @@
                                         </a>
                                         </li>
                                 </ul>
-                
+
                 @break
-        
+
              @case('drh')
              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                     with font-awesome or any other icon font library -->
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    
+
                     <div class="nav-link" style="color:white;">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p > Navigateur</p>
                     </div>
                     </div>
-                
+
                     <li class="nav-item has-treeview menu-open">
-                    <a  href="{{route('Validation')}}"  class="nav-link">
-                        <i class="nav-icon fas fa-check-double"></i>
-                        <p>
-                        Valider heure
-                        <span class="badge badge-info right">6</span>
-                        </p>
-                    </a>
-                    </li>
-                    <li class="nav-item has-treeview menu-open">
-                    <a  href="{{route('Validation')}}" href="#" class="nav-link">
+                    <a  href="{{route('Calculheure')}}" href="#" class="nav-link">
                         <i class="nav-icon fas fa-eye"></i>
                         <p>
-                        Consulter agent
+                        Heure supplémentaire
                         </p>
                     </a>
                     </li>
             </ul>
-                
+
                 @break
                 @case('dto')
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
                                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                                
+
                                 <div class="nav-link" style="color:white;">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p > Navigateur</p>
                                 </div>
                                 </div>
-                            
+
                                 <li class="nav-item has-treeview menu-open">
                                 <a  href="{{route('Validation')}}"  class="nav-link">
                                     <i class="nav-icon fas fa-check-double"></i>
@@ -353,20 +344,20 @@
                                 </a>
                                 </li>
                 </ul>
-                
+
                 @break
                 @case('dcm')
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                                     with font-awesome or any other icon font library -->
                                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                                    
+
                                     <div class="nav-link" style="color:white;">
                                         <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p > Navigateur</p>
                                     </div>
                                     </div>
-                                
+
                                     <li class="nav-item has-treeview menu-open">
                                     <a   href="{{route('Validation')}}" class="nav-link">
                                         <i class="nav-icon fas fa-check-double"></i>
@@ -386,11 +377,11 @@
                                     </li>
                     </ul>
                 @break
-        
-                
+
+
         @endswitch
               @endif
-@endforeach        
+@endforeach
       </nav>
       <!-- /.sidebar-menu -->
     </div>
@@ -433,4 +424,8 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{asset('dist/js/demo.js')}}"></script> 
+<script src="{{asset('dist/js/demo.js')}}"></script>
+   {{-- ChartScript --}}
+   @if($usersChart)
+   {!! $usersChart->script() !!}
+   @endif

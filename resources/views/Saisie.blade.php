@@ -12,33 +12,39 @@
               <center>
                 @if ($message = Session::get('success'))
 <div class="alert alert-success alert-block">
-	<button type="button" class="close" data-dismiss="alert">×</button>	
+	<button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+</div>
+@endif
+@if ($message = Session::get('erreur'))
+<div class="alert alert-danger alert-block">
+	<button type="button" class="close" data-dismiss="alert">×</button>
         <strong>{{ $message }}</strong>
 </div>
 @endif
           @if ($errors->any())
- 
-    
+
+
           @foreach ($errors->all() as $error)
-            
+
              <div class="alert alert-danger  col-6 " role="alert">
               {{ $error }}
              </div>
           @endforeach
-       
+
        @if ($errors->has('email'))
        @endif
-  
+
   @endif
 
             </center>
           </div>
-        
+
         </div>
       </div><!-- /.container-fluid -->
     </section>
       <!-- Main content -->
-     
+
 <center>
 <div class="col-md-6">
 <div class="card card-dark">
@@ -94,11 +100,11 @@
 </div>
 
 <div class="form-group row" >
-<label for="example-text-input" class="col-2 col-form-label">Travaux réalisés</label>
-<div class="col-sm-10">
-<input class="form-control" type="text"  name="travaux_effectuer" value="" id="example-text-input">
-</div>
-</div>
+  <label for="example-text-input" class="col-2 col-form-label">Travaux réalisés</label>
+  <div class="col-sm-10">
+  <input class="form-control" type="text"  name="travaux_effectuer" value="" id="example-text-input">
+  </div>
+  </div>
 <div class="form-group row" >
 <label for="example-text-input"  name="Observations" class="col-2 col-form-label">Observations</label>
 <div class="col-sm-10">
@@ -112,14 +118,23 @@
 </div>
 <input type="hidden" name="Date_debut"  value="{{old('Date_debut',$Date_debut)}}">
 <input type="hidden" name="Date_fin"  value=" {{old('Date_fin',$Date_fin)}}">
-<input class="form-control"  name="commandeur" type="hidden" value="{{old('commandeur',Auth::user()->id)}}"" id="example-text-input">
+@foreach($equipe as $equipes)
+
+        @if($equipes->agentMatricule_Agent  ==  Auth::user()->id))
+        <input class="form-control"  name="commandeur" type="hidden" value="{{old('commandeur',$equipes->n_plus_un)}}"" id="example-text-input">
+        @break
+    @endif
+@endforeach
 <input class="form-control"  name="collaborateur"  type="hidden" value="{{old('collaborateur',$collab)}}"  id="example-text-input">
+<input class="form-control"  name="nbr_heure"  type="hidden" value="{{old('nbr_heure',$nbr_heure)}}"  id="example-text-input">
+<input class="form-control"  name="id_heure"  type="hidden" value="{{old('id_heure',$id_heure)}}"  id="example-text-input">
 <input class="form-control"  name="servicedr" type="hidden" value="{{old('servicedr',$servicedr)}}" id="example-text-input">
+
 
     </div>
     <!-- /.card-body -->
     <div class="card-footer">
-      <center>  <center> <button class=" btn btn-lg btn-dark">Valider</button></center> 
+      <center>  <center> <button class=" btn btn-lg btn-dark">Valider</button></center>
     </div>
     <!-- /.card-footer -->
   </form>

@@ -10,7 +10,7 @@
           <div class="col-sm-6">
             <h1>Heures supplémentaires</h1>
           </div>
-        
+
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -22,51 +22,36 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Heures supplémentaires</h3>
+                <h3 class="card-title">
+                  <button class=" btn btn-lg btn-danger">Heures supplémentaires</button>
+
+                </h3>
+
+                <a class=" btn btn-lg btn-success"  style="position:relative; left:100px;"  href="{{route('exportheure')}}">
+
+                    <i class="fas fa-file-excel"></i>
+                </a>
+
+
+                    <form method="POST"  action="{{route('PrintCalculheureMois')}}">
+                    @csrf
+                    <input type="hidden" name="month" value="{{$mois}}">
+                    <button  style="position:relative; left:400px;bottom:47px;" class=" btn btn-lg btn-dark ">
+
+                        <i class="fa fa-print" aria-hidden="true"></i>
+                    </button>
+                    </form>
+
+
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table class="table table-striped table-responsive-md btn-table">
 
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Mois</th>
-                      <th>Nom agent</th>
-                      <th>Matricule</th>
-                      <th>Taux à 15%</th>
-                      <th>Taux à 40%</th>
-                      <th>Taux à 60%</th>
-                      <th>Taux à 100%</th>
-                      <th>Total</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                 
-                    @foreach ($data as  $datas)         
-                         @if ($datas->month == $mois)
-                             
-                       
-                                    </tr>
-                                    <td>{{$datas->year}}</td>
-                                    <td>{{$datas->month}}</td>
-                                    <td>{{$datas->Nom}}</td>
-                                    <td>{{$datas->agent}}</td>
-                                    <td>{{$datas->sum15}}</td>
-                                    <td>{{$datas->sum40}}</td>
-                                    <td>{{$datas->sum60}}</td>
-                                    <td>{{$datas->sum100}}</td>
-                                    <td><button class=" btn btn-lg btn-danger">{{$datas->total}}</button></td>
-                                    </tr>
-                           @endif
-                     @endforeach
-                    
-                                    
-                        </tr>
-                </table>
+                @include('Calculheuremoistable',$data )
+
+
               </div>
-              <!-- /.card-body 
+              <!-- /.card-body
             <tfoot>
                   <tr>
                     <th>Rendering engine</th>
@@ -77,7 +62,7 @@
                   </tr>
                   </tfoot> -->
             </div>
-          
+
           </div>
           <!-- /.col -->
         </div>

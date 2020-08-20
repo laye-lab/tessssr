@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB ;
+
 
 class StoreSaisieRequest extends FormRequest
 {
@@ -23,6 +25,7 @@ class StoreSaisieRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
 
             'Date_Heure' => 'required|date_format:Y-m-d|after_or_equal:Date_debut|before_or_equal:Date_fin',

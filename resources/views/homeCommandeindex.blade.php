@@ -4,56 +4,63 @@
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
-            <h1>Choix service</h1>
+   
+
+<center>
+<section class="content" >
+  <div class="container-fluid">
+   
+    <div class="row" style="position:relative; top:100px; left:30%;">
+      <!-- left column -->
+      <div class="col-md-6" >
+        <form method="POST" action="{{ route('homeCommandepost') }}">
+          @csrf
+        <!-- general form elements disabled -->
+        <div class="card card-info">
+          <div class="card-header col-md-5">
+            <h3 class="card-title">Choisissez le secteur</h3>
           </div>
-        
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-      <!-- Main content -->
-      <center>
-      <section class="content" style="position:relative;left:10%">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-10">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Users</h3>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <form role="form">
+              <div class="row">
+                <div class="col-sm-6">
+                  <!-- text input -->
+                  <div class="form-group">
+                    <select class="form-control" name="service" id="">
+                      @foreach($affectation as $affectations)
+                      @if(Auth::user()->id == $affectations->agentMatricule_Agent)
+                        @foreach($service as $services)
+                          @if($affectations->Etablissemt_nom == $services->Etablissemt_nom) 
+                          <option value=" {{$services->Libelle_Affectation}}">
+                            {{$services->Libelle_Affectation}}
+                          </option>
+      
+                           @endif
+                        @endforeach
+                      @endif
+                      @endforeach
+                        </select>
+                        <input class="form-control"  name="commandeur" type="hidden" value="{{Auth::user()->id }}"" id="example-text-input">
+                  </div>
                 </div>
-                <div style="position:relative;left:10%">
-                  <form method="POST" action="{{ route('homeCommandepost') }}">
-                    @csrf
-      <div class="form-group row">
-
-            <div class="col-6">
-                <label for="example-text-input" class="col-2 col-form-label">Choisissez le service</label>
-              <select name="service" id="pet-select">
-               
-                @foreach($affectation as $affectations)
-                @if(Auth::user()->id == $affectations->agentMatricule_Agent)
-                  @foreach($service as $services)
-                    @if($affectations->Etablissemt_nom == $services->Etablissemt_nom) 
-                    <option value=" {{$services->Libelle_Affectation}}">
-                      {{$services->Libelle_Affectation}}
-                    </option>
-
-                     @endif
-                  @endforeach
-                @endif
-                @endforeach
-            
-            </select>
-            </div>
-    
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    
+                  
+                 
+                    <button class=" btn  btn-lg btn-info form-control">Passer commande </button>
+                  </div>
+                </div>
+              </div>
+         
           </div>
-      <input class="form-control"  name="commandeur" type="hidden" value="{{Auth::user()->id }}"" id="example-text-input">
-
-    <center> <button class=" btn btn-lg btn-info"  style="position:relative;right:10%">Passer commande</button></center> 
+        </div>
+      </form>
+      </div>
+  
     </div>
-  </form>
-  </center> 
+  </div>
+</section>
+</center>
 @endsection
