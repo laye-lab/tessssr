@@ -425,4 +425,19 @@
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
+   {{-- ChartScript --}}
+   @if($usersChart)
+   {!! $usersChart->script() !!}
+   @else <script></script>
+   @endif
 
+   @if($usersChartMois)
+   {!! $usersChartMois->script() !!}
+   @endif
+
+   @if($usersChartband)
+   {!! $usersChartband->script() !!}
+   @endif
+   @if($usersChartbandetablissement)
+   {!! $usersChartbandetablissement->script() !!}
+   @endif

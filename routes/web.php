@@ -108,7 +108,7 @@ Auth::routes();
 
         Route::post('/Saisiestore', 'SaisieController@store')->name('Saisiestore');
 
-        Route::get('/Acceuil', 'AcceuilController@index')->name('Acceuil');
+        Route::any('/Acceuil', 'AcceuilController@index')->name('Acceuil');
 
         Route::any('/Commandeindex',
         [

@@ -1,4 +1,9 @@
-@extends('layouts.template_dashbord')
+
+
+
+
+             @extends('layouts.template_dashbord_acceuil')
+
 
 @section('content')
  <!-- Content Wrapper. Contains page content -->
@@ -208,58 +213,177 @@
                                         @endif
                                         @if($role->Nom === 'dto')
                                         <!-- Main content -->
-                                        <section class="content" style="position:relative;left:100px;">
+                                        <center>
+                                        <section class="content">
+                                            <div class="container-fluid">
+                                              <!-- Info boxes -->
+                                              <div class="row">
+                                                <div class="col-12 col-sm-6 col-md-3" style="position:relative; left:10%;">
+                                                  <div class="info-box">
+                                                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-clock"></i></span>
 
-                                                <div class="container">
+                                                    <div class="info-box-content">
+                                                      <span class="info-box-text">Total heure mois en cour </span>
+                                                      <span class="info-box-number">
+                                                        {{$total_current_month}}
+                                                        <small>heures</small>
+                                                      </span>
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                  </div>
+                                                  <!-- /.info-box -->
+                                                </div>
+                                                <!-- /.col -->
+                                                <div class="col-12 col-sm-6 col-md-3"  style="position:relative; left:45%;">
+                                                  <div class="info-box mb-3">
+                                                    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-clock"></i></span>
 
-                                                    <div class="row">
-                                                        <div class="col-6">
+                                                    <div class="info-box-content">
+                                                      <span class="info-box-text">total heure année</span>
+                                                      <span class="info-box-number">
+                                                        {{$total_current_year}}
+                                                        <small>heures</small>
+                                                        </span>
+                                                    </div>
+                                                    <!-- /.info-box-content -->
+                                                  </div>
+                                                  <!-- /.info-box -->
+                                                </div>
+                                                <!-- /.col -->
 
-                                                            <div class="card rounded">
+                                                <!-- fix for small devices only -->
+
+
+                                                <!-- /.col -->
+                                              </div>
+                                              <!-- /.row -->
+                                              <center>
+                                   <div class="container">
+                                                <div class="row">
+
+
+                                    <form method="POST" action="{{route('Acceuil')}}" style="position:relative; left:40%;bottom:100px;">
+                                        @csrf
+                                    <!-- general form elements disabled -->
+                                    <div class="card card-success">
+                                        <div class="card-header col-md-12">
+                                        <h3 class="card-title card-info"> Courbe par établissement </h3>
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <div class="card-body">
+                                        <form role="form">
+                                            <div class="row">
+                                            <div class="col-sm-6">
+                                                <!-- text input -->
+                                                <div class="form-group">
+
+                                                <select class="form-control" name="mois" id="">
+                                                    <option value="Dakar1">Dakar 1</option>
+                                                    <option value="Dakar2">Dakar 2</option>
+                                                    <option value="Hann">Centre Hann</option>
+                                                    <option value="Diourbel">Diourbel</option>
+                                                    <option value="Kaolack">Kaolack</option>
+                                                    <option value="Louga">Louga</option>
+                                                    <option value="Petite_Cote">Petite Cote</option>
+                                                    <option value="Rufisque">Rufisque</option>
+                                                    <option value="Saint_Louis">Saint Louis</option>
+                                                    <option value="Thies"> Thies</option>
+                                                    <option value="Tambacounda">Tambacounda</option>
+                                                    <option value="Ziguinchor"></option>
+                                                </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+
+                                                <button class=" btn  btn-lg btn-success form-control"> Generer </button>
+                                                </div>
+                                            </div>
+                                            </div>
+
+                                        </form>
+                                        </div></div>
+
+                                    </center>
+                                </div>
+
+                                     @if ($mois)
+
+                                        <section class="content" >
+
+
+
+                                            <div class="row" style="background-color:white">
+                                            <div class="col-8">
+
+                                                    <div class="card-body py-3 px-3">
+                                                        {!! $usersChart->container() !!}
+                                                    </div>
+
+                                             </div>
+
+
+                                            <div class="col-4">
+
+                                                    <div class="card-body py-3 px-3">
+                                                        {!!$usersChartband->container() !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                        <div class="row" style="background-color:white">
+                                            <div class="col-8">
+
+                                                    <div class="card-body py-3 px-3">
+                                                        {!! $usersChartMois->container() !!}
+                                                    </div>
+
+                                             </div>
+
+
+                                            <div class="col-4">
+
+                                                    <div class="card-body py-3 px-3">
+                                                        {!!$usersChartbandetablissement->container() !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                            </section>
+
+                                                @else
+                                                <section class="content" >
+
+
+
+                                                    <div class="row" style="background-color:white">
+                                                        <div class="col-8">
+
                                                                 <div class="card-body py-3 px-3">
                                                                     {!! $usersChart->container() !!}
+                                                                </div>
+
+                                                         </div>
+
+
+                                                        <div class="col-4">
+
+                                                                <div class="card-body py-3 px-3">
+                                                                    {!!$usersChartband->container() !!}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                 </div>
 
-                                            <div class="container-fluid">
-                                                <!-- Small boxes (Stat box) -->
-                                                <div class="row">
+                                            </section>
+                                                @endif
 
 
-                                                    <a href="{{route('Validation')}}" class="small-box-footer">
-
-                                                    <div class="col-lg-5 col-6" style="position:relative;left:40px;">
-                                                    <!-- small box -->
-                                                    <div class="small-box bg-danger container border border-success" style="height:200px;width:350px;">
-                                                        <div class="inner" >
-                                                        <h5 class="nav-link">Valider heure supplementaire</h5></u>
-                                                         <p class="font-italic" style="color:lightred;">Choix collaborateur <br> validation heure </p>                                                 </div>
-                                                        <div class="icon">
-                                                        <i class="ion ion-stats-bars" style="zoom:2.0;"></i>
-                                                        </div>
-
-                                                    </div>
-                                                    </div>
-                                                    <!-- ./col -->
-                                                </a>
-                                                <a href="{{route('homeSaisie')}}" class="small-box-footer">
-                                                    <div class="col-lg-5 col-9" style="position:relative;left:50px;">
-                                                        <div class="small-box bg-white container border border-success" style="height:200px;width:350px;">
-                                                            <div class="inner">
-                                                            <h5>Consulter Agent</h5>
-
-                                                            <p class="font-italic" style="color:lightdark;">Consultez les agents qui peuvent faire<br> des heures supplémentaires </p>
-                                                        </div>
-                                                        <div class="icon">
-                                                            <i class="ion ion-pie-graph" style="zoom:2.0;" ></i>
-                                                        </div>
-
-                                                        </div>
-                                                    </div>
-                                                </a>
 
 
                                                     @break
