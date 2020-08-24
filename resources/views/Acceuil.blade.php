@@ -217,6 +217,7 @@
                                         <section class="content">
                                             <div class="container-fluid">
                                               <!-- Info boxes -->
+
                                               <div class="row">
                                                 <div class="col-12 col-sm-6 col-md-3" style="position:relative; left:10%;">
                                                   <div class="info-box">
@@ -306,6 +307,66 @@
 
                                     </center>
                                 </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                          <div class="card-header">
+                                            <h3 class="card-title">
+                                              <button class=" btn btn-lg btn-danger">Heures supplémentaires par affectation et par taux</button>
+
+                                            </h3>
+
+                                          </div>
+                                          <!-- /.card-header -->
+                                          <div class="card-body">
+
+                                            <table class="table ">
+                                                <thead>
+                                                  <tr>
+                                                    <th>Affectation</th>
+                                                    <th>Taux à 15%</th>
+                                                    <th>Taux à 40%</th>
+                                                    <th>Taux à 60%</th>
+                                                    <th>Taux à 100%</th>
+                                                    <th>Total</th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                  @foreach ($data as  $datass)
+
+
+                                                         <tr>
+                                                                  <td>{{$datass->Affectations}}</td>
+                                                                  <td>{{$datass->sum15}}</td>
+                                                                  <td>{{$datass->sum40}}</td>
+                                                                  <td>{{$datass->sum60}}</td>
+                                                                  <td>{{$datass->sum100}}</td>
+                                                                  <td><button class=" btn btn-lg btn-danger">{{$datass->total}}</button></td>
+                                                         </tr>
+
+                                                   @endforeach
+
+                                                </tbody>
+
+                                              </table>
+
+
+                                          </div>
+                                          <!-- /.card-body
+                                        <tfoot>
+                                              <tr>
+                                                <th>Rendering engine</th>
+                                                <th>Browser</th>
+                                                <th>Platform(s)</th>
+                                                <th>Engine version</th>
+                                                <th>CSS grade</th>
+                                              </tr>
+                                              </tfoot> -->
+                                        </div>
+
+                                      </div>
+                                </div>
 
                                      @if ($mois)
 
@@ -374,13 +435,14 @@
                                                                 <div class="card-body py-3 px-3">
                                                                     {!!$usersChartband->container() !!}
                                                                 </div>
-                                                            </div>
-                                                        </div>
+                                                            </div></div>
+
                                                     </div>
 
                                                 </div>
 
                                             </section>
+
                                                 @endif
 
 

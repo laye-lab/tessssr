@@ -16,13 +16,13 @@ class HomeCommandeController extends Controller
         {
             $this->middleware('auth');
         }
-    
+
         /**
          * Show the application dashboard.
          *
          * @return \Illuminate\Contracts\Support\Renderable
          */
-    
+
         public function index()
         {
             $role_account=DB::table('Role_Account')
@@ -39,25 +39,20 @@ class HomeCommandeController extends Controller
             ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement')
             ->get();
 
-            $service=DB::table('Affectation')
-            ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')
-            ->select('Matricule_agent','Nom_Agent','Fonction','Statut','Libelle_Affectation','Direction','Etablissemt_nom')
-            ->distinct('Matricule_agent')
+            $service=DB::table('agent')
+            ->select('Matricule_agent','Affectation','Direction','Etablissement')
+            ->distinct('Affectation')
             ->get();
 
-            $affectation=DB::table('Affectation')
-            ->select('Libelle_Affectation','Etablissemt_nom','agentMatricule_Agent')
-            ->distinct('agentMatricule_Agent')
-            ->get();
+
              /**
          *print_r($service)
          *
          */
         return view('homeCommandeindex')->with([
-          
+
             'role_account'=> $role_account,
             'service'=> $service,
-            'affectation'=> $affectation
 
         ]
         );
@@ -91,8 +86,8 @@ class HomeCommandeController extends Controller
             ,'Direction','Etablissement','Affectation')
             ->get();
 
-           
-            
+
+
             return view('homeCommande')->with([
                 'service'=> $service,
                 'users'=>$users,
@@ -103,7 +98,7 @@ class HomeCommandeController extends Controller
             ]
             );
         }
-}    
-    
-    
+}
+
+
 

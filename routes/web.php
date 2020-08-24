@@ -69,6 +69,21 @@ Auth::routes();
             'middleware' => 'roles',
             'roles' => ['drh','dto']
         ]);
+        Route::any('/exportheure',
+        [
+            'uses' =>'CalculheureController@export',
+            'as' => 'exportheure',
+            'middleware' => 'roles',
+            'roles' => ['drh','dto']
+        ]);
+
+        Route::any('/PrintCalculheureMois',
+        [
+            'uses' =>'CalculheureController@Printpermonth',
+            'as' => 'PrintCalculheureMois',
+            'middleware' => 'roles',
+            'roles' => ['drh','dto']
+        ]);
 
         Route::any('/CalculheureSecteur',
         [

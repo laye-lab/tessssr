@@ -73,6 +73,19 @@ class AcceuilController extends Controller
         }
 
 
+        $data = DB::table('heures_supp')
+        ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
+        ->select
+            (
+            DB::raw('SUM(total_taux_15) as sum15'),
+            DB::raw('SUM(total_taux_40) as sum40'),
+            DB::raw('SUM(total_taux_60) as sum60'),
+            DB::raw('SUM(total_taux_100) as sum100'),
+            DB::raw('SUM(total_heures_saisie) as total'),
+            DB::raw('Affectation as Affectations'),
+            )
+            ->groupBy('Affectations')
+            ->get();
 
         $current_month = date('m');
         $current_year = date("Y");
@@ -189,6 +202,7 @@ class AcceuilController extends Controller
                 'usersChartband' =>$usersChartband,
                 'usersChartbandetablissement' => $usersChartbandetablissement,
                 'mois' => $mois,
+                'data' => $data,
                 'total_current_month' =>  $total_current_month,
                 'total_current_year' =>  $total_current_year ,
                 'role_account'=>$role_account]);

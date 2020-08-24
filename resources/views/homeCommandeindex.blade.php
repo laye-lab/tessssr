@@ -4,12 +4,12 @@
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-   
+
 
 <center>
 <section class="content" >
   <div class="container-fluid">
-   
+
     <div class="row" style="position:relative; top:100px; left:30%;">
       <!-- left column -->
       <div class="col-md-6" >
@@ -28,14 +28,13 @@
                   <!-- text input -->
                   <div class="form-group">
                     <select class="form-control" name="service" id="">
-                      @foreach($affectation as $affectations)
-                      @if(Auth::user()->id == $affectations->agentMatricule_Agent)
+                      @foreach($service as $affectations)
+                      @if(Auth::user()->id == $affectations->Matricule_agent)
                         @foreach($service as $services)
-                          @if($affectations->Etablissemt_nom == $services->Etablissemt_nom) 
-                          <option value=" {{$services->Libelle_Affectation}}">
-                            {{$services->Libelle_Affectation}}
+                          @if($affectations->Etablissement == $services->Etablissement and $affectations->Direction == $services->Direction)
+                          <option value=" {{$services->Affectation}}">
+                            {{$services->Affectation}}
                           </option>
-      
                            @endif
                         @endforeach
                       @endif
@@ -46,19 +45,19 @@
                 </div>
                 <div class="col-sm-6">
                   <div class="form-group">
-                    
-                  
-                 
+
+
+
                     <button class=" btn  btn-lg btn-info form-control">Passer commande </button>
                   </div>
                 </div>
               </div>
-         
+
           </div>
         </div>
       </form>
       </div>
-  
+
     </div>
   </div>
 </section>
