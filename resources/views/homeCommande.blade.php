@@ -1,4 +1,4 @@
-@extends('../../layouts.template_dashbord')
+@extends('../../layouts.template_dashbord_collapsed')
 
 @section('content')
  <!-- Content Wrapper. Contains page content -->
@@ -10,7 +10,7 @@
           <div class="col-sm-6">
             <h1>Liste des utilisateurs</h1>
           </div>
-        
+
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -45,28 +45,17 @@
                   </thead>
                   <tbody>
                   <tr>
-                 
-                    @foreach($agent_etablissement as $dr)
-                        @if(Auth::user()->id == $dr->Matricule_agent)
-                        @break
-                        @endif
-               
-                        @endforeach
-                            @foreach($service as $agent_collaborateur)
-
-                                   @if($dr->Etablissement  == $agent_collaborateur->Etablissemt_nom
-                                    and $servicedr  == $agent_collaborateur->Affectation
-                                     and $agent_collaborateur->Statut !='CAD' )                   
+                            @foreach($agent as $agent_collaborateur)
 
                                       <td>
-                                        {{$agent_collaborateur->Matricule_agent}}
+                                        {{$agent_collaborateur->Matricule_Agent}}
                                       </td>
-                                      
+
                                       <td>
                                         {{$agent_collaborateur->Nom_Agent}}
                                       </td>
                                       <td>
-                                        {{$agent_collaborateur->Fonction}}
+                                        {{$agent_collaborateur->fonction}}
                                       </td>
                                       <td>
                                         {{$agent_collaborateur->Statut}}
@@ -78,36 +67,23 @@
                                         {{$agent_collaborateur->Direction}}
                                       </td>
                                       <td>
-                                        {{$agent_collaborateur->Etablissemt_nom}}
-                                      </td>
-                                      <td>
-                                        @foreach($agent_etablissement as $agent_etablissements)
-
-                                        @if($agent_etablissements->Matricule_agent  == $agent_collaborateur->n_plus_un)
-                                        {{$agent_etablissements->Nom_Agent}} <br>
-                                        {{$agent_etablissements->Matricule_agent}}
-                                        @break
-                                        @endif
-                                        @endforeach
+                                        {{$agent_collaborateur->Etablissement}}
                                       </td>
                                       <td>
                                         <form method="POST" action="{{'Commandeindex'}}">
                                           @csrf
-                                        <input type="hidden" name="id"  value="{{$agent_collaborateur->Matricule_agent}}">
+                                        <input type="hidden" name="id"  value="{{$agent_collaborateur->Matricule_Agent}}">
                                         <input type="hidden" name="servicedr"  value="{{$servicedr}}">
                                           <button type="submit" class="btn btn-danger">Commander</button>
                                         </form>
-                                     
+
                                       </td>
-                                  </tr>
-                          
-                                    @endif
-                              
+                                    </tr>
                               @endforeach
-                      
+
                 </table>
               </div>
-              <!-- /.card-body 
+              <!-- /.card-body
             <tfoot>
                   <tr>
                     <th>Rendering engine</th>
@@ -118,7 +94,7 @@
                   </tr>
                   </tfoot> -->
             </div>
-          
+
           </div>
           <!-- /.col -->
         </div>

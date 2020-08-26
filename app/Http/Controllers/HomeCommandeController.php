@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\User;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB ;
 class HomeCommandeController extends Controller
@@ -25,25 +26,42 @@ class HomeCommandeController extends Controller
 
         public function index()
         {
+            $user=auth()->user()->id;
+
+            $etablissement_user=DB::table('agent')
+            ->select('etablissement')
+            ->where('agent.Matricule_Agent', '=',$user)
+            ->distinct('Matricule_agent')
+            ->first();
+            $etablissement_direction=DB::table('agent')
+            ->select('Direction')
+            ->where('agent.Matricule_Agent', '=',$user)
+            ->distinct('Matricule_agent')
+            ->first();
+
+            if ($etablissement_user->etablissement === "Centre de Hann"){
+
+             $Affectation=DB::table('agent')
+             ->select('Affectation')
+             ->where('agent.Direction', '=',$etablissement_direction->Direction)
+             ->distinct('Affectation')
+             ->get();
+            }
+            else{
+             $Affectation=DB::table('agent')
+             ->select('Affectation')
+             ->where('agent.Etablissement', '=',$etablissement_user->etablissement)
+             ->distinct('Affectation')
+             ->get();
+            }
+
+
             $role_account=DB::table('Role_Account')
             ->join('users','users.id' ,'=', 'Role_Account.AccountID')
             ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
             ->join('agent','agent.Matricule_Agent' ,'=','users.id')
             ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
             ->get();
-
-            $agent_attribut=DB::table('agent')
-            ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->distinct('Matricule_agent')
-            ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement')
-            ->get();
-
-            $service=DB::table('agent')
-            ->select('Matricule_agent','Affectation','Direction','Etablissement')
-            ->distinct('Affectation')
-            ->get();
-
 
              /**
          *print_r($service)
@@ -52,14 +70,17 @@ class HomeCommandeController extends Controller
         return view('homeCommandeindex')->with([
 
             'role_account'=> $role_account,
-            'service'=> $service,
-
+            'Affectation'=> $Affectation
         ]
         );
         }
         public function showForm()
-        {  $users=User::all();
+        {
+            $user=auth()->user()->id;
+
             $servicedr=request('service');
+
+
             $role_account=DB::table('Role_Account')
             ->join('users','users.id' ,'=', 'Role_Account.AccountID')
             ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
@@ -67,34 +88,19 @@ class HomeCommandeController extends Controller
             ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
             ->get();
 
-            $agent_attribut=DB::table('agent')
-            ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->distinct('Matricule_agent')
-            ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement')
+            $agent=DB::table('agent')
+            ->where([
+                ['agent.affectation', '=', $servicedr],
+                ['agent.Statut', '<>', 'CAD']
+                ])
+            ->distinct('Affectation')
             ->get();
-
-            $service=DB::table('Affectation')
-            ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')
-            ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->select('Matricule_agent','Nom_Agent','Fonction','Statut','Affectation','Direction','Etablissemt_nom','n_plus_un')
-            ->distinct('Matricule_agent')
-            ->get();
-
-            $agent_etablissement=DB::table('agent')
-            ->select('agent.Matricule_agent','Nom_Agent','Fonction','agent.Statut'
-            ,'Direction','Etablissement','Affectation')
-            ->get();
-
 
 
             return view('homeCommande')->with([
-                'service'=> $service,
-                'users'=>$users,
-                'agent_etablissement'=>$agent_etablissement,
-                'role_account'=> $role_account,
-                'servicedr'=> $servicedr
-
+                'servicedr'=> $servicedr,
+                'agent'=> $agent,
+                'role_account'=>$role_account
             ]
             );
         }

@@ -52,14 +52,15 @@ class CalculheureController extends Controller
              DB::raw('YEAR(Date_Heure) as year')
             )->groupBy('year')
          ->get();
-         $etablissement=DB::table('etablissement')
-         ->select('nom')
-         ->distinct('nom')
+         $etablissement=DB::table('agent')
+         ->select('Etablissement')
+         ->distinct('Etablissement')
          ->get();
 
         $array=DB::table('heures_supp')
         ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
         ->get();
+
         $array_agent=DB::table('heures_supp')
         ->select('Agent_Matricule_Agent','semaine')
         ->distinct('Agent_Matricule_Agent')
@@ -128,10 +129,10 @@ $mois=request('month');
           DB::raw('YEAR(Date_Heure) as year')
          )->groupBy('year')
       ->get();
-      $etablissement=DB::table('etablissement')
-      ->select('nom')
-      ->distinct('nom')
-      ->get();
+       $etablissement=DB::table('agent')
+         ->select('Etablissement')
+         ->distinct('Etablissement')
+         ->get();
 
       $array=DB::table('heures_supp')
       ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
@@ -282,11 +283,10 @@ $content = "";
           DB::raw('YEAR(Date_Heure) as year')
          )->groupBy('year')
       ->get();
-      $etablissement=DB::table('etablissement')
-      ->select('nom')
-      ->distinct('nom')
+      $etablissement=DB::table('agent')
+      ->select('Etablissement')
+      ->distinct('Etablissement')
       ->get();
-
       $array=DB::table('heures_supp')
       ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
       ->get();
@@ -359,9 +359,9 @@ $content = "";
           DB::raw('YEAR(Date_Heure) as year')
          )->groupBy('year')
       ->get();
-      $etablissement=DB::table('etablissement')
-      ->select('nom')
-      ->distinct('nom')
+      $etablissement=DB::table('agent')
+      ->select('Etablissement')
+      ->distinct('Etablissement')
       ->get();
 
       $array=DB::table('heures_supp')

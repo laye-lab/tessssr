@@ -28,16 +28,12 @@
                   <!-- text input -->
                   <div class="form-group">
                     <select class="form-control" name="service" id="">
-                      @foreach($service as $affectations)
-                      @if(Auth::user()->id == $affectations->Matricule_agent)
-                        @foreach($service as $services)
-                          @if($affectations->Etablissement == $services->Etablissement and $affectations->Direction == $services->Direction)
-                          <option value=" {{$services->Affectation}}">
-                            {{$services->Affectation}}
+                      @foreach($Affectation as $Affectations)
+
+                          <option value=" {{$Affectations->Affectation}}">
+                            {{$Affectations->Affectation}}
                           </option>
-                           @endif
-                        @endforeach
-                      @endif
+
                       @endforeach
                         </select>
                         <input class="form-control"  name="commandeur" type="hidden" value="{{Auth::user()->id }}"" id="example-text-input">
