@@ -7,18 +7,8 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB ;
-class AcceuilController extends Controller
+class DashbordController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
 
@@ -161,30 +151,29 @@ class AcceuilController extends Controller
 
 
 
-        $Janvier=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=', 1)->where('Etablissement', '<>',"Centre de Hann")->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        $Janvier=DB::table('heures_supp')->select('total_heures_saisie')->whereMonth('Date_Heure', '=', 1)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
-        $Fevrier=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=', 2)->where('Etablissement', '<>',"Centre de Hann")->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        $Fevrier=DB::table('heures_supp')->select('total_heures_saisie')->whereMonth('Date_Heure', '=', 2)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
+        $Mars=DB::table('heures_supp')->select('total_heures_saisie')->whereMonth('Date_Heure', '=', 3)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
-        $Mars=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=', 3)->where('Etablissement', '<>',"Centre de Hann")->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        $Avril=DB::table('heures_supp')->select('total_heures_saisie')->whereMonth('Date_Heure', '=', 4)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
-        $Avril=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=', 4)->where('Etablissement', '<>',"Centre de Hann")->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        $Mai=DB::table('heures_supp')->select('total_heures_saisie')->whereMonth('Date_Heure', '=', 5)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
-        $Mai=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=', 5)->where('Etablissement', '<>',"Centre de Hann")->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        $Juin=DB::table('heures_supp')->select('total_heures_saisie')->whereMonth('Date_Heure', '=', 6)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
-        $Juin=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=', 6)->where('Etablissement', '<>',"Centre de Hann")->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        $Juillet=DB::table('heures_supp')->select('total_heures_saisie')->whereMonth('Date_Heure', '=', 7)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
-        $Juillet=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=', 7)->where('Etablissement', '<>',"Centre de Hann")->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        $Aout=DB::table('heures_supp')->select('total_heures_saisie')->whereMonth('Date_Heure', '=', 8)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
-        $Aout=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=', 8)->where('Etablissement', '<>',"Centre de Hann")->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        $Septembre=DB::table('heures_supp')->select('total_heures_saisie')->whereMonth('Date_Heure', '=', 9)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
-        $Septembre=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=', 9)->where('Etablissement', '<>',"Centre de Hann")->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        $Octobre=DB::table('heures_supp')->select('total_heures_saisie')->whereMonth('Date_Heure', '=', 10)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
-        $Octobre=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=', 10)->where('Etablissement', '<>',"Centre de Hann")->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        $Novembre=DB::table('heures_supp')->select('total_heures_saisie')->whereMonth('Date_Heure', '=', 11)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
-        $Novembre=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=', 11)->where('Etablissement', '<>',"Centre de Hann")->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
-
-        $Decembre=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=', 12)->where('Etablissement', '<>',"Centre de Hann")->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        $Decembre=DB::table('heures_supp')->select('total_heures_saisie')->whereMonth('Date_Heure', '=', 12)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
 
 
@@ -223,7 +212,7 @@ class AcceuilController extends Controller
         ->get();
 
 
-        return view('Acceuil')->with([
+        return view('Dashbord')->with([
                 'users'=>$users,
                 'usersChart' => $usersChart,
                 'usersChartMois' => $usersChartMois,
@@ -238,72 +227,4 @@ class AcceuilController extends Controller
                 'total_current_year_dr' =>  $total_current_year_dr,
                 'role_account'=>$role_account]);
 }
-
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Users  $users
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Users $users)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Users  $users
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Users $users)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Users  $users
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Users $users)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Users  $users
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Users $users)
-    {
-        //
-    }
 }

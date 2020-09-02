@@ -35,7 +35,7 @@ class StoreSaisieRequest extends FormRequest
             'Date_fin' => 'required',
             'commandeur' => 'required',
             'collaborateur' => 'required',
-            'servicedr' => 'required',
+
 
 
 

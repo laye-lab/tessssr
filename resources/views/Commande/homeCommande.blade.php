@@ -8,7 +8,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Liste des agents</h1>
+            <h1>Liste des utilisateurs</h1>
           </div>
 
         </div>
@@ -23,8 +23,8 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
-                  <button type="submit" class="btn btn-danger">Choisissez un agent et affectez lui des heures supplémentaires </button>
-                </h3>
+                <button type="submit" class="btn btn-danger">  {{$servicedr}}</button>
+              </h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -39,74 +39,46 @@
                     <th>Secteur/Service</th>
                     <th>Direction</th>
                     <th>Etablissemt</th>
-                    <th>Date début</th>
-                    <th>Date fin</th>
-                    <th>Travaux a éffectuer </th>
-
+                    <th>Responsable</th>
                     <th></th>
                     </tr>
                   </thead>
                   <tbody>
                   <tr>
-
-                            @foreach($agent_attribut as $agent_attributs)
-
+                            @foreach($agent as $agent_collaborateur)
 
                                       <td>
-                                        {{$agent_attributs->Matricule_agent}}
+                                        {{$agent_collaborateur->Matricule_Agent}}
                                       </td>
 
                                       <td>
-                                        {{$agent_attributs->Nom_Agent}}
+                                        {{$agent_collaborateur->Nom_Agent}}
                                       </td>
                                       <td>
-                                        {{$agent_attributs->fonction}}
+                                        {{$agent_collaborateur->fonction}}
                                       </td>
                                       <td>
-                                        {{$agent_attributs->Statut}}
+                                        {{$agent_collaborateur->Statut}}
                                       </td>
                                       <td>
-                                        {{$agent_attributs->Affectation}}
+                                        {{$agent_collaborateur->Affectation}}
                                       </td>
                                       <td>
-                                        {{$agent_attributs->Direction}}
+                                        {{$agent_collaborateur->Direction}}
                                       </td>
                                       <td>
-                                        {{$agent_attributs->etablissement}}
+                                        {{$agent_collaborateur->Etablissement}}
                                       </td>
                                       <td>
-                                        {{$agent_attributs->Date_debut}}
+                                        <form method="POST" action="{{'Commandeindex'}}">
+                                          @csrf
+                                        <input type="hidden" name="id"  value="{{$agent_collaborateur->Matricule_Agent}}">
+                                        <input type="hidden" name="servicedr"  value="{{$servicedr}}">
+                                          <button type="submit" class="btn btn-danger">Commander</button>
+                                        </form>
+
                                       </td>
-                                      <td>
-                                        {{$agent_attributs->Date_fin}}
-                                      </td>
-                                      <td>
-                                        {{$agent_attributs->travaux_effectuer}}
-                                      </td>
-
-
-
-
-                                    <td>
-                                      <form method="POST" action="{{'Saisie'}}">
-                                        @csrf
-                                        <input type="hidden" name="Date_debut"  value="{{$agent_attributs->Date_debut}}">
-                                        <input type="hidden" name="Date_fin"  value=" {{$agent_attributs->Date_fin}}">
-                                        <input type="hidden" name="nbr_heure"  value=" {{$agent_attributs->nbr_heure}}">
-                                      <input type="hidden" name="id"  value="{{$agent_attributs->Matricule_agent}}">
-                                      <input type="hidden" name="nom"  value=" {{$agent_attributs->Nom_Agent}}">
-                                      <input type="hidden" name="id_heure"  value=" {{$agent_attributs->ID}}">
-
-                                      <input type="hidden" name="servicedr"  value="{{$agent_attributs->Affectation}}">
-                                        <button type="submit" class="btn btn-primary">Saisir</button>
-                                      </form>
-
-                                    </td>
-
-                                  </tr>
-
-
-
+                                    </tr>
                               @endforeach
 
                 </table>

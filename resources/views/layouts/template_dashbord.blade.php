@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  @livewireStyles
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -127,7 +128,14 @@
                                             <p > Navigateur</p>
                                             </div>
                                             </div>
-
+                                            <li class="nav-item has-treeview menu-open">
+                                                <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
+                                                    <i class="fas fa-home"></i>
+                                                    <p>
+                                                   Acceuil
+                                                    </p>
+                                                </a>
+                                            </li>
                                     <li class="nav-item has-treeview menu-open">
                                     <a  href="{{route('homeSaisie')}}" class="nav-link">
                                         <i class="nav-icon fas fa-pen-alt"></i>
@@ -156,7 +164,7 @@
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
-                                    <span class="badge badge-info right">6</span>
+                                    <span class="badge badge-info right">new</span>
                                     </p>
                                 </a>
                                 </li>
@@ -172,7 +180,8 @@
 
                 @break
             @case('n+2')
-                                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                                     <!-- Add icons to the links using the .nav-icon class
                                         with font-awesome or any other icon font library -->
                                         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -182,33 +191,37 @@
                                         <p > Navigateur</p>
                                         </div>
                                         </div>
-
+                                        <li class="nav-item has-treeview menu-open">
+                                            <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
+                                                <i class="fas fa-home"></i>
+                                                <p>
+                                               Acceuil
+                                                </p>
+                                            </a>
+                                        </li>
                                         <li class="nav-item has-treeview menu-open">
                                         <a href="{{route('homeCommandeindex')}}" class="nav-link" >
                                             <i class="nav-icon fas fa-user-plus"></i>
                                             <p>
                                             Commande heure
-                                            <span class="badge badge-info right">6</span>
                                             </p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                     <a  class="nav-link">
-                                        <i class="nav-icon far fa-circle text-danger"></i>
                                         <i class="nav-icon fas fa-laptop-house"></i>
                                         <p class="text">Choix service</p>
                                     </a>
                                     </li>
                                     <li class="nav-item">
                                     <a class="nav-link">
-                                        <i class="nav-icon far fa-circle text-danger"></i>
+
                                         <i class="nav-icon fas fa-user-check"></i>
                                         <p>Choix collaborateur</p>
                                     </a>
                                     </li>
                                     <li class="nav-item">
                                     <a  class="nav-link">
-                                        <i class="nav-icon far fa-circle text-danger"></i>
                                         <i class="nav-icon far fa-calendar-check"></i>
                                         <p>Saisie  </p>
                                     </a>
@@ -226,14 +239,12 @@
 
                             <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-circle text-info"></i>
                                 <i class="nav-icon fas fa-user-check"></i>
                                 <p>Choix collaborateur</p>
                             </a>
                             </li>
                             <li class="nav-item">
                             <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-circle text-info"></i>
                                 <i class="nav-icon far fa-calendar-check"></i>
                                 <p>Saisie  </p>
                             </a>
@@ -243,7 +254,8 @@
                                 <i class="nav-icon fas fa-check-double"></i>
                                 <p>
                                 Valider heure
-                                <span class="badge badge-info right">6</span>
+                                <span class="badge badge-info right">
+                            new</span>
                                 </p>
                             </a>
                             </li>
@@ -269,13 +281,20 @@
                                         <p > Navigateur</p>
                                         </div>
                                         </div>
-
+                                        <li class="nav-item has-treeview menu-open">
+                                            <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
+                                                <i class="fas fa-home"></i>
+                                                <p>
+                                               Acceuil
+                                                </p>
+                                            </a>
+                                        </li>
                                         <li class="nav-item has-treeview menu-open">
                                         <a  href="{{route('Validation')}}" class="nav-link">
                                             <i class="nav-icon fas fa-check-double"></i>
                                             <p>
                                             Valider heure
-                                            <span class="badge badge-info right">6</span>
+                                            <span class="badge badge-info right">new</span>
                                             </p>
                                         </a>
                                         </li>
@@ -304,6 +323,14 @@
                     </div>
 
                     <li class="nav-item has-treeview menu-open">
+                        <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            <p>
+                           Acceuil
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview menu-open">
                     <a  href="{{route('Calculheure')}}" href="#" class="nav-link">
                         <i class="nav-icon fas fa-eye"></i>
                         <p>
@@ -311,6 +338,23 @@
                         </p>
                     </a>
                     </li>
+                    <li class="nav-item has-treeview menu-open">
+                        <a  href="{{route('Dashbord')}}" href="#" class="nav-link">
+                            <i class="fas fa-route"></i>
+                            <p>
+                            Tableau de bord
+                            </p>
+                        </a>
+                     </li>
+
+                     <li class="nav-item has-treeview menu-open">
+                        <a  href="{{route('Affectationindex')}}" href="#" class="nav-link">
+                            <i class="fas fa-luggage-cart"></i>
+                            <p>
+                            Affectation
+                            </p>
+                        </a>
+                     </li>
             </ul>
 
                 @break
@@ -331,7 +375,7 @@
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
-                                    <span class="badge badge-info right">6</span>
+                                    <span class="badge badge-info right">new</span>
                                     </p>
                                 </a>
                                 </li>
@@ -363,7 +407,7 @@
                                         <i class="nav-icon fas fa-check-double"></i>
                                         <p>
                                         Valider heure
-                                        <span class="badge badge-info right">6</span>
+                                        <span class="badge badge-info right">new</span>
                                         </p>
                                     </a>
                                     </li>
@@ -425,4 +469,5 @@
 <script src="{{asset('dist/js/pages/dashboard.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
+@livewireScripts
 

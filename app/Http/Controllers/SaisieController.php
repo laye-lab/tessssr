@@ -29,7 +29,7 @@ class SaisieController extends Controller
     public function index(Request $request)
     {
 
-
+        $user=auth()->user()->id;
         $Date_debut=request('Date_debut');
 
         $Date_fin=request('Date_fin');
@@ -81,46 +81,33 @@ class SaisieController extends Controller
         ->join('agent','agent.Matricule_Agent' ,'=','users.id')
         ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
         ->get();
+        $id=request('id');
         $heure=DB::table('Heures_supp_a_faire')
         ->get();
 
-        $id=request('id');
+        $data =DB::table('heures_supp')
+        ->join('Heures_supp_a_faire','Heures_supp_a_faire.ID' ,'=','heures_supp.id')
+        ->where('heures_supp.id', '=',$id)
+        ->get();
 
         return view('ModifSaisie')->with([
             'id' =>  $id,
-            'role_account' =>  $role_account,
+            'data'=> $data,
+            'role_account' =>$role_account,
             'heure' =>$heure
             ]);
 
     }
 
-    public function Update(UpdateSaisie $request)
+    public function  Update(request $request)
     {
-
-
-        $heure_debut=request('heure_debut');
-        $Date_Heure=request('Date_Heure');
-        $heure_fin=request('heure_fin');
-        $collab=request('id');
-        $travaux_effectuer=request('travaux_effectuer');
-        $Observations=request('Observations');
+        $id=request('id');
 
         $Heures_supp=DB::table('heures_supp')
         ->where('id', '=', $id )
-        ->update([
-            'Date_Heure' =>  $Date_Heure,
-            'heure_debut' => $heure_debut,
-            'heure_fin' => $heure_fin,
-            'travaux_effectuer' => $travaux_effectuer,
-            'Observations' => $Observations,
-
-            ]);
-
+        ->delete();
        return back();
     }
-
-
-
 
 
 
@@ -144,7 +131,7 @@ class SaisieController extends Controller
 
     $servicedr=request('servicedr');
     $heuresaisie = DB::table('heures_supp')
-    ->where('heures_supp.id_heure_a_faire', '=',$id_heure)
+
     ->sum('total_heures_saisie');
     $role_account=DB::table('Role_Account')
     ->join('users','users.id' ,'=', 'Role_Account.AccountID')

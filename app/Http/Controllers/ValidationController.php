@@ -44,11 +44,12 @@ class ValidationController extends Controller
             ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.Heures_supp_a_faireID','=','Heures_supp_a_faire.ID')
             ->join('heures_supp','heures_supp.id_heure_a_faire','=','Heures_supp_a_faire.ID')
             ->get();
+
             $heurre_a_faire=DB::table('agent_Heures_supp_a_faire')
             ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
-            ->join('Etablissement','Etablissement.agentMatricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
             ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
-            ->select('agent.Matricule_agent','Nom_Agent','Etablissement.nom','Date_Heure','heure_debut','heure_fin','travaux_effectuer','observations','heures_supp.id','heures_supp.Statut','id_heure_a_faire')
+            ->select('agent.Matricule_agent','Nom_Agent','Etablissement','Date_Heure','heure_debut'
+            ,'heure_fin','travaux_effectuer','observations','heures_supp.id','heures_supp.Statut','id_heure_a_faire','total_heures_saisie')
             ->get();
 
             return view('Validation')->with([
@@ -75,6 +76,10 @@ class ValidationController extends Controller
         ->where('commandeur', '=', $id )
         ->update(['Statut' => 2]);
 
+        $Step=DB::table('Step')
+        ->where('Demandeur', '=',$id)
+        ->update(['etape' => 2]);
+
         return back();
           break;
         case 'n+2':
@@ -84,6 +89,9 @@ class ValidationController extends Controller
                 ->where('commandeur', '=', $id )
                 ->update(['Statut' => 4]);
 
+                $Step=DB::table('Step')
+                ->where('Demandeur', '=',$id)
+                ->update(['etape' => 2]);
 
             }
             else {
@@ -91,6 +99,9 @@ class ValidationController extends Controller
                 ->where('commandeur', '=', $id )
                 ->update(['Statut' => 3]);
 
+                $Step=DB::table('Step')
+                ->where('Heures_supp_a_faireID', '=',$id)
+                ->update(['etape' => 2]);
 
             }
 
@@ -101,6 +112,9 @@ class ValidationController extends Controller
             ->where('Statut', '=',3)
             ->update(['Statut' => 4]);
 
+            $Step=DB::table('Step')
+            ->where('Demandeur', '=',$id)
+            ->update(['etape' => 2]);
 
             return back();
               break;
@@ -118,9 +132,12 @@ class ValidationController extends Controller
                 $Heures_supp=DB::table('heures_supp')
                 ->where('id_heure_a_faire', '=', $id )
                 ->update(['Statut' => 1]);
+                $Step=DB::table('Step')
+                    ->where('Demandeur', '=',$id)
+                    ->update(['etape' => 1]);
 
 
-        return back()->with('success','Toutes les heure Supplémentaire sont maintenant validées ');
+        return back()->with('success','heures supplémentaire validées ');
               break;
         }
 
