@@ -118,7 +118,14 @@
                                             <p > Navigateur</p>
                                             </div>
                                             </div>
-
+                                            <li class="nav-item has-treeview menu-open">
+                                                <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
+                                                    <i class="fas fa-home"></i>
+                                                    <p>
+                                                   Acceuil
+                                                    </p>
+                                                </a>
+                                            </li>
                                     <li class="nav-item has-treeview menu-open">
                                     <a  href="{{route('homeSaisie')}}" class="nav-link">
                                         <i class="nav-icon fas fa-pen-alt"></i>
@@ -147,7 +154,7 @@
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
-                                    <span class="badge badge-info right">6</span>
+                                    <span class="badge badge-info right">new</span>
                                     </p>
                                 </a>
                                 </li>
@@ -173,13 +180,20 @@
                                         <p > Navigateur</p>
                                         </div>
                                         </div>
-
+                                        <li class="nav-item has-treeview menu-open">
+                                            <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
+                                                <i class="fas fa-home"></i>
+                                                <p>
+                                               Acceuil
+                                                </p>
+                                            </a>
+                                        </li>
                                         <li class="nav-item has-treeview menu-open">
                                         <a href="{{route('homeCommandeindex')}}" class="nav-link" >
                                             <i class="nav-icon fas fa-user-plus"></i>
                                             <p>
                                             Commande heure
-                                            <span class="badge badge-info right">6</span>
+                                            <span class="badge badge-info right">new</span>
                                             </p>
                                         </a>
                                     </li>
@@ -234,7 +248,7 @@
                                 <i class="nav-icon fas fa-check-double"></i>
                                 <p>
                                 Valider heure
-                                <span class="badge badge-info right">6</span>
+                                <span class="badge badge-info right">new</span>
                                 </p>
                             </a>
                             </li>
@@ -260,13 +274,21 @@
                                         <p > Navigateur</p>
                                         </div>
                                         </div>
+                                        <li class="nav-item has-treeview menu-open">
+                                            <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
+                                                <i class="fas fa-home"></i>
+                                                <p>
+                                               Acceuil
+                                                </p>
+                                            </a>
+                                        </li>
 
                                         <li class="nav-item has-treeview menu-open">
                                         <a  href="{{route('Validation')}}" class="nav-link">
                                             <i class="nav-icon fas fa-check-double"></i>
                                             <p>
                                             Valider heure
-                                            <span class="badge badge-info right">6</span>
+                                            <span class="badge badge-info right">new</span>
                                             </p>
                                         </a>
                                         </li>
@@ -293,7 +315,14 @@
                     <p > Navigateur</p>
                     </div>
                     </div>
-
+                    <li class="nav-item has-treeview menu-open">
+                        <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            <p>
+                           Acceuil
+                            </p>
+                        </a>
+                    </li>
                     <li class="nav-item has-treeview menu-open">
                     <a  href="{{route('Calculheure')}}" href="#" class="nav-link">
                         <i class="nav-icon fas fa-eye"></i>
@@ -302,6 +331,22 @@
                         </p>
                     </a>
                     </li>
+                    <li class="nav-item has-treeview menu-open">
+                        <a  href="{{route('Dashbord')}}" href="#" class="nav-link">
+                            <i class="fas fa-route"></i>
+                            <p>
+                            Tableau de bord
+                            </p>
+                        </a>
+                        </li>
+                        <li class="nav-item has-treeview menu-open">
+                            <a  href="{{route('Affectationindex')}}" href="#" class="nav-link">
+                                <i class="fas fa-luggage-cart"></i>
+                                <p>
+                                Affectation
+                                </p>
+                            </a>
+                         </li>
             </ul>
 
                 @break
@@ -316,13 +361,20 @@
                                 <p > Navigateur</p>
                                 </div>
                                 </div>
-
+                                <li class="nav-item has-treeview menu-open">
+                                    <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
+                                        <i class="fas fa-home"></i>
+                                        <p>
+                                       Acceuil
+                                        </p>
+                                    </a>
+                                </li>
                                 <li class="nav-item has-treeview menu-open">
                                 <a  href="{{route('Validation')}}"  class="nav-link">
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
-                                    <span class="badge badge-info right">6</span>
+
                                     </p>
                                 </a>
                                 </li>
@@ -348,13 +400,20 @@
                                     <p > Navigateur</p>
                                     </div>
                                     </div>
-
+                                    <li class="nav-item has-treeview menu-open">
+                                        <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
+                                            <i class="fas fa-home"></i>
+                                            <p>
+                                           Acceuil
+                                            </p>
+                                        </a>
+                                    </li>
                                     <li class="nav-item has-treeview menu-open">
                                     <a   href="{{route('Validation')}}" class="nav-link">
                                         <i class="nav-icon fas fa-check-double"></i>
                                         <p>
                                         Valider heure
-                                        <span class="badge badge-info right">6</span>
+                                        <span class="badge badge-info right">new</span>
                                         </p>
                                     </a>
                                     </li>

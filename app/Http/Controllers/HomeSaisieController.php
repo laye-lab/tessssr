@@ -25,6 +25,7 @@ class HomeSaisieController extends Controller
 
         public function index()
         {
+            $user=auth()->user()->id;
             $role_account=DB::table('Role_Account')
             ->join('users','users.id' ,'=', 'Role_Account.AccountID')
             ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
@@ -35,11 +36,17 @@ class HomeSaisieController extends Controller
 
                 $agent_attribut=DB::table('agent_Heures_supp_a_faire')
                 ->join('equipe','equipe.agentMatricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+                ->join('Step','Step.Heures_supp_a_faireID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
                 ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
                 ->join('Heures_supp_a_faire','Heures_supp_a_faire.ID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+                ->where([
+                    ['n_plus_un', '=',$user],
+                    ['etape', '=',1]
+                    ]
+                    )
                 ->distinct('Matricule_agent')
                 ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement'
-                ,'fonction','Affectation','Date_debut','Date_fin','travaux_effectuer','nbr_heure','Heures_supp_a_faire.ID')
+                ,'fonction','Affectation','Date_debut','Date_fin','travaux_effectuer','nbr_heure','Heures_supp_a_faire.ID','etape')
                 ->get();
 
             } catch (Throwable $e) {

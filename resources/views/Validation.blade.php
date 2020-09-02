@@ -16,6 +16,8 @@
             <div class="col-sm-6">
               <h1>Heures supplémentaires</h1>
             </div>
+
+
             <section class="content"  style="position:relative;left:400px;">
 
 
@@ -49,7 +51,7 @@
 
                               @foreach($heurre_a_faire as $heure)
 
-                                      @if($agent_unite->Matricule_agent ==$heure->Matricule_agent and $heure->Statut==2 and $heure->nom==$role->etablissement )
+                                      @if($agent_unite->Matricule_agent ==$heure->Matricule_agent and $heure->Statut==2 and $heure->Etablissement==$role->etablissement )
 <center>
                                       <section class="content">
                                         <div class="card col-8">
@@ -125,7 +127,11 @@
                                                           <td>
                                                             {{$heure->observations}}
                                                           </td>
+                                                          <td>
+                                                            <button type="submit" class="btn btn-info">{{$heure->total_heures_saisie}}</button>
+                                                          </td>
                                                       </tr>
+
                                                         @endif
                                               @endforeach
 
@@ -143,6 +149,9 @@
                             <!-- /.card -->
 
                           </section>
+
+
+
                           @break
                           @endif
                   @endforeach
@@ -215,10 +224,10 @@
                                                           <div class="col-12 col-sm-4">
                                                             <div class="info-box bg-info">
                                                               <div class="info-box-content">
-                                                                @foreach($nbr_heure as $nbr_heures)
+                                       1                         @foreach($nbr_heure as $nbr_heures)
 
-                                                                @if($agent_unite->Matricule_agent ==$nbr_heures->Agent_Matricule_Agent )
-                                                                <span class="info-box-text text-center ">Nombre d'heures</span>
+                                                                @if($agent_unite->Matricule_agent ==$nbr_heures->Agent_Matricule_Agent)
+                                                                <span class="info-box-text text-center ">Nombre d'heures <br> commandées</span>
                                                                 <span class="info-box-number text-center mb-0">  {{$nbr_heures->nbr_heure}}</span>
                                                                 @break
                                                               @endif
@@ -239,6 +248,7 @@
                                                 <th>A</th>
                                                 <th>Travaux réalisés</th>
                                                 <th>Observations</td>
+                                                 <th>Nombre d'heures</td>
                                               </tr>
                                             </thead>
                                             <tbody>
@@ -262,12 +272,14 @@
                                                   {{$heure->observations}}
                                                 </td>
                                                 <td>
-                                                    <form method="POST" action="{{'ModifSaisieindex'}}">
+                                                  <button type="submit" class="btn btn-info">{{$heure->total_heures_saisie}}</button>
+                                                </td>
+                                                <td>
+                                                    <form method="POST" action="{{'ModifSaisie'}}">
                                                       @csrf
 
                                                     <input type="hidden" name="id"  value="{{$heure->id}}">
-                                                    <input type="hidden" name="id"  value="{{$heure->id}}">
-                                                      <button type="submit" class="btn btn-primary">Modifier</button>
+                                                      <button type="submit" class="btn btn-danger">Supprimer</button>
                                                     </form>
 
                                                   </td>
@@ -340,9 +352,9 @@
                                           @foreach($heure_supp as $heure)
 
                                                   @if($agent_unite->Matricule_agent ==$heure->Agent_Matricule_Agent and $heure->Statut ==3 )
-
+                                                  <center>
                                                   <section class="content">
-                                                    <div class="card">
+                                                    <div class="card col-md-8">
                                                       <div class="card-header">
                                                         <h3 class="card-title"> Details</h3>
                                                       </div>
@@ -350,7 +362,7 @@
                                                         <div class="row">
                                                           <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
                                                             <div class="row">
-                                                              <div class="col-12 col-sm-4">
+                                                              <div class="col-8 col-sm-4">
                                                                 <div class="info-box bg-info">
                                                                   <div class="info-box-content">
                                                                     @foreach($nbr_heure as $nbr_heures)
@@ -368,7 +380,7 @@
 
                                         </div>
                                         <div class="row">
-                                          <div class="col-12">
+                                          <div class="col-20">
                                           <h4>{{$agent_unite->Nom_Agent}}</h4>
                                             <div class="card-body table-responsive p-0">
                                               <table class="table table-hover text-nowrap">
@@ -378,32 +390,35 @@
                                                     <th>De</th>
                                                     <th>A</th>
                                                     <th>Travaux réalisés</th>
-                                                    <th>Observations</td>
-
+                                                    <th>Observations</th>
+                                                    <th></th>
                                                   </tr>
                                                 </thead>
                                                 <tbody>
                                                   @foreach($heurre_a_faire as $heure)
 
-                                                  @if($agent_unite->Matricule_agent ==$heure->Matricule_agent and $heure->Statut==3)
-                                                  <tr>
-                                                    <td>
-                                                      {{$heure->Date_Heure}}
-                                                    </td>
-                                                    <td>
-                                                      {{$heure->heure_debut}}  :00
-                                                    </td>
-                                                    <td>
-                                                      {{$heure->heure_fin}}:00
-                                                    </td>
-                                                    <td>
-                                                      {{$heure->travaux_effectuer}}
-                                                    </td>
-                                                    <td>
-                                                      {{$heure->observations}}
-                                                    </td>
-                                                </tr>
-                                                  @endif
+                                                    @if($agent_unite->Matricule_agent ==$heure->Matricule_agent and $heure->Statut==3)
+                                                    <tr>
+                                                        <td>
+                                                        {{$heure->Date_Heure}}
+                                                        </td>
+                                                        <td>
+                                                        {{$heure->heure_debut}}  :00
+                                                        </td>
+                                                        <td>
+                                                        {{$heure->heure_fin}}:00
+                                                        </td>
+                                                        <td>
+                                                        {{$heure->travaux_effectuer}}
+                                                        </td>
+                                                        <td>
+                                                        {{$heure->observations}}
+                                                        </td>
+                                                        <td>
+                                                      <button type="submit" class="btn btn-info">{{$heure->total_heures_saisie}}</button>
+                                                        </td>
+                                                    </tr>
+                                                    @endif
                                         @endforeach
 
                                       </tbody>
@@ -428,22 +443,9 @@
             @endforeach
                     @endforeach
                 @break
-                    @default
 
-                <div class="container">
-                  <div class="row justify-content-center">
-                      <div class="col-md-8">
-                          <div class="card">
-                              <div class="card-header">{{ __('Dashboard') }}</div>
 
-                              <div class="card-body">
 
-                                  {{ __('Pas de commande a valider pour le moment') }}
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
 
 
             @endswitch
