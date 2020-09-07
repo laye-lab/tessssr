@@ -52,7 +52,21 @@ class HomeSaisieController extends Controller
                     ['etape', '=',1]
                     ]
                     )
-                ->distinct('Matricule_agent')
+                ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement'
+                ,'fonction','Affectation','Date_debut','Date_fin','travaux_effectuer','nbr_heure','Heures_supp_a_faire.ID','etape')
+                ->get();
+
+
+                $agent_n_plus_1=DB::table('agent_Heures_supp_a_faire')
+                ->join('equipe','equipe.agentMatricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+                ->join('Step','Step.Heures_supp_a_faireID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+                ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+                ->join('Heures_supp_a_faire','Heures_supp_a_faire.ID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+                ->where([
+                    ['n_plus_un', '=',$user],
+                    ['etape', '=',1],
+                    ]
+                    )
                 ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement'
                 ,'fonction','Affectation','Date_debut','Date_fin','travaux_effectuer','nbr_heure','Heures_supp_a_faire.ID','etape')
                 ->get();
@@ -67,7 +81,6 @@ class HomeSaisieController extends Controller
                     ['etape', '=',1]
                     ]
                     )
-                ->distinct('Matricule_agent')
                 ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement'
                 ,'fonction','Affectation','Date_debut','Date_fin','travaux_effectuer','nbr_heure','Heures_supp_a_faire.ID','etape')
                 ->get();
@@ -81,6 +94,7 @@ class HomeSaisieController extends Controller
 
                 return view('homesaisie')->with([
                     'agent_attribut'=> $agent_attribut,
+                    'agent_n_plus_1'=>$agent_n_plus_1,
                     'role_account'=> $role_account,
                     'agent_sec'=> $agent_sec,
                 ]);
@@ -90,13 +104,13 @@ class HomeSaisieController extends Controller
         }
         public function showForm()
         {
-            $servicedr=request('service');
-            $role_account=DB::table('Role_Account')
-            ->join('users','users.id' ,'=', 'Role_Account.AccountID')
-            ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
-            ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-            ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
-            ->get();
+                $servicedr=request('service');
+                $role_account=DB::table('Role_Account')
+                ->join('users','users.id' ,'=', 'Role_Account.AccountID')
+                ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
+                ->join('agent','agent.Matricule_Agent' ,'=','users.id')
+                ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
+                ->get();
 
                 $agent_attribut=DB::table('agent')
                 ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
@@ -104,7 +118,8 @@ class HomeSaisieController extends Controller
                 ->distinct('Matricule_agent')
                 ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement','fonction','Affectation')
                 ->get();
-            $users=User::all();
+
+                $users=User::all();
 
 
 

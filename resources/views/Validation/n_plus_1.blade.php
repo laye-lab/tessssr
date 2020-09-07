@@ -10,7 +10,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Validation</a></li>
-              <li class="breadcrumb-item"><a href="#">Validation</a></li>
+              <li class="breadcrumb-item"><a href="#">Acceuil</a></li>
               <li class="breadcrumb-item active">Senadmin</li>
             </ol>
           </div>
@@ -23,7 +23,7 @@
           <div class="col-sm-6">
 
           </div>
-          <section class="content"  style="position:relative;left:400px;">
+          <section class="content"  style="position:relative;left:420px;">
 
 
               <div class="card-body">
@@ -66,13 +66,14 @@
 
 
                                         <section class="content" >
-                                          <div class="card col-8" style="position:relative;bottom:80px;" >
+                                          <div class="card col-9" style="position:relative;bottom:80px;" >
 
                                             <div class="card-body">
                                               <div class="row">
 
-
-                                  <button type="submit" class="btn btn-info"> {{$agent_unite->Nom_Agent}}</button>
+                                                  <div class="col-12">
+                                                    <button type="submit" class="btn btn-info">{{$agent_unite->Nom_Agent}}</button>
+                                                    <button type="submit" class="btn btn-outline-info">Heure nº{{$heure->id_heure_a_faire}}</button>
                                   <div class="card-body table-responsive p-0">
                                     <table class="table table-hover text-nowrap">
                                       <thead>

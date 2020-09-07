@@ -64,7 +64,8 @@
                                                   <div class="col-12 col-md-12 col-lg-12 order-2 order-md-1">
                                                     <div class="row">
 
-                                    <button type="submit" class="btn btn-info"> {{$agent_unite->Nom_Agent}}</button>
+                                                        <button type="submit" class="btn btn-info">{{$agent_unite->Nom_Agent}}</button>
+                                                        <button type="submit" class="btn btn-outline-info">Heure nº{{$heure->id_heure_a_faire}}</button>
                                     <div class="card-body table-responsive p-0">
                                       <table class="table table-hover text-nowrap">
                                         <thead>
@@ -86,10 +87,10 @@
                                               {{$heure->Date_Heure}}
                                             </td>
                                             <td>
-                                              {{$heure->heure_debut}} :00
+                                              {{$heure->heure_debut}}:00
                                             </td>
                                             <td>
-                                              {{$heure->heure_fin}} :00
+                                              {{$heure->heure_fin}}:00
                                             </td>
                                             <td>
                                               {{$heure->travaux_effectuer}}

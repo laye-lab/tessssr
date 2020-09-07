@@ -132,12 +132,11 @@ class ValidationController extends Controller
                 $Heures_supp=DB::table('heures_supp')
                 ->where('id_heure_a_faire', '=', $id )
                 ->update(['Statut' => 1]);
+
                 $Step=DB::table('Step')
-                    ->where('Demandeur', '=',$id)
+                    ->where('Heures_supp_a_faireID', '=',$id)
                     ->update(['etape' => 1]);
-
-
-        return back()->with('success','heures supplémentaire validées ');
+                    return back()->with('success','heures supplémentaire invalidées ');
               break;
         }
 

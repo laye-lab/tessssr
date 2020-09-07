@@ -68,7 +68,7 @@
                             <tbody>
                             <tr>
 
-                                        @foreach($agent_attribut as $agent_attributs)
+                                        @foreach($agent_n_plus_1 as $agent_attributs)
 
 
                                                 <td>
@@ -216,7 +216,7 @@
                             <tbody>
                             <tr>
 
-                                        @foreach($agent_sec as $agent_attributs)
+                                        @foreach($agent_attribut as $agent_attributs)
 
 
                                                 <td>
