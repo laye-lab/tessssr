@@ -3,15 +3,24 @@
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Calcul heure </h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Heure supplémentaire</a></li>
+                <li class="breadcrumb-item active">senadmin</li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
     <section class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Heures supplémentaires</h1>
-          </div>
 
-        </div>
-      </div><!-- /.container-fluid -->
     </section>
     <center>
 
@@ -57,7 +66,7 @@
 
 
 
-                        <button class=" btn  btn-lg btn-dark form-control">Lister</button>
+                        <button class=" btn  btn-lg btn-outline-dark form-control">Lister</button>
                       </div>
                     </div>
                   </div>
@@ -134,7 +143,7 @@
                     <div class="col-sm-6">
                       <div class="form-group">
 
-                        <button class=" btn  btn-lg btn-danger form-control">  Lister </button>
+                        <button class=" btn  btn-lg btn-outline-danger form-control">Lister</button>
                       </div>
                     </div>
                   </div>

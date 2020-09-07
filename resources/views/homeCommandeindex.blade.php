@@ -3,21 +3,42 @@
 @section('content')
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Secteur</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+
+                <li class="breadcrumb-item"><a href="#">Choix secteur</a></li>
+                <li class="breadcrumb-item active">senadmin</li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
     <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
 
 
-<center>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
 <section class="content" >
-  <div class="container-fluid">
+  <div class="container-fluid" >
     @if ($message = Session::get('notif'))
-    <div class="alert alert-success alert-block col-md-6">
+    <div class="alert alert-success alert-block col-md-8"style="position:relative; left:15%;">
         <button type="button" class="close" data-dismiss="alert">×</button>
             <strong>{{ $message }}</strong>
     </div>
     @endif
-    <div class="row" style="position:relative; top:100px; left:30%;">
+    <div class="row" style="position:relative; left:15%;">
       <!-- left column -->
-      <div class="col-md-6" >
+      <div class="col-md-8" >
         <form method="POST" action="{{ route('homeCommandepost') }}">
           @csrf
         <!-- general form elements disabled -->
@@ -49,7 +70,7 @@
 
 
 
-                    <button class=" btn  btn-lg btn-info form-control">Passer commande </button>
+                    <button class=" btn btn-lg  btn-outline-info">Passer commande </button>
                   </div>
                 </div>
               </div>

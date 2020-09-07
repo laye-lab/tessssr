@@ -3,12 +3,28 @@
 @section('content')
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">Saisie heure supplémentaire</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="#">Saisie</a></li>
+                <li class="breadcrumb-item"><a href="#">Choix</a></li>
+                <li class="breadcrumb-item active">senadmin</li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
     <!-- Content Header (Page header) -->
     <section class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-            <h1>Saisir heure</h1>
+
               <center>
                             @if ($message = Session::get('success'))
             <div class="alert alert-success alert-block">
@@ -46,9 +62,9 @@
       <!-- Main content -->
 
             <center>
-            <div class="col-md-6">
-            <div class="card card-dark">
-            <div class="card-header">
+            <div class="col-md-8">
+            <div class="card  card-dark">
+            <div class="card-header card-outline-dark">
                 @foreach($agent_etablissement as $agent_etablissements)
 
                 @if($agent_etablissements->Matricule_agent  ==  $collab)
@@ -65,8 +81,8 @@
             <div class="form-group row">
 
 
-            <label for="example-datetime-local-input" class="col-sm-2 col-form-label">Date</label>
-            <div class="col-sm-10">
+            <label for="example-datetime-local-input" class="col-sm-3 col-form-label">Date</label>
+            <div class="col-sm-9">
             <input class="form-control  @error ('Date_debut') @enderror" type="date" name="Date_Heure"  value="" id="example-date-input">
             </div>
             @error('Date_debut')
@@ -76,8 +92,8 @@
             @enderror
             </div>
             <div class="form-group row">
-            <label for="example-date-input" class="col-2 col-form-label">De</label>
-            <div class="col-sm-10">
+            <label for="example-date-input" class="col-3 col-form-label">Heure de début</label>
+            <div class="col-sm-9">
             <input class="form-control @error ('Date_fin') @enderror" type="time"  name="heure_debut"  value="" id="example-date-input">
             </div>
             @error('Date_fin')
@@ -88,8 +104,8 @@
 
             </div>
             <div class="form-group row">
-            <label for="example-week-input" class="col-2 col-form-label">À </label>
-            <div class="col-sm-10">
+            <label for="example-week-input" class="col-3 col-form-label">Heure de fin </label>
+            <div class="col-sm-9">
             <input class="form-control @error ('nbr_heure') @enderror" type="time" name="heure_fin"  value="2011-W33" id="example-week-input">
             </div>
             @error('nbr_heure')
@@ -100,14 +116,14 @@
             </div>
 
             <div class="form-group row" >
-            <label for="example-text-input" class="col-2 col-form-label">Travaux réalisés</label>
-            <div class="col-sm-10">
+            <label for="example-text-input" class="col-3 col-form-label">Travaux réalisés</label>
+            <div class="col-sm-9">
             <input class="form-control" type="text"  name="travaux_effectuer" value="" id="example-text-input">
             </div>
             </div>
             <div class="form-group row" >
-            <label for="example-text-input"  name="Observations" class="col-2 col-form-label">Observations</label>
-            <div class="col-sm-10">
+            <label for="example-text-input"  name="Observations" class="col-3 col-form-label">Observations</label>
+            <div class="col-sm-9">
             <input class="form-control  @error ('Observations')"@enderror" name="Observations" type="text" value="" id="example-text-input">
             </div>
             @error('Observations')
@@ -134,7 +150,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                <center>  <center> <button class=" btn btn-lg btn-dark">Valider</button></center>
+                <center>  <center> <button class="btn btn-lg  btn-outline-dark">Valider</button></center>
                 </div>
                 <!-- /.card-footer -->
             </form>

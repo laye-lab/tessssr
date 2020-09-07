@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +9,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{asset('../../plugins/fontawesome-free/css/all.min.css')}}">
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{{asset('../../dist/css/adminlte.min.css')}}">
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -23,65 +24,79 @@
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link"  href="{{ URL::previous() }}">
-        <i class="fas fa-backspace fa-2x "> </i>
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
 
+        </li>
 
-    </a>
-    </li>
-</ul>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a  href="{{route('Acceuil')}}" class="nav-link">Acceuil</a>
+        </li>
 
-    <!-- SEARCH FORM -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Authentication Links -->
-      @guest
-          <li class="nav-item">
-              <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-          </li>
-          @if (Route::has('register'))
-              <li class="nav-item">
-                  <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-              </li>
-          @endif
-      @else
-          <li class="nav-item dropdown">
-            <div class="user-block">
-              <img class="img-circle img-bordered-sm" src="{{asset('../../dist/img/icone2.png')}}" alt="user image">
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="https://www.seneau.sn/portail/fr-FR" class="nav-link">Contact</a>
+        </li>
+      </ul>
+
+      <!-- SEARCH FORM -->
+      <form class="form-inline ml-3">
+        <div class="input-group input-group-sm">
+          <input class="form-control form-control-navbar" type="search" placeholder="recherche" disabled aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-navbar" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
         </div>
-              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                <span class="username">
-                @foreach($role_account as $role)
-                @if(Auth::user()->id == $role->Matricule_agent)
-                {{$role->Nom_Agent}}
-                @break
-                @endif
-                @endforeach
-              </span>
-              </a>
+      </form>
 
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{{ route('logout') }}"
-                     onclick="event.preventDefault();
-                                   document.getElementById('logout-form').submit();">
-                      {{ __('Se deconnecter') }}
-                  </a>
 
-                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                      @csrf
-                  </form>
 
-              </div>
-          </li>
-
-      @endguest
   </ul>
-
-
     <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+        <!-- Authentication Links -->
+        @guest
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+            @if (Route::has('register'))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                </li>
+            @endif
+        @else
+            <li class="nav-item dropdown">
+              <div class="user-block">
+                <img class="img-circle img-bordered-sm" src="{{asset('../../dist/img/icone2.png')}}" alt="user image">
+          </div>
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                  <span class="username">
+                  @foreach($role_account as $role)
+                  @if(Auth::user()->id == $role->Matricule_agent)
+                  {{$role->Nom_Agent}}
+                  @break
+                  @endif
+                  @endforeach
+                </span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();">
+                        {{ __('Se deconnecter') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+
+                </div>
+            </li>
+
+        @endguest
+    </ul>
 
   </nav>
   <!-- /.navbar -->
@@ -107,7 +122,7 @@
         @foreach($role_account as $role)
         @if(Auth::user()->id == $role->Matricule_agent)
         @switch($role->Nom)
-            @case('n+1')
+        @case('n+1')
                                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                                         <!-- Add icons to the links using the .nav-icon class
                                             with font-awesome or any other icon font library -->
@@ -324,6 +339,15 @@
                         </a>
                     </li>
                     <li class="nav-item has-treeview menu-open">
+                        <a  href="{{route('Chartsrh')}}" href="#" class="nav-link">
+                            <i class="fas fa-chart-bar"></i>
+                            <p>
+                                Statistiques
+                            </p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item has-treeview menu-open">
                     <a  href="{{route('Calculheure')}}" href="#" class="nav-link">
                         <i class="nav-icon fas fa-eye"></i>
                         <p>
@@ -378,6 +402,13 @@
                                     </p>
                                 </a>
                                 </li>
+                                <li class="nav-item has-treeview menu-open">
+                                    <a  href="{{route('Chartsrh')}}" href="#" class="nav-link">
+                                        <i class="fas fa-chart-bar"></i>
+                                        <p>
+                                            Statistiques
+                                        </p>
+                                    </a>
                                 <li class="nav-item has-treeview menu-open">
                                 <a  href="{{route('Validation')}}" href="#" class="nav-link">
                                     <i class="nav-icon fas fa-eye"></i>
@@ -438,20 +469,34 @@
     <!-- /.sidebar -->
   </aside>
 
-<!-- /.container-fluid -->
-    </section>
+  @yield('content')
+  <!-- Content Wrapper. Contains page content -->
 
-    <!-- Main content -->
-   @yield('content')
+  <!-- /.content-wrapper -->
+
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2020 <a href="https://www.seneau.sn/portail/fr-FR">SEN'EAU</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b>1
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="{{asset('../../plugins/jquery/jquery.min.js')}}"></script>
+<script src="../../plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="{{asset('../../plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="{{asset('../../dist/js/adminlte.min.js')}}"></script>
+<script src="../../dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="{{asset('../../dist/js/demo.js')}}"></script>
-
+<script src="../../dist/js/demo.js"></script>
 </body>
 </html>

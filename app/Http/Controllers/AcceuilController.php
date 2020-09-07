@@ -132,19 +132,21 @@ class AcceuilController extends Controller
 
         ];
 
-        $etablissement_dr =DB::table('agent')->select('etablissement')->where('Matricule_Agent', '=',  $user)->first();
+        $etablissement_dr =DB::table('agent')->where('Matricule_Agent', '=', $user)->first();
+
+
         $total_current_month =DB::table('heures_supp')->select('total_heures_saisie')
         ->whereMonth('Date_Heure', '=',$current_month)->sum('total_heures_saisie');
 
         $total_current_month_dr=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')
-        ->where('Etablissement', '=',$etablissement_dr->etablissement)->whereMonth('Date_Heure', '=',$current_month)->sum('total_heures_saisie');
+        ->where('Etablissement', '=',$etablissement_dr->Etablissement)->whereMonth('Date_Heure', '=',$current_month)->sum('total_heures_saisie');
 
 
         $total_current_year =DB::table('heures_supp')->select('total_heures_saisie')
         ->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
         $total_current_year_dr =DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')
-        ->where('Etablissement', '=',$etablissement_dr->etablissement)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        ->where('Etablissement', '=',$etablissement_dr->Etablissement)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
 
         $total_taux_15_year =DB::table('heures_supp')->select('total_taux_15')->whereYear('Date_Heure', '=',$current_year)->sum('total_taux_15');
@@ -219,7 +221,7 @@ class AcceuilController extends Controller
         ->join('users','users.id' ,'=', 'Role_Account.AccountID')
         ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
         ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-        ->select('Matricule_agent','Role.Nom','Nom_Agent')
+        ->select('Matricule_agent','Role.Nom','Nom_Agent','fonction')
         ->get();
 
 

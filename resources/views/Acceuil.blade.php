@@ -8,16 +8,22 @@
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+    <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Acceuil</h1>
-          </div>
-
-        </div>
+            <h1 class="m-0 text-dark">Acceuil</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Acceuil</a></li>
+              <li class="breadcrumb-item active">senadmin</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
       </div><!-- /.container-fluid -->
-    </section>
+    </div>
+
     @foreach($role_account as $role)
                 @if(Auth::user()->id == $role->Matricule_agent)
                                 @if($role->Nom == 'n+3')
@@ -34,7 +40,7 @@
                                                         <!-- ./col -->
                                 @endif
 
-                            @if($role->Nom === 'n+1')
+                            @if($role->Nom === 'n+1' or $role->Nom === 'sec')
                                         <!-- Main content -->
                                     @include('Acceuil.n_plus_1')
                                     @break

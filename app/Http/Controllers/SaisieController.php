@@ -179,6 +179,8 @@ class SaisieController extends Controller
     ->select('total_heures_saisie')
     ->where([
         ['Agent_Matricule_Agent','=',$collaborateur],
+        ['id','=',$id_heure]
+
     ])
     ->sum('total_heures_saisie');
 if ($heure_debut>$heure_fin) {

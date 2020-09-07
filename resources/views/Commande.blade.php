@@ -2,38 +2,52 @@
 
 @section('content')
  <!-- Content Wrapper. Contains page content -->
- <div class="content-wrapper">
+ <div class="content-wrapper">  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0 text-dark">Saisie commande</h1>
+        </div><!-- /.col -->
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="#">Saisie</a></li>
+            <li class="breadcrumb-item"><a href="#">Choix</a></li>
+            <li class="breadcrumb-item active">senadmin</li>
+          </ol>
+        </div><!-- /.col -->
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
     <!-- Content Header (Page header) -->
     <section class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-12">
-            <h4>Commande heure supplémentaire</h4>
             <center>
             @if ($errors->any())
- 
-    
+
+
         @foreach ($errors->all() as $error)
-          
+
            <div class="alert alert-danger  col-6 " role="alert">
             {{ $error }}
            </div>
         @endforeach
-     
+
      @if ($errors->has('email'))
      @endif
 
 @endif
 </center>
           </div>
-        
+
         </div>
       </div><!-- /.container-fluid -->
     </section>
       <!-- Main content -->
-  
+
   <center>
-    <div class="col-md-6">
+    <div class="col-md-8">
     <div class="card card-info">
       <div class="card-header">
         @foreach($agent_etablissement as $agent_etablissements)
@@ -49,8 +63,8 @@
       <form  class="form-horizontal" method="POST" action="{{ route('Commandestore') }}">
         @csrf
         <div class="card-body">
-        
-        
+
+
     <div class="form-group row">
 
 
@@ -58,7 +72,7 @@
       <div class="col-8">
           <input class="form-control"  type="date" name="Date_debut"  value="{{ old('Date_debut') }}" id="example-date-input">
       </div>
-              
+
             </div>
                   <div class="form-group row">
                     <label for="example-datetime-local-input" class="col-3 col-form-label">Date de fin</label>
@@ -71,7 +85,7 @@
               <div class="col-8">
                   <input class="form-control " type="number" name="nbr_heure"  value="{{ old('nbr_heure') }}" id="example-date-input">
               </div>
-          
+
             </div>
 
             <div class="form-group row" >
@@ -85,7 +99,7 @@
               <div class="col-8">
                   <input class="form-control"  type="text" name="Observations"  value="{{ old('Observations') }}" id="example-date-input">
               </div>
-          
+
             </div>
             <input class="form-control"  type="hidden"   name="commandeur" value="{{old('commandeur', Auth::user()->id) }}"  id="example-text-input">
             <input class="form-control"  type="hidden"   name="collaborateur" value="{{old('collaborateur', $collab) }}"  id="example-text-input">
@@ -93,11 +107,11 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                  <center>  <center> <button class=" btn btn-lg btn-info">Valider</button></center> 
+                  <center>  <center> <button class=" btn btn-lg  btn-outline-info">Valider</button></center>
                 </div>
                 <!-- /.card-footer -->
               </form>
     </div>
     </center>
-  
+
 @endsection

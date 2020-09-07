@@ -35,19 +35,36 @@
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-  <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
 
-      </li>
-      <li class="nav-item">
-        <a class="nav-link"  href="{{ URL::previous() }}">
-        <i class="fas fa-backspace fa-2x "> </i>
+        </li>
+
+        <li class="nav-item d-none d-sm-inline-block">
+          <a  href="{{route('Acceuil')}}" class="nav-link">Acceuil</a>
+        </li>
+
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="https://www.seneau.sn/portail/fr-FR" class="nav-link">Contact</a>
+        </li>
+      </ul>
+
+      <!-- SEARCH FORM -->
+      <form class="form-inline ml-3">
+        <div class="input-group input-group-sm">
+          <input class="form-control form-control-navbar" type="search" placeholder="rechercher" disabled aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-navbar" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
 
 
-    </a>
-    </li>
-</ul>
+
+  </ul>
 <!-- Right Side Of Navbar -->
 <ul class="navbar-nav ml-auto">
     <!-- Authentication Links -->
@@ -116,7 +133,7 @@
         @foreach($role_account as $role)
         @if(Auth::user()->id == $role->Matricule_agent)
         @switch($role->Nom)
-            @case('n+1')
+        @case('n+1')
                                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                                         <!-- Add icons to the links using the .nav-icon class
                                             with font-awesome or any other icon font library -->
@@ -135,14 +152,70 @@
                                                     </p>
                                                 </a>
                                             </li>
+
+                                    <li class="nav-item has-treeview menu-open">
+                                    <a  href="{{route('homeSaisie')}}" class="nav-link">
+                                        <i class="nav-icon fas fa-pen-alt"></i>
+                                        <p>
+                                        Saisie heure
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                <a  class="nav-link">
+                                    <i class="nav-icon far fa-circle text-info"></i>
+                                    <i class="nav-icon fas fa-user-check"></i>
+                                    <p>Choix collaborateur</p>
+                                </a>
+                                </li>
+                                <li class="nav-item">
+                                <a  class="nav-link">
+                                    <i class="nav-icon far fa-circle text-info"></i>
+                                    <i class="nav-icon far fa-calendar-check"></i>
+                                    <p>Saisie  </p>
+                                </a>
+                                </li>
+                                <li class="nav-item has-treeview menu-open">
+                                <a href="{{route('Validation')}}" class="nav-link">
+                                    <i class="nav-icon fas fa-check-double"></i>
+                                    <p>
+                                    Valider heure
+                                  <span class="badge badge-info right">new</span>
+                                    </p>
+                                </a>
+                                </li>
+                                <li class="nav-item has-treeview menu-open">
+                                <a href="{{route('Validation')}}" class="nav-link">
+                                    <i class="nav-icon fas fa-eye"></i>
+                                    <p>
+                                    Consulter agent
+                                    </p>
+                                </a>
+                                </li>
+                                    </ul>
+
+                @break
+                @case('sec')
+                                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                                        <!-- Add icons to the links using the .nav-icon class
+                                            with font-awesome or any other icon font library -->
+                                            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+
+                                            <div class="nav-link" style="color:white;">
+                                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                            <p > Navigateur</p>
+                                            </div>
+                                            </div>
                                             <li class="nav-item has-treeview menu-open">
-                                                <a  href="{{route('Calculheure')}}" href="#" class="nav-link">
+                                                <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
                                                     <i class="fas fa-home"></i>
                                                     <p>
                                                    Acceuil
                                                     </p>
                                                 </a>
                                             </li>
+
                                     <li class="nav-item has-treeview menu-open">
                                     <a  href="{{route('homeSaisie')}}" class="nav-link">
                                         <i class="nav-icon fas fa-pen-alt"></i>
@@ -335,6 +408,14 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item has-treeview menu-open">
+                        <a  href="{{route('Chartsrh')}}" href="#" class="nav-link">
+                            <i class="fas fa-chart-bar"></i>
+                            <p>
+                                Statistiques
+                            </p>
+                        </a>
+                    </li>
 
                     <li class="nav-item has-treeview menu-open">
                     <a  href="{{route('Calculheure')}}" href="#" class="nav-link">
@@ -393,6 +474,13 @@
                                 </a>
                                 </li>
                                 <li class="nav-item has-treeview menu-open">
+                                    <a  href="{{route('Chartsrh')}}" href="#" class="nav-link">
+                                        <i class="fas fa-chart-bar"></i>
+                                        <p>
+                                            Statistiques
+                                        </p>
+                                    </a>
+                                <li class="nav-item has-treeview menu-open">
                                 <a  href="{{route('Validation')}}" href="#" class="nav-link">
                                     <i class="nav-icon fas fa-eye"></i>
                                     <p>
@@ -449,6 +537,26 @@
 @yield('content')
 <!-- ./wrapper -->
 <!-- jQuery -->
+    <!-- /.row -->
+</div>
+<!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+</div>
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <strong>Copyright &copy; 2020 <a href="https://www.seneau.sn/portail/fr-FR">SEN'EAU</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b>1
+    </div>
+  </footer>
+</div>
 <script src="{{asset('plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="{{asset('plugins/jquery-ui/jquery-ui.min.js')}}"></script>

@@ -27,7 +27,7 @@
                       <td>{{$datass->sum40}}</td>
                       <td>{{$datass->sum60}}</td>
                       <td>{{$datass->sum100}}</td>
-                      <td><button class=" btn btn-lg btn-danger">{{$datass->total}}</button></td>
+                      <td><button class=" btn btn-lg btn-outline-danger">{{$datass->total}}</button></td>
              </tr>
 
        @endforeach

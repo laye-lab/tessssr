@@ -32,6 +32,12 @@ Auth::routes();
             'middleware' => 'roles',
             'roles' => ['drh']
         ]);
+        Route::any('/Chartsrh', [
+            'uses' =>'DashbordController@charts',
+            'as' => 'Chartsrh',
+            'middleware' => 'roles',
+            'roles' => ['drh','dto']
+        ]);
 
         Route::any('/Affectation', [
             'uses' =>'AffectationController@showForm',
@@ -72,7 +78,7 @@ Auth::routes();
             'uses' =>'HomeSaisieController@index',
             'as' => 'homeSaisie',
             'middleware' => 'roles',
-            'roles' => ['n+2','n+1']
+            'roles' => ['n+2','n+1','sec']
         ]);
 
         Route::get('/Calculheure',[
@@ -118,21 +124,21 @@ Auth::routes();
             'uses' =>'SaisieController@index',
             'as' => 'Saisie',
             'middleware' => 'roles',
-            'roles' => ['n+2','n+1']
+            'roles' => ['n+2','n+1','sec']
         ]);
         Route::any('/ModifSaisieindex',
         [
             'uses' =>'SaisieController@Updateindex',
             'as' => 'ModifSaisieindex',
             'middleware' => 'roles',
-            'roles' => ['n+1']
+            'roles' => ['n+1','sec']
         ]);
         Route::any('/ModifSaisie',
         [
             'uses' =>'SaisieController@Update',
             'as' => 'ModifSaisie',
             'middleware' => 'roles',
-            'roles' => ['n+1']
+            'roles' => ['n+1','sec']
         ]);
 
         Route::get('/Validation', 'ValidationController@index')->name('Validation');
