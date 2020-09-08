@@ -36,7 +36,7 @@ Auth::routes();
             'uses' =>'DashbordController@charts',
             'as' => 'Chartsrh',
             'middleware' => 'roles',
-            'roles' => ['drh','dto']
+            'roles' => ['drh','dto','dcm']
         ]);
 
         Route::any('/Affectation', [
@@ -85,7 +85,7 @@ Auth::routes();
             'uses' =>'CalculheureController@index',
             'as' => 'Calculheure',
             'middleware' => 'roles',
-            'roles' => ['drh','dto']
+            'roles' => ['drh']
         ]);
 
         Route::any('/CalculheureMois',
@@ -93,14 +93,14 @@ Auth::routes();
             'uses' =>'CalculheureController@Showpermonth',
             'as' => 'CalculheureMois',
             'middleware' => 'roles',
-            'roles' => ['drh','dto']
+            'roles' => ['drh']
         ]);
         Route::any('/exportheure',
         [
             'uses' =>'CalculheureController@export',
             'as' => 'exportheure',
             'middleware' => 'roles',
-            'roles' => ['drh','dto']
+            'roles' => ['drh']
         ]);
 
         Route::any('/PrintCalculheureMois',
@@ -116,7 +116,7 @@ Auth::routes();
             'uses' =>'CalculheureController@Showpersecteur',
             'as' => 'CalculheureSecteur',
             'middleware' => 'roles',
-            'roles' => ['drh','dto']
+            'roles' => ['drh']
         ]);
 
         Route::any('/Saisie',

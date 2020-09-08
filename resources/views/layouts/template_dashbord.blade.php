@@ -28,6 +28,12 @@
   <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+<script>
+    var elem = document.getElementById("myvideo");
+        if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+        }
+</script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -41,13 +47,14 @@
 
         </li>
 
-        <li class="nav-item d-none d-sm-inline-block">
+        <li  class="nav-item d-none d-sm-inline-block">
           <a  href="{{route('Acceuil')}}" class="nav-link">Acceuil</a>
         </li>
 
         <li class="nav-item d-none d-sm-inline-block">
           <a href="https://www.seneau.sn/portail/fr-FR" class="nav-link">Contact</a>
         </li>
+
       </ul>
 
       <!-- SEARCH FORM -->
@@ -492,35 +499,50 @@
 
                 @break
                 @case('dcm')
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-                                    with font-awesome or any other icon font library -->
-                                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                        with font-awesome or any other icon font library -->
+                                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 
-                                    <div class="nav-link" style="color:white;">
-                                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                                    <p > Navigateur</p>
-                                    </div>
-                                    </div>
+                                <div class="nav-link" style="color:white;">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p > Navigateur</p>
+                                </div>
+                                </div>
+                                  <li class="nav-item has-treeview menu-open">
+                                            <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
+                                                <i class="fas fa-home"></i>
+                                                <p>
+                                               Acceuil
+                                                </p>
+                                            </a>
+                                        </li>
 
-                                    <li class="nav-item has-treeview menu-open">
-                                    <a   href="{{route('Validation')}}" class="nav-link">
-                                        <i class="nav-icon fas fa-check-double"></i>
+                                <li class="nav-item has-treeview menu-open">
+                                <a  href="{{route('Validation')}}"  class="nav-link">
+                                    <i class="nav-icon fas fa-check-double"></i>
+                                    <p>
+                                    Valider heure
+                                  <span class="badge badge-info right">new</span>
+                                    </p>
+                                </a>
+                                </li>
+                                <li class="nav-item has-treeview menu-open">
+                                    <a  href="{{route('Chartsrh')}}" href="#" class="nav-link">
+                                        <i class="fas fa-chart-bar"></i>
                                         <p>
-                                        Valider heure
-                                      <span class="badge badge-info right">new</span>
+                                            Statistiques
                                         </p>
                                     </a>
-                                    </li>
-                                    <li class="nav-item has-treeview menu-open">
-                                    <a  href="{{route('Validation')}}" href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-eye"></i>
-                                        <p>
-                                        Consulter agent
-                                        </p>
-                                    </a>
-                                    </li>
-                    </ul>
+                                <li class="nav-item has-treeview menu-open">
+                                <a  href="{{route('Validation')}}" href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-eye"></i>
+                                    <p>
+                                    Consulter agent
+                                    </p>
+                                </a>
+                                </li>
+                </ul>
                 @break
 
 
@@ -591,3 +613,4 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
    {{-- ChartScript --}}
+
