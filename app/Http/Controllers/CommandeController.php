@@ -45,7 +45,7 @@ class CommandeController extends Controller
         ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement')
         ->get();
 
-        $service=DB::table('Affectation')
+        $service=DB::table('affectation')
         ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')
         ->select('Matricule_agent','Nom_Agent','Fonction','Statut','Affectation','Direction','Etablissemt_nom')
         ->distinct('Matricule_agent')
@@ -92,7 +92,7 @@ class CommandeController extends Controller
             ->select('Matricule_agent','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
             ->get();
 
-            $service=DB::table('Affectation')
+            $service=DB::table('affectation')
             ->select('Libelle_Affectation','Etablissemt_nom','agentMatricule_Agent')
             ->distinct('Libelle_Affectation')
             ->select('Libelle_Affectation','Etablissemt_nom')

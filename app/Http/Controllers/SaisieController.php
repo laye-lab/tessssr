@@ -140,7 +140,7 @@ class SaisieController extends Controller
     ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
     ->get();
 
-    $verif_doublon=DB::table('Heures_supp')
+    $verif_doublon=DB::table('heures_supp')
     ->where([
         ['Agent_Matricule_Agent','=',$collaborateur],
         ['Date_Heure','=',$date]])
@@ -152,12 +152,12 @@ class SaisieController extends Controller
  return back()->with('notif','vous avez déja saisie des heures pour cette date');
     }
 
-        $service=DB::table('Affectation')
+        $service=DB::table('affectation')
         ->select('Libelle_Affectation','Etablissemt_nom','agentMatricule_Agent')
         ->distinct('Libelle_Affectation')
         ->select('Libelle_Affectation','Etablissemt_nom')
         ->get();
-        $affectation=DB::table('Affectation')
+        $affectation=DB::table('affectation')
         ->select('Libelle_Affectation','Etablissemt_nom','agentMatricule_Agent')
         ->get();
 

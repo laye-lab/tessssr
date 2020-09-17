@@ -22,7 +22,7 @@ class ValidationController extends Controller
         $current_month = date('m');
         $current_year = date("Y");
 
-        $service=DB::table('Affectation')
+        $service=DB::table('affectation')
             ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')
             ->select('Matricule_agent','Nom_Agent','Fonction','Statut','Libelle_Affectation','Direction','Etablissemt_nom')
             ->distinct('Matricule_agent')
