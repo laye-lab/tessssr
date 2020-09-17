@@ -22,11 +22,17 @@ class StoreCommandeRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
+  {
+
+        $today = \Carbon\Carbon::now(); //Current Date and Time
+
+          $lastDayofMonth = \Carbon\Carbon::parse($today)->endOfMonth()->toDateString();
+
+
         return [
 
             'Date_debut' => 'required|date_format:Y-m-d|after:yesterday',
-            'Date_fin' => 'required|date_format:Y-m-d||after_or_equal:Date_debut',
+            'Date_fin' => 'required|date_format:Y-m-d||after:Date_debut|before_or_equal:'.$lastDayofMonth,
             'nbr_heure' => 'required|numeric|min:0|max:80',
             'commandeur' => 'required',
             'collaborateur' => 'required',

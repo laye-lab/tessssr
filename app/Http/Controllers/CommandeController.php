@@ -131,6 +131,30 @@ class CommandeController extends Controller
             ->select('agent.Matricule_agent','Nom_Agent','Fonction','agent.Statut'
             ,'Direction','Etablissement','Affectation')
             ->get();
+
+            $verif_doublon=DB::table('Heures_supp_a_faire')
+            ->join('agent_Heures_supp_a_faire','Heures_supp_a_faireID','=','ID' )
+            ->where([
+                ['agentMatricule_Agent','=',request('collaborateur')],
+                ['Date_fin','=',request('Date_fin')],
+                ['Demandeur','=', request('commandeur')],
+                ['Date_debut','=',request('Date_debut')]
+                ])
+            ->get();
+
+            $verif_date=DB::table('Heures_supp_a_faire')
+            ->join('agent_Heures_supp_a_faire','Heures_supp_a_faireID','=','ID' )
+            ->where('agentMatricule_Agent','=',request('collaborateur'))
+            ->whereBetween('Date_debut', [request('Date_debut'),request('Date_fin')])
+            ->get();
+
+
+            $Isempty_doublon=$verif_doublon->isEmpty();
+            $Isempty_interval=$verif_doublon->isEmpty();
+
+
+        if($Isempty_doublon == 'true'){
+
         $Heures_supp_a_faire = new Heures_supp_a_faire;
         $Step = new Step;
         $Agent_Heures_supp_a_faire = new Agent_Heures_supp_a_faire;
@@ -140,13 +164,15 @@ class CommandeController extends Controller
         $Heures_supp_a_faire->nbr_heure =request('nbr_heure');
         $Heures_supp_a_faire->travaux_effectuer =request('travaux_effectuer');
         $Heures_supp_a_faire->Observations =request('Observations');
-
         $Heures_supp_a_faire->save();
 
         $Heures_supp=DB::table('Heures_supp_a_faire')
         ->select('ID')
         ->where('Demandeur','=', $Heures_supp_a_faire->Demandeur)
         ->latest('ID')->first();
+
+
+
         $Step->Demandeur =request('commandeur');
         $Step->etape =1;
         $Step->Libelle=request('travaux_effectuer');
@@ -180,7 +206,9 @@ class CommandeController extends Controller
 
         ]
         );
-
+    } else {
+        return back()->with('notif','les doublons ne sont pas autorisés');
+    }
     }
 
     /**

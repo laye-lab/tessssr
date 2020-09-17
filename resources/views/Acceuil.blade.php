@@ -1,7 +1,3 @@
-
-
-
-
 @extends('layouts.template_dashbord_acceuil')
 
 @section('content')
@@ -37,7 +33,7 @@
                                     <!-- Main content -->
                                     @include('Acceuil.n_plus_2')
                                     @break
-                                                        <!-- ./col -->
+                 <!-- ./col -->
                                 @endif
 
                             @if($role->Nom === 'n+1' or $role->Nom === 'sec')
@@ -47,14 +43,17 @@
                                                     <!-- ./col -->
                                 @endif
 
-
                             @if($role->Nom === 'dto')
                                                     <!-- Main content -->
-
                                     @include('Acceuil.dto_dcm')
                                     @break
                                 @endif
 
+                            @if($role->Nom === 'dcm')
+                                <!-- Main content -->
+                             @include('Acceuil.dto_dcm')
+                                @break
+                            @endif
 
                             @if($role->Nom === 'drh')
                                     @include('Acceuil.drh')

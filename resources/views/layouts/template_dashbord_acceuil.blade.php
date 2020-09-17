@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Senadmin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -492,35 +492,50 @@
 
                 @break
                 @case('dcm')
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-                                    with font-awesome or any other icon font library -->
-                                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                        with font-awesome or any other icon font library -->
+                                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 
-                                    <div class="nav-link" style="color:white;">
-                                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                                    <p > Navigateur</p>
-                                    </div>
-                                    </div>
+                                <div class="nav-link" style="color:white;">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p > Navigateur</p>
+                                </div>
+                                </div>
+                                  <li class="nav-item has-treeview menu-open">
+                                            <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
+                                                <i class="fas fa-home"></i>
+                                                <p>
+                                               Acceuil
+                                                </p>
+                                            </a>
+                                        </li>
 
-                                    <li class="nav-item has-treeview menu-open">
-                                    <a   href="{{route('Validation')}}" class="nav-link">
-                                        <i class="nav-icon fas fa-check-double"></i>
+                                <li class="nav-item has-treeview menu-open">
+                                <a  href="{{route('Validation')}}"  class="nav-link">
+                                    <i class="nav-icon fas fa-check-double"></i>
+                                    <p>
+                                    Valider heure
+                                  <span class="badge badge-info right">new</span>
+                                    </p>
+                                </a>
+                                </li>
+                                <li class="nav-item has-treeview menu-open">
+                                    <a  href="{{route('Chartsrh')}}" href="#" class="nav-link">
+                                        <i class="fas fa-chart-bar"></i>
                                         <p>
-                                        Valider heure
-                                      <span class="badge badge-info right">new</span>
+                                            Statistiques
                                         </p>
                                     </a>
-                                    </li>
-                                    <li class="nav-item has-treeview menu-open">
-                                    <a  href="{{route('Validation')}}" href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-eye"></i>
-                                        <p>
-                                        Consulter agent
-                                        </p>
-                                    </a>
-                                    </li>
-                    </ul>
+                                <li class="nav-item has-treeview menu-open">
+                                <a  href="{{route('Validation')}}" href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-eye"></i>
+                                    <p>
+                                    Consulter agent
+                                    </p>
+                                </a>
+                                </li>
+                </ul>
                 @break
 
 
@@ -591,18 +606,62 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
    {{-- ChartScript --}}
-   @if($usersChart)
-   {!! $usersChart->script() !!}
+   @if(isset($usersChartDiourbel))
+   {!! $usersChartDiourbel->script() !!}
    @else <script></script>
    @endif
 
-   @if($usersChartMois)
-   {!! $usersChartMois->script() !!}
+   @if(isset($usersChartKaolack))
+   {!! $usersChartKaolack->script() !!}
+   @else <script></script>
    @endif
 
-   @if($usersChartband)
-   {!! $usersChartband->script() !!}
+   @if(isset($usersChartLouga))
+   {!! $usersChartLouga->script() !!}
+   @else <script></script>
    @endif
-   @if($usersChartbandetablissement)
-   {!! $usersChartbandetablissement->script() !!}
+
+   @if(isset($usersChartDakar1))
+   {!! $usersChartDakar1->script() !!}
+   @else <script></script>
+   @endif
+
+
+   @if(isset($usersChartRufisque))
+   {!! $usersChartRufisque->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartDakar2))
+   {!! $usersChartDakar2->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartHann))
+   {!! $usersChartHann->script() !!}
+   @else <script></script>
+   @endif
+
+
+   @if(isset($usersChartThies))
+   {!! $usersChartThies->script() !!}
+   @else <script></script>
+   @endif
+   @if(isset($usersChartSaint_Louis))
+   {!! $usersChartSaint_Louis->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartZiguinchor))
+   {!! $usersChartZiguinchor->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartTambacounda))
+   {!! $usersChartTambacounda->script() !!}
+   @else <script></script>
+   @endif
+   @if(isset($usersChartNgnith))
+   {!! $usersChartNgnith->script() !!}
+   @else <script></script>
    @endif

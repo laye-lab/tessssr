@@ -16,7 +16,7 @@
                         <span class="info-box-icon btn btn-lg btn-outline-info elevation-1"><i class="fas fa-clock"></i></span>
 
                         <div class="info-box-content">
-                        <span class="info-box-text">Total heure <br> mois en cour </span>
+                        <span class="info-box-text">Total heure <br> mois en cours </span>
                         <span class="info-box-number">
                             {{$total_current_month}}
                             <small>heures</small>
@@ -32,7 +32,7 @@
                         <span class="info-box-icon  btn btn-lg btn-outline-danger elevation-1"><i class="fas fa-clock"></i></span>
 
                         <div class="info-box-content">
-                        <span class="info-box-text">total heure année</span>
+                        <span class="info-box-text">total des  heures <br> de l'année</span>
                         <span class="info-box-number">
                             {{$total_current_year}}
                             <small>heures</small>
@@ -58,48 +58,34 @@
                     <div class="col-12">
                         <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">
-                            <button class=" btn btn-lg btn-outline-success">Heures supplémentaires par établissements et par taux</button>
 
-                            </h3>
+                     <center> <button class=" btn btn-lg btn-outline-success">Suivi des heures supplémentaire du mois</button></center>
 
                         </div>
                         <!-- /.card-header -->
-                        <div class="card-body">
-
-                            <table class="table ">
-                                <thead>
-                                <tr>
-                                    <th>Affectation</th>
-                                    <th>Taux à 15%</th>
-                                    <th>Taux à 40%</th>
-                                    <th>Taux à 60%</th>
-                                    <th>Taux à 100%</th>
-                                    <th>Total</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                @foreach ($data as  $datass)
 
 
-                                        <tr>
-                                                <td>{{$datass->Affectations}}</td>
-                                                <td>{{$datass->sum15}}</td>
-                                                <td>{{$datass->sum40}}</td>
-                                                <td>{{$datass->sum60}}</td>
-                                                <td>{{$datass->sum100}}</td>
-                                                <td><button  class=" btn btn-lg btn-outline-success">{{$datass->total}}</button></td>
-                                        </tr>
+                        <section class="content" >
 
-                                @endforeach
 
-                                </tbody>
 
-                            </table>
+                            <div class="row" style="background-color:white">
+                                <div class="col-12">
 
+                                        <div class="card-body py-3 px-3">
+                                            {!! $usersChartKaolack->container() !!}
+                                        </div>
+
+                                </div>
+
+
+                             </div>
+
+                            </div>
 
                         </div>
+
+                    </section>
                         <!-- /.card-body
                         <tfoot>
                             <tr>

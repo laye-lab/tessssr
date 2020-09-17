@@ -1,4 +1,4 @@
-@extends('layouts.template_dashbord')
+@extends('layouts.template_dashbord_acceuil')
 
 @section('content')
  <!-- Content Wrapper. Contains page content -->
@@ -48,6 +48,7 @@
           </div>
           <!-- /.card-header -->
           <div class="card-body">
+
             <form role="form">
               <div class="row">
                 <div class="col-sm-6">
@@ -82,6 +83,7 @@
 
     </div>
   </div>
+
 </section>
 </center>
 @endsection
