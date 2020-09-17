@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Senadmin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -606,18 +606,62 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
    {{-- ChartScript --}}
-   @if($usersChart)
-   {!! $usersChart->script() !!}
+   @if(isset($usersChartDiourbel))
+   {!! $usersChartDiourbel->script() !!}
    @else <script></script>
    @endif
 
-   @if($usersChartMois)
-   {!! $usersChartMois->script() !!}
+   @if(isset($usersChartKaolack))
+   {!! $usersChartKaolack->script() !!}
+   @else <script></script>
    @endif
 
-   @if($usersChartband)
-   {!! $usersChartband->script() !!}
+   @if(isset($usersChartLouga))
+   {!! $usersChartLouga->script() !!}
+   @else <script></script>
    @endif
-   @if($usersChartbandetablissement)
-   {!! $usersChartbandetablissement->script() !!}
+
+   @if(isset($usersChartDakar1))
+   {!! $usersChartDakar1->script() !!}
+   @else <script></script>
+   @endif
+
+
+   @if(isset($usersChartRufisque))
+   {!! $usersChartRufisque->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartDakar2))
+   {!! $usersChartDakar2->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartHann))
+   {!! $usersChartHann->script() !!}
+   @else <script></script>
+   @endif
+
+
+   @if(isset($usersChartThies))
+   {!! $usersChartThies->script() !!}
+   @else <script></script>
+   @endif
+   @if(isset($usersChartSaint_Louis))
+   {!! $usersChartSaint_Louis->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartZiguinchor))
+   {!! $usersChartZiguinchor->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartTambacounda))
+   {!! $usersChartTambacounda->script() !!}
+   @else <script></script>
+   @endif
+   @if(isset($usersChartNgnith))
+   {!! $usersChartNgnith->script() !!}
+   @else <script></script>
    @endif

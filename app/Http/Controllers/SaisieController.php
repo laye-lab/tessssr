@@ -106,7 +106,7 @@ class SaisieController extends Controller
         $Heures_supp=DB::table('heures_supp')
         ->where('id', '=', $id )
         ->delete();
-       return back();
+       return back()->with('success','heure supplémentaire supprimée ');;
     }
 
 
@@ -131,8 +131,8 @@ class SaisieController extends Controller
 
     $servicedr=request('servicedr');
     $heuresaisie = DB::table('heures_supp')
-
     ->sum('total_heures_saisie');
+
     $role_account=DB::table('Role_Account')
     ->join('users','users.id' ,'=', 'Role_Account.AccountID')
     ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
@@ -140,6 +140,17 @@ class SaisieController extends Controller
     ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
     ->get();
 
+    $verif_doublon=DB::table('Heures_supp')
+    ->where([
+        ['Agent_Matricule_Agent','=',$collaborateur],
+        ['Date_Heure','=',$date]])
+    ->get();
+
+    $Isempty_doublon=$verif_doublon->isEmpty();
+
+    if($Isempty_doublon != 'true'){
+ return back()->with('notif','vous avez déja saisie des heures pour cette date');
+    }
 
         $service=DB::table('Affectation')
         ->select('Libelle_Affectation','Etablissemt_nom','agentMatricule_Agent')

@@ -55,6 +55,7 @@ class HomeSaisieController extends Controller
                 ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement'
                 ,'fonction','Affectation','Date_debut','Date_fin','travaux_effectuer','nbr_heure','Heures_supp_a_faire.ID','etape')
                 ->get();
+                $agent_attribut_count= $agent_attribut->count();
 
 
                 $agent_n_plus_1=DB::table('agent_Heures_supp_a_faire')
@@ -94,6 +95,7 @@ class HomeSaisieController extends Controller
 
                 return view('homesaisie')->with([
                     'agent_attribut'=> $agent_attribut,
+                    'agent_attribut_count'=> $agent_attribut_count,
                     'agent_n_plus_1'=>$agent_n_plus_1,
                     'role_account'=> $role_account,
                     'agent_sec'=> $agent_sec,

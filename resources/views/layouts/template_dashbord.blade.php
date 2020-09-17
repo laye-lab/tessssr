@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>Senadmin</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -28,12 +28,6 @@
   <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-<script>
-    var elem = document.getElementById("myvideo");
-        if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-        }
-</script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 
@@ -47,14 +41,13 @@
 
         </li>
 
-        <li  class="nav-item d-none d-sm-inline-block">
+        <li class="nav-item d-none d-sm-inline-block">
           <a  href="{{route('Acceuil')}}" class="nav-link">Acceuil</a>
         </li>
 
         <li class="nav-item d-none d-sm-inline-block">
           <a href="https://www.seneau.sn/portail/fr-FR" class="nav-link">Contact</a>
         </li>
-
       </ul>
 
       <!-- SEARCH FORM -->
@@ -613,4 +606,62 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
    {{-- ChartScript --}}
+   @if(isset($usersChartDiourbel))
+   {!! $usersChartDiourbel->script() !!}
+   @else <script></script>
+   @endif
 
+   @if(isset($usersChartKaolack))
+   {!! $usersChartKaolack->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartLouga))
+   {!! $usersChartLouga->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartDakar1))
+   {!! $usersChartDakar1->script() !!}
+   @else <script></script>
+   @endif
+
+
+   @if(isset($usersChartRufisque))
+   {!! $usersChartRufisque->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartDakar2))
+   {!! $usersChartDakar2->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartHann))
+   {!! $usersChartHann->script() !!}
+   @else <script></script>
+   @endif
+
+
+   @if(isset($usersChartThies))
+   {!! $usersChartThies->script() !!}
+   @else <script></script>
+   @endif
+   @if(isset($usersChartSaint_Louis))
+   {!! $usersChartSaint_Louis->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartZiguinchor))
+   {!! $usersChartZiguinchor->script() !!}
+   @else <script></script>
+   @endif
+
+   @if(isset($usersChartTambacounda))
+   {!! $usersChartTambacounda->script() !!}
+   @else <script></script>
+   @endif
+   @if(isset($usersChartNgnith))
+   {!! $usersChartNgnith->script() !!}
+   @else <script></script>
+   @endif

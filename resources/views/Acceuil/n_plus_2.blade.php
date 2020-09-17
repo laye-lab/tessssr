@@ -6,7 +6,7 @@
                 <span class="info-box-icon bg-info elevation-1"><i class="fas fa-clock"></i></span>
 
                 <div class="info-box-content">
-                  <span class="info-box-text">Total heure <br> mois en cour </span>
+                  <span class="info-box-text">Total heures <br> mois en cours </span>
                   <span class="info-box-number">
                     {{$total_current_month_dr}}
                     <small>heures</small>
@@ -22,7 +22,7 @@
                 <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-clock"></i></span>
 
                 <div class="info-box-content">
-                  <span class="info-box-text">total heure année</span>
+                  <span class="info-box-text">total des heures <br> année en cours</span>
                   <span class="info-box-number">
                     {{$total_current_year_dr}}
                     <small>heures</small>

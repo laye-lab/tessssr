@@ -21,40 +21,13 @@ class ValidationController extends Controller
         $user=auth()->user()->id;
         $current_month = date('m');
         $current_year = date("Y");
-
-        $service=DB::table('Affectation')
-            ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')
-            ->select('Matricule_agent','Nom_Agent','Fonction','Statut','Libelle_Affectation','Direction','Etablissemt_nom')
-            ->distinct('Matricule_agent')
+        $equipe=DB::table('equipe')
             ->get();
-            $etablissement_dr = DB::table('agent')
-            ->where('Matricule_agent', '=', $user)
-            ->select('etablissement')
-            ->first();
-
-            $data_n_plus_1 = DB::table('agent_Heures_supp_a_faire')
-            ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
-            ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
-            ->join('equipe','equipe.agentMatricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
-            ->whereMonth('Date_Heure', '=',  now()->month)
-            ->whereYear('Date_Heure', '=',$current_year)
-            ->where([
-                ['agent.etablissement', '=',$etablissement_dr->etablissement],
-                ['heures_supp.statut', '=',1],
-                ['n_plus_un', '=',  $user],
-                ])
-             ->get();
-
-             $data_n_plus_1_count = $data_n_plus_1->count();
-
-            $role_account=DB::table('Role_Account')
-            ->join('users','users.id' ,'=', 'Role_Account.AccountID')
-            ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
-            ->join('agent','agent.Matricule_Agent' ,'=','users.id')
-            ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
-            ->get();
-
-            $agent_attribut=DB::table('agent')
+        $etablissement_dr = DB::table('agent')
+        ->where('Matricule_agent', '=', $user)
+        ->select('etablissement')
+        ->first();
+        $agent_attribut=DB::table('agent')
             ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
             ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.agentMatricule_Agent','=','agent.Matricule_Agent')
             ->distinct('Matricule_agent')
@@ -70,94 +43,71 @@ class ValidationController extends Controller
             ->join('heures_supp','heures_supp.id_heure_a_faire','=','Heures_supp_a_faire.ID')
             ->get();
 
+
+
+            $role_account=DB::table('Role_Account')
+            ->join('users','users.id' ,'=', 'Role_Account.AccountID')
+            ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
+            ->join('agent','agent.Matricule_Agent' ,'=','users.id')
+            ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
+            ->get();
+
             $Affectation =DB::table('agent')->select('affectation')->distinct('affectation')->get();
 
 
-            $data_dto = DB::table('heures_supp')
-            ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
-            ->whereMonth('Date_Heure', '=',  now()->month)
-            ->whereYear('Date_Heure', '=',$current_year)
-            ->where('heures_supp.statut', '=',3)
-            ->select
-                (
-                DB::raw('SUM(total_heures_saisie) as total'),
-                DB::raw('AVG(total) as moy'),
-                DB::raw('Etablissement as Etablissements'),
-                )
-                ->groupBy('Etablissements')
-                ->get();
-                $data_dto_count= $data_dto->count();
 
-
-                $data_dcm = DB::table('heures_supp')
-                ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
-                ->whereMonth('Date_Heure', '=',  now()->month)
-                ->whereYear('Date_Heure', '=',$current_year)
-                ->where('heures_supp.statut', '=',3)
-                ->select
-                    (
-                    DB::raw('SUM(total_heures_saisie) as total'),
-                    DB::raw('AVG(total) as moy'),
-                    DB::raw('Etablissement as Etablissements'),
-                    )
-                    ->groupBy('Etablissements')
-                    ->get();
-
-                    $data_dcm_count= $data_dcm->count();
-
-                    $data_dq = DB::table('heures_supp')
-                    ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
-                    ->whereMonth('Date_Heure', '=',  now()->month)
-                    ->whereYear('Date_Heure', '=',$current_year)
-                    ->where('heures_supp.statut', '=',3)
-                    ->select
-                        (
-                        DB::raw('SUM(total_heures_saisie) as total'),
-                        DB::raw('AVG(total) as moy'),
-                        DB::raw('Etablissement as Etablissements'),
-                        )
-                        ->groupBy('Etablissements')
-                        ->get();
-
-                        $data_dq_count= $data_dq->count();
-
-                $data_n_plus_2 = DB::table('agent_Heures_supp_a_faire')
-                ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
-                ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
-                ->whereMonth('Date_Heure', '=',  now()->month)
-                ->whereYear('Date_Heure', '=',$current_year)
-                ->where([
-                    ['agent.etablissement', '=',$etablissement_dr->etablissement],
-                    ['heures_supp.statut', '=',2]
-                    ])
-                 ->get();
-
-                $data_n_plus_2_count =  $data_n_plus_2->count();
-
-            $heurre_a_faire=DB::table('agent_Heures_supp_a_faire')
+            $data_n_plus_2 = DB::table('agent_Heures_supp_a_faire')
             ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
             ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
-            ->select('agent.Matricule_agent','Nom_Agent','Etablissement','Date_Heure','heure_debut'
-            ,'heure_fin','travaux_effectuer','observations','heures_supp.id','heures_supp.Statut','id_heure_a_faire','total_heures_saisie')
-            ->get();
-
-            $heurre_somme=DB::table('heures_supp')
-            ->join('agent','agent.Matricule_Agent','=','heures_supp.Agent_Matricule_Agent')
             ->whereMonth('Date_Heure', '=',  now()->month)
             ->whereYear('Date_Heure', '=',$current_year)
             ->where([
                 ['agent.etablissement', '=',$etablissement_dr->etablissement],
                 ['heures_supp.statut', '=',2]
                 ])
-                ->select
-                (
-                DB::raw('SUM(total_heures_saisie) as total'),
-                DB::raw('id_heure_a_faire as id_heure'),
-                DB::raw('Matricule_Agent as Matricule_Agent'),
-                DB::raw('Nom_Agent as Nom_Agent'),
-                )->groupBy('id_heure','Matricule_Agent')
-                ->get();
+             ->get();
 
+             $data_n_plus_1 = DB::table('agent_Heures_supp_a_faire')
+            ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+            ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+            ->whereMonth('Date_Heure', '=',  now()->month)
+            ->whereYear('Date_Heure', '=',$current_year)
+            ->where('heures_supp.statut', '=',1)
+             ->get();
+
+             $data = DB::table('heures_supp')
+             ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
+             ->whereMonth('Date_Heure', '=',  now()->month)
+             ->whereYear('Date_Heure', '=',$current_year)
+             ->where('heures_supp.statut', '>=',3)
+             ->select
+                 (
+                 DB::raw('SUM(total_heures_saisie) as total'),
+                 DB::raw('AVG(total) as moy'),
+                 DB::raw('Etablissement as Etablissements'),
+                 )
+                 ->groupBy('Etablissements')
+                 ->get();
+
+                 $heurre_a_faire=DB::table('agent_Heures_supp_a_faire')
+            ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+            ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+            ->select('agent.Matricule_agent','Nom_Agent','Etablissement','Date_Heure','heure_debut'
+            ,'heure_fin','travaux_effectuer','observations','heures_supp.id','heures_supp.Statut','id_heure_a_faire','total_heures_saisie')
+            ->get();
+
+
+            $heurre_somme=DB::table('agent_Heures_supp_a_faire')
+            ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+            ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+            ->select
+            (
+            DB::raw('SUM(total_heures_saisie) as total'),
+            DB::raw('Matricule_Agent as Matricule_Agent'),
+            DB::raw('id_heure_a_faire as id_heure')
+            )
+            ->groupBy('id_heure','Matricule_Agent' )
+            ->get();
 
             $Ngnith=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
@@ -453,87 +403,95 @@ class ValidationController extends Controller
             $usersChartDiourbel = new UserChart;
             $usersChartDiourbel->labels([now()->subMonths(3)->month, now()->subMonths(2)->month,now()->subMonth()->month, $current_month]);
             $usersChartDiourbel->dataset('Evolution  sur les trois derniers mois  ', 'line', [$Diourbel_moins_3,$Diourbel_moins_2, $Diourbel_moins_1,$Diourbel])
-            ->color( "rgb(15, 50,192)" )
-            ->backgroundcolor("rgb(94, 219, 23)");;
+            ->color( "#006400 " )
+            ->backgroundcolor("#C0FFAF");;
+
 
             $usersChartTambacounda = new UserChart;
             $usersChartTambacounda->labels([now()->subMonths(3)->month, now()->subMonths(2)->month,now()->subMonth()->month, $current_month]);
             $usersChartTambacounda->dataset('Evolution  sur les trois derniers mois  ', 'line', [$Tambacounda_moins_3,$Tambacounda_moins_2, $Tambacounda_moins_1,$Tambacounda])
-            ->color( "rgb(15, 50,192)" )
-            ->backgroundcolor("rgb(94, 219, 23)");;
+            ->color( "#006400 " )
+            ->backgroundcolor("#C0FFAF");;
+
 
             $usersChartNgnith = new UserChart;
             $usersChartNgnith->labels([now()->subMonths(3)->month, now()->subMonths(2)->month,now()->subMonth()->month, $current_month]);
             $usersChartNgnith->dataset('Evolution  sur les trois derniers mois  ', 'line', [$Ngnith_moins_3,$Ngnith_moins_2, $Ngnith_moins_1,$Ngnith])
-            ->color( "rgb(15, 50,192)" )
-            ->backgroundcolor("rgb(94, 219, 23)");;
+            ->color( "#006400 " )
+            ->backgroundcolor("#C0FFAF");;
+
 
             $usersChartRufisque = new UserChart;
             $usersChartRufisque->labels([now()->subMonths(3)->month, now()->subMonths(2)->month,now()->subMonth()->month, $current_month]);
             $usersChartRufisque->dataset('Evolution  sur les trois derniers mois  ', 'line', [$Rufisque_moins_3,$Rufisque_moins_2, $Rufisque_moins_1,$Rufisque])
-            ->color( "rgb(15, 50,192)" )
-            ->backgroundcolor("rgb(94, 219, 23)");;
+            ->color( "#006400 " )
+            ->backgroundcolor("#C0FFAF");;
 
             $usersChartSaint_Louis = new UserChart;
             $usersChartSaint_Louis->labels([now()->subMonths(3)->month, now()->subMonths(2)->month,now()->subMonth()->month, $current_month]);
             $usersChartSaint_Louis->dataset('Evolution  sur les trois derniers mois  ', 'line', [$Saint_Louis_moins_3,$Saint_Louis_moins_2, $Saint_Louis_moins_1,$Saint_Louis])
-            ->color( "rgb(15, 50,192)" )
-            ->backgroundcolor("rgb(94, 219, 23)");;
+            ->color( "#006400 " )
+            ->backgroundcolor("#C0FFAF");;
+
 
             $usersChartThies = new UserChart;
             $usersChartThies->labels([now()->subMonths(3)->month, now()->subMonths(2)->month,now()->subMonth()->month, $current_month]);
             $usersChartThies->dataset('Evolution  sur les trois derniers mois  ', 'line', [$Thies_moins_3,$Thies_moins_2, $Thies_moins_1,$Thies])
-            ->color( "rgb(15, 50,192)" )
-            ->backgroundcolor("rgb(94, 219, 23)");;
+            ->color( "#006400 " )
+            ->backgroundcolor("#C0FFAF");;
+
 
             $usersChartHann = new UserChart;
             $usersChartHann->labels([now()->subMonths(3)->month, now()->subMonths(2)->month,now()->subMonth()->month, $current_month]);
             $usersChartHann->dataset('Evolution  sur les trois derniers mois  ', 'line', [$Hann_moins_3,$Hann_moins_2, $Hann_moins_1,$Hann])
-            ->color( "rgb(15, 50,192)" )
-            ->backgroundcolor("rgb(94, 219, 23)");;
+            ->color( "#006400 " )
+            ->backgroundcolor("#C0FFAF");;
+
 
             $usersChartKaolack = new UserChart;
             $usersChartKaolack->labels([now()->subMonths(3)->month, now()->subMonths(2)->month,now()->subMonth()->month, $current_month]);
             $usersChartKaolack->dataset('Evolution  sur les trois derniers mois  ', 'line', [$Kaolack_moins_3,$Kaolack_moins_2, $Kaolack_moins_1,$Kaolack])
-            ->color( "rgb(15, 50,192)" )
-            ->backgroundcolor("rgb(94, 219, 23)");;
+            ->color( "#006400 " )
+            ->backgroundcolor("#C0FFAF");;
 
 
             $usersChartDakar1 = new UserChart;
             $usersChartDakar1->labels([now()->subMonths(3)->month, now()->subMonths(2)->month,now()->subMonth()->month, $current_month]);
             $usersChartDakar1->dataset('Evolution  sur les trois derniers mois  ', 'line', [$Dakar1_moins_3,$Dakar1_moins_2, $Dakar1_moins_1,$Dakar1])
-            ->color( "rgb(15, 50,192)" )
-            ->backgroundcolor("rgb(94, 219, 23)");;
+            ->color( "#006400 " )
+            ->backgroundcolor("#C0FFAF");;
+
 
             $usersChartDakar2 = new UserChart;
             $usersChartDakar2->labels([now()->subMonths(3)->month, now()->subMonths(2)->month,now()->subMonth()->month, $current_month]);
             $usersChartDakar2->dataset('Evolution  sur les trois derniers mois  ', 'line', [$Dakar2_moins_3,$Dakar2_moins_2, $Dakar2_moins_2,$Dakar2])
-            ->color( "rgb(15, 50,192)" )
-            ->backgroundcolor("rgb(94, 219, 23)");;
+            ->color( "#006400 " )
+            ->backgroundcolor("#C0FFAF");;
+
 
             $usersChartLouga = new UserChart;
             $usersChartLouga->labels([now()->subMonths(3)->month, now()->subMonths(2)->month,now()->subMonth()->month, $current_month]);
             $usersChartLouga->dataset('Evolution  sur les trois derniers mois  ', 'line', [$Louga_moins_3,$Louga_moins_2, $Louga_moins_1,$Louga])
-            ->color( "rgb(15, 50,192)" )
-            ->backgroundcolor("rgb(94, 219, 23)");;
+            ->color( "#006400 " )
+            ->backgroundcolor("#C0FFAF");;
+
 
             $usersChartZiguinchor = new UserChart;
             $usersChartZiguinchor->labels([now()->subMonths(3)->month, now()->subMonths(2)->month,now()->subMonth()->month, $current_month]);
             $usersChartZiguinchor->dataset('Evolution  sur les trois derniers mois  ', 'line', [$Ziguinchor_moins_3,$Ziguinchor_moins_2, $Ziguinchor_moins_1,$Ziguinchor])
-            ->color( "rgb(15, 50,192)" )
-            ->backgroundcolor("rgb(94, 219, 23)");;
+            ->color( "#006400 " )
+            ->backgroundcolor("#C0FFAF");;
+
 
                     return view('Validation')->with([
                         'role_account'=> $role_account,
                         'agent_attribut'=> $agent_attribut,
+                        'heurre_a_faire'=> $agent_attribut,
                         'nbr_heure'=> $nbr_heure,
+                        'heurre_somme'=> $heurre_somme,
                         'usersChartDiourbel' => $usersChartDiourbel,
                         'usersChartKaolack' => $usersChartKaolack,
                         'usersChartDakar1' => $usersChartDakar1,
-                        'heurre_somme' => $heurre_somme,
-                        'data_n_plus_2' => $data_n_plus_2,
-                        'data_n_plus_1_count' => $data_n_plus_1_count,
-                        'data_n_plus_2_count' => $data_n_plus_2_count,
                         'usersChartDakar2' => $usersChartDakar2,
                         'usersChartThies' => $usersChartThies,
                         'usersChartNgnith' => $usersChartNgnith,
@@ -543,17 +501,11 @@ class ValidationController extends Controller
                         'usersChartSaint_Louis' => $usersChartSaint_Louis,
                         'usersChartLouga' => $usersChartLouga,
                         'usersChartZiguinchor' => $usersChartZiguinchor,
-                        'heure_supp'=> $heure_supp,
-                        'heurre_a_faire'=>$heurre_a_faire,
+                        'data'=>$data,
                         'equipe'=>$equipe,
-                        'data_dto'=>$data_dto,
-                        'data_dto_count'=>$data_dto_count,
-                        'data_dcm'=>$data_dcm,
-                        'data_dcm_count,'=>$data_dcm_count,
-                        'data_dq'=>$data_dq,
-                        'data_dq_count'=>$data_dq_count,
-                        'Affectation'=>$Affectation,
-                        'service'=>$service
+                        'data_n_plus_2'=>$data_n_plus_2,
+                        'Affectation'=>$Affectation
+
                     ]);
 
 
@@ -565,10 +517,7 @@ class ValidationController extends Controller
         switch ($role){
             case 'n+1':
         $Heures_supp=DB::table('heures_supp')
-        ->where([
-            ['commandeur', '=', $id ],
-            ['Statut', '=', 1  ],
-            ])
+        ->where('commandeur', '=', $id )
         ->update(['Statut' => 2]);
 
         $Step=DB::table('Step')
@@ -581,22 +530,17 @@ class ValidationController extends Controller
             $etablissement=request('etablissement');
             if ($etablissement == 'Hann') {
                 $Heures_supp=DB::table('heures_supp')
-                ->where([
-                    ['commandeur', '=', $id ],
-                    ['Statut', '=', 2],
-                    ])
+                ->where('commandeur', '=', $id )
                 ->update(['Statut' => 4]);
 
                 $Step=DB::table('Step')
                 ->where('Demandeur', '=',$id)
                 ->update(['etape' => 2]);
+
             }
             else {
                 $Heures_supp=DB::table('heures_supp')
-                ->where([
-                    ['commandeur', '=', $id ],
-                    ['Statut', '=', 2  ],
-                    ])
+                ->where('commandeur', '=', $id )
                 ->update(['Statut' => 3]);
 
                 $Step=DB::table('Step')
@@ -609,10 +553,7 @@ class ValidationController extends Controller
               break;
         case 'n+3' or 'dcm' or 'dto' :
             $Heures_supp=DB::table('heures_supp')
-            ->where([
-                ['commandeur', '=', $id ],
-                ['Statut', '=', 3  ],
-                ])
+            ->where('Statut', '=',3)
             ->update(['Statut' => 4]);
 
             $Step=DB::table('Step')

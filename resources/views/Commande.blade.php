@@ -38,6 +38,12 @@
      @endif
 
 @endif
+@if ($message = Session::get('notif'))
+<div class="alert alert-danger alert-block col-md-8"style="position:relative;">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{ $message }}</strong>
+</div>
+@endif
 </center>
           </div>
 

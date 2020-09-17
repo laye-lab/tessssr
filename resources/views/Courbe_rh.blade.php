@@ -63,80 +63,28 @@
                     </div>
 
 
-                    @if ($mois)
 
-                        <section class="content" >
-
-
-
-                            <div class="row" style="background-color:white">
-                            <div class="col-8">
-
-                                    <div class="card-body py-3 px-3">
-                                        {!! $usersChart->container() !!}
-                                    </div>
-
-                            </div>
-
-
-                            <div class="col-4">
-
-                                    <div class="card-body py-3 px-3">
-                                        {!!$usersChartband->container() !!}
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                        <div class="row" style="background-color:white">
-                            <div class="col-8">
-
-                                    <div class="card-body py-3 px-3">
-                                        {!! $usersChartMois->container() !!}
-                                    </div>
-
-                            </div>
-
-
-                            <div class="col-4">
-
-                                    <div class="card-body py-3 px-3">
-                                        {!!$usersChartbandetablissement->container() !!}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                            </section>
-
-                                @else
                                 <section class="content" >
 
 
 
                                     <div class="row" style="background-color:white">
-                                        <div class="col-8">
+                                        <div class="col-12">
 
                                                 <div class="card-body py-3 px-3">
-                                                    {!! $usersChart->container() !!}
+                                                    {!! $usersChartKaolack->container() !!}
                                                 </div>
 
                                         </div>
 
 
-                                        <div class="col-4">
-
-                                                <div class="card-body py-3 px-3">
-                                                    {!!$usersChartband->container() !!}
-                                                </div>
-                                            </div></div>
+                                     </div>
 
                                     </div>
 
                                 </div>
 
                             </section>
-@endif
+
 
             @endsection

@@ -21,6 +21,9 @@ Route::get('/testlogin', function () {
 });
 Auth::routes();
 
+
+        Route::post('/ValidationInvalideurPerEtablissement', 'ValidationController@InvalideurPerRegion');
+
         Route::get('/users', 'ChartController@index')->name('users');
 
 
@@ -32,6 +35,14 @@ Auth::routes();
             'middleware' => 'roles',
             'roles' => ['drh']
         ]);
+
+        Route::any('/Calendrier', [
+            'uses' =>'CalendrierController@index',
+            'as' => 'Calendrier',
+            'middleware' => 'roles',
+            'roles' => ['drh','n+2']
+        ]);
+
         Route::any('/Chartsrh', [
             'uses' =>'DashbordController@charts',
             'as' => 'Chartsrh',

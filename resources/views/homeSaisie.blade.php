@@ -37,6 +37,7 @@
                 <!-- Main content -->
                 <section class="content">
                 <div class="container-fluid">
+                    @if ($agent_attribut_count >0)
                     <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -51,17 +52,13 @@
 
                             <thead>
                                 <tr>
+                                <th>Nº commande</th>
                                 <th>Matricule</th>
                                 <th>Prenom et Nom</th>
                                 <th>Fonction</th>
-                                <th>Statut</th>
-                                <th>Secteur/Service</th>
-                                <th>Direction</th>
-                                <th>Etablissemt</th>
                                 <th>Date début</th>
                                 <th>Date fin</th>
                                 <th>Travaux a éffectuer </th>
-
                                 <th></th>
                                 </tr>
                             </thead>
@@ -70,6 +67,9 @@
 
                                         @foreach($agent_n_plus_1 as $agent_attributs)
 
+                                                <td>
+                                                    {{$agent_attributs->ID}}
+                                                </td>
 
                                                 <td>
                                                     {{$agent_attributs->Matricule_agent}}
@@ -80,18 +80,6 @@
                                                 </td>
                                                 <td>
                                                     {{$agent_attributs->fonction}}
-                                                </td>
-                                                <td>
-                                                    {{$agent_attributs->Statut}}
-                                                </td>
-                                                <td>
-                                                    {{$agent_attributs->Affectation}}
-                                                </td>
-                                                <td>
-                                                    {{$agent_attributs->Direction}}
-                                                </td>
-                                                <td>
-                                                    {{$agent_attributs->etablissement}}
                                                 </td>
                                                 <td>
                                                     {{$agent_attributs->Date_debut}}
@@ -144,6 +132,21 @@
 
                     </div>
                     <!-- /.col -->
+                    @else
+                    <center>
+                        <div class="card card-primary card-outline col-md-7">
+                            <div class="card-header">
+                              <h5 class="m-0">Saisie</h5>
+                            </div>
+                            <div class="card-body">
+                              <h6 class="card-title">Pas de commande  d'heures supplémentaires  pour le moment</h6>
+                              <p class="card-text"></p>
+                              <a  href="{{route('Acceuil')}}" class="btn btn-primary">Acceuil<i class="fa fa-arrow-right" aria-hidden="true"></i> </a>
+                            </div>
+                          </div>
+                        </div>
+                    </center>
+                    @endif
                     </div>
                     <!-- /.row -->
                 </div>
@@ -173,6 +176,7 @@
                 </div>
                 <section class="content-header">
                 <div class="container-fluid">
+                    @if ($agent_attribut_count >0)
                     <div class="row mb-2">
                     <div class="col-sm-6">
 
@@ -292,7 +296,23 @@
 
                     </div>
                     <!-- /.col -->
+
                     </div>
+                    @else
+                    <center>
+                    <div class="card card-primary card-outline col-md-7">
+                        <div class="card-header">
+                          <h5 class="m-0">Saisie</h5>
+                        </div>
+                        <div class="card-body">
+                          <h6 class="card-title">Pas de commande  d'heures supplémentaires  pour le moment</h6>
+                          <p class="card-text"></p>
+                          <a  href="{{route('Acceuil')}}" class="btn btn-primary">Acceuil<i class="fa fa-arrow-right" aria-hidden="true"></i> </a>
+                        </div>
+                      </div>
+                    </div>
+                </center>
+                    @endif
                     <!-- /.row -->
                 </div>
                 <!-- /.container-fluid -->

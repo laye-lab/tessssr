@@ -1,4 +1,7 @@
-@extends('../../layouts.template_dashbord_collapsed')
+
+
+
+@extends('../../layouts.template_dashbord_acceuil ')
 
 @section('content')
  <!-- Content Wrapper. Contains page content -->
@@ -20,7 +23,7 @@
                         @break
 
                         @case('n+3' or 'dto' or 'dcm')
-                            @include('Validation.n_plus_3')
+                            @include('Validation.dto_dcm')
                         @break
 
 
