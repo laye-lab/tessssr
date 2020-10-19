@@ -88,6 +88,7 @@
                                         <form method="POST" action="{{'Commandeindex'}}">
                                           @csrf
                                         <input type="hidden" name="id"  value="{{$agent_collaborateur->Matricule_Agent}}">
+
                                         <input type="hidden" name="servicedr"  value="{{$servicedr}}">
                                           <button type="submit" class=" btn   btn-outline-danger">Commander</button>
                                         </form>

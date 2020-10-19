@@ -70,6 +70,13 @@ Auth::routes();
             'roles' => ['n+2']
         ]);
 
+        Route::post('/homeCommandesearch', [
+            'uses' =>'HomeCommandeController@search',
+            'as' => 'homeCommandesearch',
+            'middleware' => 'roles',
+            'roles' => ['n+2']
+        ]);
+
         Route::post('/homeCommande',[
             'uses' =>'HomeCommandeController@showForm',
             'as' => 'homeCommandepost',
@@ -81,6 +88,13 @@ Auth::routes();
         Route::get('/homeCommande',[
             'uses' =>'HomeCommandeController@showForm',
             'as' => 'homeCommande',
+            'middleware' => 'roles',
+            'roles' => ['n+2']
+        ]);
+
+        Route::any('/SuiviCommande',[
+            'uses' =>'CommandeController@showCommande',
+            'as' => 'SuiviCommande',
             'middleware' => 'roles',
             'roles' => ['n+2']
         ]);
@@ -144,12 +158,16 @@ Auth::routes();
             'middleware' => 'roles',
             'roles' => ['n+1','sec']
         ]);
+
+        Route::get('/import_excel', 'ImportExcelController@index');
+Route::post('/import_excel/import', 'ImportExcelController@import');
+
         Route::any('/ModifSaisie',
         [
             'uses' =>'SaisieController@Update',
             'as' => 'ModifSaisie',
             'middleware' => 'roles',
-            'roles' => ['n+1','sec']
+            'roles' => ['n+1','sec','n+2']
         ]);
 
         Route::get('/Validation', 'ValidationController@index')->name('Validation');

@@ -21,7 +21,21 @@ class ValidationController extends Controller
         $user=auth()->user()->id;
         $current_month = date('m');
         $current_year = date("Y");
+        $etablissement_dr =DB::table('agent')->where('Matricule_Agent', '=', $user)->first();
 
+
+        $total_current_month =DB::table('heures_supp')->select('total_heures_saisie')
+        ->whereMonth('Date_Heure', '=',$current_month)->sum('total_heures_saisie');
+
+        $total_current_month_dr=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')
+        ->where('Etablissement', '=',$etablissement_dr->Etablissement)->whereMonth('Date_Heure', '=',$current_month)->sum('total_heures_saisie');
+
+
+        $total_current_year =DB::table('heures_supp')->select('total_heures_saisie')
+        ->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+
+        $total_current_year_dr =DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')
+        ->where('Etablissement', '=',$etablissement_dr->Etablissement)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
         $service=DB::table('affectation')
             ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')
             ->select('Matricule_agent','Nom_Agent','Fonction','Statut','Libelle_Affectation','Direction','Etablissemt_nom')
@@ -32,20 +46,7 @@ class ValidationController extends Controller
             ->select('etablissement')
             ->first();
 
-            $data_n_plus_1 = DB::table('agent_Heures_supp_a_faire')
-            ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
-            ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
-            ->join('equipe','equipe.agentMatricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
-            ->whereMonth('Date_Heure', '=',  now()->month)
-            ->whereYear('Date_Heure', '=',$current_year)
-            ->where([
-                ['agent.etablissement', '=',$etablissement_dr->etablissement],
-                ['heures_supp.statut', '=',1],
-                ['n_plus_un', '=',  $user],
-                ])
-             ->get();
 
-             $data_n_plus_1_count = $data_n_plus_1->count();
 
             $role_account=DB::table('Role_Account')
             ->join('users','users.id' ,'=', 'Role_Account.AccountID')
@@ -54,12 +55,14 @@ class ValidationController extends Controller
             ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
             ->get();
 
-            $agent_attribut=DB::table('agent')
-            ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.agentMatricule_Agent','=','agent.Matricule_Agent')
-            ->distinct('Matricule_agent')
-            ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement')
+            $agent_attribut=DB::table('agent_Heures_supp_a_faire')
+            ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+            ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+            ->join('Heures_supp_a_faire','Heures_supp_a_faire.ID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+            ->where('heures_supp.id_heure_a_faire', '=',116)
             ->get();
+
+
             $equipe=DB::table('equipe')
             ->get();
 
@@ -158,6 +161,26 @@ class ValidationController extends Controller
                 )->groupBy('id_heure','Matricule_Agent')
                 ->get();
 
+                $heurre_somme_n_plus_un=DB::  table('agent_Heures_supp_a_faire')
+                ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+                ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+                ->join('Heures_supp_a_faire','Heures_supp_a_faire.ID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+                ->whereMonth('Date_Heure', '=',  now()->month)
+                ->whereYear('Date_Heure', '=',$current_year)
+                ->where([
+                    ['Heures_supp_a_faire.responsable', '=', $user ],
+                    ['heures_supp.statut', '=',1]
+                    ])
+                    ->select
+                    (
+                    DB::raw('SUM(total_heures_saisie) as total'),
+                    DB::raw('id_heure_a_faire as id_heure'),
+                    DB::raw('Matricule_Agent as Matricule_Agent'),
+                    DB::raw('Nom_Agent as Nom_Agent'),
+                    )->groupBy('id_heure','Matricule_Agent')
+                    ->get();
+
+                    $data_n_plus_1_count = $heurre_somme_n_plus_un->count();
 
             $Ngnith=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
@@ -531,10 +554,13 @@ class ValidationController extends Controller
                         'usersChartKaolack' => $usersChartKaolack,
                         'usersChartDakar1' => $usersChartDakar1,
                         'heurre_somme' => $heurre_somme,
+                        'heurre_somme_n_plus_un' => $heurre_somme_n_plus_un,
                         'data_n_plus_2' => $data_n_plus_2,
                         'data_n_plus_1_count' => $data_n_plus_1_count,
                         'data_n_plus_2_count' => $data_n_plus_2_count,
                         'usersChartDakar2' => $usersChartDakar2,
+                        'total_current_month_dr' => $total_current_month_dr,
+                        'total_current_year_dr' => $total_current_year_dr,
                         'usersChartThies' => $usersChartThies,
                         'usersChartNgnith' => $usersChartNgnith,
                         'usersChartTambacounda' => $usersChartTambacounda,
@@ -564,16 +590,27 @@ class ValidationController extends Controller
         $id=request('id');
         switch ($role){
             case 'n+1':
-        $Heures_supp=DB::table('heures_supp')
-        ->where([
-            ['commandeur', '=', $id ],
-            ['Statut', '=', 1  ],
-            ])
-        ->update(['Statut' => 2]);
 
-        $Step=DB::table('Step')
-        ->where('Demandeur', '=',$id)
-        ->update(['etape' => 2]);
+           $Step=DB::table('agent_Heures_supp_a_faire')
+            ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+            ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+            ->join('Heures_supp_a_faire','Heures_supp_a_faire.ID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+            ->join('Step','Step.Heures_supp_a_faireID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+            ->where([
+                ['Heures_supp_a_faire.responsable', '=', $id ],
+                ['heures_supp.Statut', '=', 1  ],
+                ])
+            ->update(['etape' => 2]);
+
+            $Heures_supp=DB::table('agent_Heures_supp_a_faire')
+            ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+            ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+            ->join('Heures_supp_a_faire','Heures_supp_a_faire.ID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+            ->where([
+                ['Heures_supp_a_faire.responsable', '=', $id ],
+                ['heures_supp.Statut', '=', 1  ],
+                ])
+            ->update(['heures_supp.Statut' => 2]);
 
         return back();
           break;

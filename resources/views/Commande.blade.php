@@ -107,6 +107,24 @@
               </div>
 
             </div>
+
+            <div class="form-group row" >
+                <label for="example-datetime-local-input" class="col-3 col-form-label">Responsable</label>
+                <div class="col-8">
+                    <div class="form-group">
+                        <select class="form-control" name="responsable" id="">
+                          @foreach($responsable as $responsables)
+
+                              <option value=" {{$responsables->Matricule_Agent}}">
+                                {{$responsables->Nom_Agent}}
+                              </option>
+
+                          @endforeach
+                            </select>
+                </div>
+
+              </div>
+
             <input class="form-control"  type="hidden"   name="commandeur" value="{{old('commandeur', Auth::user()->id) }}"  id="example-text-input">
             <input class="form-control"  type="hidden"   name="collaborateur" value="{{old('collaborateur', $collab) }}"  id="example-text-input">
             <input class="form-control" type="hidden"   name="servicedr" value="{{old('servicedr', $servicedr) }}"id="example-text-input">

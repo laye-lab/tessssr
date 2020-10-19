@@ -30,6 +30,45 @@
 
 <center>
             <section class="content">
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-3" style="position:relative; left:20%;">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-clock"></i></span>
+
+                        <div class="info-box-content">
+                          <span class="info-box-text">Total heures <br> mois en cours </span>
+                          <span class="info-box-number">
+                            {{$total_current_month_dr}}
+                            <small>heures</small>
+                          </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                      </div>
+                      <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-12 col-sm-6 col-md-3"  style="position:relative; left:30%;">
+                      <div class="info-box mb-3">
+                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-clock"></i></span>
+
+                        <div class="info-box-content">
+                          <span class="info-box-text">total des heures <br> année en cours</span>
+                          <span class="info-box-number">
+                            {{$total_current_year_dr}}
+                            <small>heures</small>
+                            </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                      </div>
+                      <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+
+                    <!-- fix for small devices only -->
+
+
+                    <!-- /.col -->
+                  </div>
                 <div class="container-fluid">
                 <!-- Info boxes -->
                 @if ($data_n_plus_2_count >0)
@@ -103,14 +142,7 @@
                                         Invalider
                                           </button>
                                         </form>
-                                        <form method="POST" action="{{'ValidationInvalideur'}}" class="col-12 col-sm-4"  >
-                                            @csrf
-                                          <input type="hidden" name="id"  value="{{$heure->id_heure}}">
-                                          <input type="hidden" name="role"  value="{{$role->Nom}}">
-                                          <button class="btn  btn-warning">
-                                              Details
-                                          </button>
-                                        </form>
+
                                       </td>
 
 

@@ -72,13 +72,9 @@
             <div class="col-md-8">
             <div class="card  card-dark">
             <div class="card-header card-outline-dark">
-                @foreach($agent_etablissement as $agent_etablissements)
 
-                @if($agent_etablissements->Matricule_agent  ==  $collab)
-                <button  name="collab" class=" btn btn-lg btn-dark">{{old('collab',$agent_etablissements->Nom_Agent)}}</button>
-                @break
-                @endif
-            @endforeach
+                <button  name="collab" class=" btn btn-lg btn-dark">Saisir heures</button>
+
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -99,10 +95,10 @@
             @enderror
             </div>
             <div class="form-group row">
-            <label for="example-date-input" class="col-3 col-form-label">Heure de début</label>
-            <div class="col-sm-9">
-            <input class="form-control @error ('Date_fin') @enderror" type="time"  name="heure_debut"  value="" id="example-date-input">
-            </div>
+             <label for="example-date-input" class="col-3 col-form-label">Heure de début</label>
+                <div class="col-sm-9">
+                     <input class="form-control @error ('Date_fin') @enderror" type="time"  name="heure_debut"  value="" id="example-date-input">
+                </div>
             @error('Date_fin')
             <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
@@ -141,13 +137,7 @@
             </div>
             <input type="hidden" name="Date_debut"  value="{{old('Date_debut',$Date_debut)}}">
             <input type="hidden" name="Date_fin"  value=" {{old('Date_fin',$Date_fin)}}">
-            @foreach($equipe as $equipes)
 
-                    @if($equipes->agentMatricule_Agent  ==  Auth::user()->id)
-                    <input class="form-control"  name="commandeur" type="hidden" value="{{old('commandeur',$equipes->n_plus_un)}}"" id="example-text-input">
-                    @break
-                @endif
-            @endforeach
             <input class="form-control"  name="collaborateur"  type="hidden" value="{{old('collaborateur',$collab)}}"  id="example-text-input">
             <input class="form-control"  name="nbr_heure"  type="hidden" value="{{old('nbr_heure',$nbr_heure)}}"  id="example-text-input">
             <input class="form-control"  name="id_heure"  type="hidden" value="{{old('id_heure',$id_heure)}}"  id="example-text-input">

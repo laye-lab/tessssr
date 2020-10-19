@@ -30,12 +30,41 @@ class CommandeController extends Controller
     public function index(Request $request)
     {
         $collab=request('id');
+        $user=auth()->user()->id;
         $servicedr=request('servicedr');
         $role_account=DB::table('Role_Account')
         ->join('users','users.id' ,'=', 'Role_Account.AccountID')
         ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
         ->join('agent','agent.Matricule_Agent' ,'=','users.id')
         ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
+        ->get();
+
+        $etablissement_user=DB::table('agent')
+        ->select('etablissement')
+        ->where('agent.Matricule_Agent', '=',$user)
+        ->distinct('Matricule_agent')
+        ->first();
+
+        $etablissement_direction=DB::table('agent')
+        ->select('Direction')
+        ->where('agent.Matricule_Agent', '=',$user)
+        ->distinct('Matricule_agent')
+        ->first();
+
+        $responsable=DB::table('agent')
+        ->where([
+            ['agent.Statut', '=', 'CAD'],
+            ['agent.etablissement', '=',  $etablissement_user->etablissement]
+            ])
+        ->orWhere([
+            ['agent.fonction','=','Responsable administratif' ],
+            ['agent.etablissement', '=',  $etablissement_user->etablissement]
+            ])
+            ->orWhere([
+            ['agent.fonction','=','Responsable technique' ],
+            ['agent.etablissement', '=',  $etablissement_user->etablissement]
+            ])
+        ->distinct('Affectation')
         ->get();
 
         $agent_attribut=DB::table('agent')
@@ -60,6 +89,7 @@ class CommandeController extends Controller
                 'role_account'=>$role_account,
                 'collab'=>$collab,
                 'servicedr'=>$servicedr,
+                'responsable'=>$responsable,
                 'agent_etablissement'=>$agent_etablissement]
             );
     }
@@ -70,8 +100,36 @@ class CommandeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function Create()
+    public function showCommande()
     {
+        $user=auth()->user()->id;
+        $role_account=DB::table('Role_Account')
+        ->join('users','users.id' ,'=', 'Role_Account.AccountID')
+        ->join('Role','Role.ID' ,'=','Role_Account.RoleID')
+        ->join('agent','agent.Matricule_Agent' ,'=','users.id')
+        ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
+        ->get();
+
+        $commande=DB::table('agent_Heures_supp_a_faire')
+        ->join('Step','Step.Heures_supp_a_faireID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+        ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+        ->join('Heures_supp_a_faire','Heures_supp_a_faire.ID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+        ->where([
+            ['Heures_supp_a_faire.Demandeur', '=',$user],
+            ['etape', '=',1],
+            ]
+            )
+        ->select('agent.Matricule_agent','Nom_Agent','Statut','Direction','etablissement'
+        ,'fonction','Affectation','Date_debut','Date_fin','travaux_effectuer','nbr_heure'
+        ,'Heures_supp_a_faire.ID','etape','agentMatricule_Agent','responsable','Heures_supp_a_faire.created_at')
+        ->get();
+
+
+       return view('Suivi' )->with([
+                'commande'=>$commande,
+                'role_account'=>$role_account
+               ]
+            );
 
     }
 
@@ -83,6 +141,8 @@ class CommandeController extends Controller
      */
     public function store(StoreCommandeRequest $request)
     {
+
+
         $user=auth()->user()->id;
         $servicedr=request('service');
         $role_account=DB::table('Role_Account')
@@ -104,6 +164,7 @@ class CommandeController extends Controller
             ->where('agent.Matricule_Agent', '=',$user)
             ->distinct('Matricule_agent')
             ->first();
+
             $etablissement_direction=DB::table('agent')
             ->select('Direction')
             ->where('agent.Matricule_Agent', '=',$user)
@@ -158,12 +219,14 @@ class CommandeController extends Controller
         $Heures_supp_a_faire = new Heures_supp_a_faire;
         $Step = new Step;
         $Agent_Heures_supp_a_faire = new Agent_Heures_supp_a_faire;
+
         $Heures_supp_a_faire->Date_debut =request('Date_debut');
         $Heures_supp_a_faire->Date_fin =request('Date_fin');
         $Heures_supp_a_faire->Demandeur =request('commandeur');
         $Heures_supp_a_faire->nbr_heure =request('nbr_heure');
         $Heures_supp_a_faire->travaux_effectuer =request('travaux_effectuer');
         $Heures_supp_a_faire->Observations =request('Observations');
+        $Heures_supp_a_faire->responsable =request('responsable');
         $Heures_supp_a_faire->save();
 
         $Heures_supp=DB::table('Heures_supp_a_faire')
@@ -184,6 +247,21 @@ class CommandeController extends Controller
 
         $Agent_Heures_supp_a_faire->save();
         session()->flash('notif', 'Commande enregistrée!');
+        $agent_count=10;
+        if (request('collaborateur')==null ||  request('servicedr')==null) {
+
+            session()->flash('erreur', 'Plusieurs erreurs dans le formulaire , veuillez recommencer !');
+            return view('homeCommandeindex')->with([
+                'role_account'=> $role_account,
+                'service'=> $service,
+                'Affectation'=> $Affectation,
+                'role_account'=> $role_account,
+                'servicedr'=> $servicedr,
+                'agent_count'=> $agent_count
+
+            ]
+            );
+        }
         if (null ==request('commandeur') ){
 
             return view('homeCommandeindex')->with([
@@ -191,7 +269,8 @@ class CommandeController extends Controller
                 'service'=> $service,
                 'Affectation'=> $Affectation,
                 'role_account'=> $role_account,
-                'servicedr'=> $servicedr
+                'servicedr'=> $servicedr,
+                'agent_count'=> $agent_count
 
             ]
             );
@@ -202,7 +281,8 @@ class CommandeController extends Controller
             'service'=> $service,
             'Affectation'=> $Affectation,
             'role_account'=> $role_account,
-            'servicedr'=> $servicedr
+            'servicedr'=> $servicedr,
+            'agent_count'=> $agent_count
 
         ]
         );

@@ -59,18 +59,19 @@ class HomeSaisieController extends Controller
 
 
                 $agent_n_plus_1=DB::table('agent_Heures_supp_a_faire')
-                ->join('equipe','equipe.agentMatricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
                 ->join('Step','Step.Heures_supp_a_faireID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
                 ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
                 ->join('Heures_supp_a_faire','Heures_supp_a_faire.ID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
                 ->where([
-                    ['n_plus_un', '=',$user],
+                    ['responsable', '=',$user],
                     ['etape', '=',1],
                     ]
                     )
-                ->select('agent.Matricule_agent','Nom_Agent','n_plus_un','Statut','Direction','etablissement'
+                ->select('agent.Matricule_agent','Nom_Agent','Statut','Direction','etablissement'
                 ,'fonction','Affectation','Date_debut','Date_fin','travaux_effectuer','nbr_heure','Heures_supp_a_faire.ID','etape')
                 ->get();
+
+                $agent_n_plus_un_count=$agent_n_plus_1->count();
 
                 $agent_sec=DB::table('agent_Heures_supp_a_faire')
                 ->join('equipe','equipe.agentMatricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
@@ -97,6 +98,7 @@ class HomeSaisieController extends Controller
                     'agent_attribut'=> $agent_attribut,
                     'agent_attribut_count'=> $agent_attribut_count,
                     'agent_n_plus_1'=>$agent_n_plus_1,
+                    'agent_n_plus_un_count'=>$agent_n_plus_un_count,
                     'role_account'=> $role_account,
                     'agent_sec'=> $agent_sec,
                 ]);

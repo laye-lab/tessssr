@@ -133,7 +133,7 @@
                                             <p > Navigateur</p>
                                             </div>
                                             </div>
-                                            <li class="nav-item has-treeview menu-open">
+                                            <li class="nav-item">
                                                 <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
                                                     <i class="fas fa-home"></i>
                                                     <p>
@@ -141,7 +141,7 @@
                                                     </p>
                                                 </a>
                                             </li>
-                                    <li class="nav-item has-treeview menu-open">
+                                    <li class="nav-item">
                                     <a  href="{{route('homeSaisie')}}" class="nav-link">
                                         <i class="nav-icon fas fa-pen-alt"></i>
                                         <p>
@@ -150,21 +150,8 @@
                                     </a>
                                 </li>
 
-                                <li class="nav-item">
-                                <a  class="nav-link">
-                                    <i class="nav-icon far fa-circle text-info"></i>
 
-                                    <p>Choix collaborateur</p>
-                                </a>
-                                </li>
                                 <li class="nav-item">
-                                <a  class="nav-link">
-                                    <i class="nav-icon far fa-circle text-info"></i>
-
-                                    <p>Saisie  </p>
-                                </a>
-                                </li>
-                                <li class="nav-item has-treeview menu-open">
                                 <a href="{{route('Validation')}}" class="nav-link">
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
@@ -173,7 +160,7 @@
                                     </p>
                                 </a>
                                 </li>
-                                <li class="nav-item has-treeview menu-open">
+                                <li class="nav-item">
                                 <a href="{{route('Validation')}}" class="nav-link">
                                     <i class="nav-icon fas fa-eye"></i>
                                     <p>
@@ -195,7 +182,7 @@
                                         <p > Navigateur</p>
                                         </div>
                                         </div>
-                                        <li class="nav-item has-treeview menu-open">
+                                        <li class="nav-item">
                                             <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
                                                 <i class="fas fa-home"></i>
                                                 <p>
@@ -203,7 +190,7 @@
                                                 </p>
                                             </a>
                                         </li>
-                                        <li class="nav-item has-treeview menu-open">
+                                        <li class="nav-item">
                                         <a href="{{route('homeCommandeindex')}}" class="nav-link" >
                                             <i class="nav-icon fas fa-user-plus"></i>
                                             <p>
@@ -212,30 +199,9 @@
                                             </p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                    <a  class="nav-link">
-                                        <i class="nav-icon far fa-circle text-danger"></i>
-
-                                        <p class="text">Choix service</p>
-                                    </a>
-                                    </li>
-                                    <li class="nav-item">
-                                    <a class="nav-link">
-                                        <i class="nav-icon far fa-circle text-danger"></i>
-
-                                        <p>Choix collaborateur</p>
-                                    </a>
-                                    </li>
-                                    <li class="nav-item">
-                                    <a  class="nav-link">
-                                        <i class="nav-icon far fa-circle text-danger"></i>
-
-                                        <p>Saisie  </p>
-                                    </a>
-                                    </li>
 
 
-                                <li class="nav-item has-treeview menu-open">
+                                <li class="nav-item">
                                 <a href="{{route('homeSaisie')}}"   class="nav-link">
                                     <i class="nav-icon fas fa-pen-alt"></i>
                                     <p>
@@ -245,20 +211,6 @@
                             </li>
 
                             <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-circle text-info"></i>
-
-                                <p>Choix collaborateur</p>
-                            </a>
-                            </li>
-                            <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon far fa-circle text-info"></i>
-
-                                <p>Saisie  </p>
-                            </a>
-                            </li>
-                            <li class="nav-item has-treeview menu-open">
                             <a  href="{{route('Validation')}}" class="nav-link">
                                 <i class="nav-icon fas fa-check-double"></i>
                                 <p>
@@ -267,7 +219,7 @@
                                 </p>
                             </a>
                             </li>
-                            <li class="nav-item has-treeview menu-open">
+                            <li class="nav-item">
                             <a  href="{{route('Validation')}}"class="nav-link">
                                 <i class="nav-icon fas fa-eye"></i>
                                 <p>
@@ -289,7 +241,7 @@
                                         <p > Navigateur</p>
                                         </div>
                                         </div>
-                                        <li class="nav-item has-treeview menu-open">
+                                        <li class="nav-item">
                                             <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
                                                 <i class="fas fa-home"></i>
                                                 <p>
@@ -298,7 +250,7 @@
                                             </a>
                                         </li>
 
-                                        <li class="nav-item has-treeview menu-open">
+                                        <li class="nav-item">
                                         <a  href="{{route('Validation')}}" class="nav-link">
                                             <i class="nav-icon fas fa-check-double"></i>
                                             <p>
@@ -307,7 +259,7 @@
                                             </p>
                                         </a>
                                         </li>
-                                        <li class="nav-item has-treeview menu-open">
+                                        <li class="nav-item">
                                         <a href="{{route('Validation')}}" class="nav-link">
                                             <i class="nav-icon fas fa-eye"></i>
                                             <p>
@@ -330,7 +282,7 @@
                     <p > Navigateur</p>
                     </div>
                     </div>
-                    <li class="nav-item has-treeview menu-open">
+                    <li class="nav-item">
                         <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
                             <i class="fas fa-home"></i>
                             <p>
@@ -338,7 +290,7 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item has-treeview menu-open">
+                    <li class="nav-item">
                         <a  href="{{route('Chartsrh')}}" href="#" class="nav-link">
                             <i class="fas fa-chart-bar"></i>
                             <p>
@@ -347,7 +299,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-item has-treeview menu-open">
+                    <li class="nav-item">
                     <a  href="{{route('Calculheure')}}" href="#" class="nav-link">
                         <i class="nav-icon fas fa-eye"></i>
                         <p>
@@ -355,7 +307,7 @@
                         </p>
                     </a>
                     </li>
-                    <li class="nav-item has-treeview menu-open">
+                    <li class="nav-item">
                         <a  href="{{route('Dashbord')}}" href="#" class="nav-link">
                             <i class="fas fa-route"></i>
                             <p>
@@ -363,7 +315,7 @@
                             </p>
                         </a>
                         </li>
-                        <li class="nav-item has-treeview menu-open">
+                        <li class="nav-item">
                             <a  href="{{route('Affectationindex')}}" href="#" class="nav-link">
                                 <i class="fas fa-luggage-cart"></i>
                                 <p>
@@ -385,7 +337,7 @@
                                 <p > Navigateur</p>
                                 </div>
                                 </div>
-                                <li class="nav-item has-treeview menu-open">
+                                <li class="nav-item">
                                     <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
                                         <i class="fas fa-home"></i>
                                         <p>
@@ -393,7 +345,7 @@
                                         </p>
                                     </a>
                                 </li>
-                                <li class="nav-item has-treeview menu-open">
+                                <li class="nav-item">
                                 <a  href="{{route('Validation')}}"  class="nav-link">
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
@@ -402,14 +354,14 @@
                                     </p>
                                 </a>
                                 </li>
-                                <li class="nav-item has-treeview menu-open">
+                                <li class="nav-item">
                                     <a  href="{{route('Chartsrh')}}" href="#" class="nav-link">
                                         <i class="fas fa-chart-bar"></i>
                                         <p>
                                             Statistiques
                                         </p>
                                     </a>
-                                <li class="nav-item has-treeview menu-open">
+                                <li class="nav-item">
                                 <a  href="{{route('Validation')}}" href="#" class="nav-link">
                                     <i class="nav-icon fas fa-eye"></i>
                                     <p>
@@ -431,7 +383,7 @@
                                 <p > Navigateur</p>
                                 </div>
                                 </div>
-                                  <li class="nav-item has-treeview menu-open">
+                                  <li class="nav-item">
                                             <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
                                                 <i class="fas fa-home"></i>
                                                 <p>
@@ -440,7 +392,7 @@
                                             </a>
                                         </li>
 
-                                <li class="nav-item has-treeview menu-open">
+                                <li class="nav-item">
                                 <a  href="{{route('Validation')}}"  class="nav-link">
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
@@ -449,14 +401,14 @@
                                     </p>
                                 </a>
                                 </li>
-                                <li class="nav-item has-treeview menu-open">
+                                <li class="nav-item">
                                     <a  href="{{route('Chartsrh')}}" href="#" class="nav-link">
                                         <i class="fas fa-chart-bar"></i>
                                         <p>
                                             Statistiques
                                         </p>
                                     </a>
-                                <li class="nav-item has-treeview menu-open">
+                                <li class="nav-item">
                                 <a  href="{{route('Validation')}}" href="#" class="nav-link">
                                     <i class="nav-icon fas fa-eye"></i>
                                     <p>

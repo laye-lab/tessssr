@@ -102,11 +102,26 @@ class SaisieController extends Controller
     public function  Update(request $request)
     {
         $id=request('id');
+        $id_from_dr=request('id_from_dr');
 
-        $Heures_supp=DB::table('heures_supp')
-        ->where('id', '=', $id )
-        ->delete();
-       return back()->with('success','heure supplémentaire supprimée ');;
+        if ($id != null) {
+            $Heures_supp=DB::table('heures_supp')
+            ->where('id', '=', $id )
+            ->delete();
+           return back()->with('success','heure supplémentaire supprimée ');
+            }
+        if ($id_from_dr != null) {
+
+            $commande=DB::table('agent_Heures_supp_a_faire')
+            ->join('Step','Step.Heures_supp_a_faireID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+            ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
+            ->join('Heures_supp_a_faire','Heures_supp_a_faire.ID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
+            ->where('Heures_supp_a_faire.id', '=', $id_from_dr )
+            ->delete();
+
+            return back()->with('success','heure supplémentaire supprimée ');
+            }
+
     }
 
 
@@ -142,7 +157,7 @@ class SaisieController extends Controller
 
     $verif_doublon=DB::table('heures_supp')
     ->where([
-        ['Agent_Matricule_Agent','=',$collaborateur],
+        ['id_heure_a_faire','=',$id_heure],
         ['Date_Heure','=',$date]])
     ->get();
 
@@ -210,16 +225,14 @@ else{
 
 
 
-        $id_heure=DB::table('agent_Heures_supp_a_faire')
-    ->select('Heures_supp_a_faireID')
-    ->where('agentMatricule_Agent','=',$collaborateur)
-    ->latest('Heures_supp_a_faireID')->first();
 
 
-            $id_heure=DB::table('agent_Heures_supp_a_faire')
-        ->select('Heures_supp_a_faireID')
-        ->where('agentMatricule_Agent','=',$collaborateur)
-		->latest('Heures_supp_a_faireID')->first();
+        $Demadeur_heure=DB::table('Heures_supp_a_faire')
+        ->select('Demandeur')
+        ->where('ID','=',$id_heure)
+        ->first();
+
+
 		Carbon::setWeekStartsAt(Carbon::SUNDAY);
         $Heures_supp = new Heures_supp;
 
@@ -230,10 +243,10 @@ else{
         $Heures_supp->travaux_effectuer =request('travaux_effectuer');
         $Heures_supp->Observations =request('Observations');
         $Heures_supp->Statut =1;
-		$Heures_supp->commandeur =request('commandeur');
+		$Heures_supp->commandeur =$Demadeur_heure->Demandeur;
         $Heures_supp->semaine =$semaine;
         $Heures_supp->id_step =1;
-		$Heures_supp->id_heure_a_faire= $id_heure->Heures_supp_a_faireID;
+		$Heures_supp->id_heure_a_faire = $id_heure;
 
 				$total_taux_15=0;
 				$total_taux_40=0;

@@ -28,151 +28,106 @@
       </div><!-- /.container-fluid -->
     </section>
 
+<center>
+            <section class="content">
+                <div class="container-fluid">
+                <!-- Info boxes -->
+                @if ($data_n_plus_1_count >0)
+                    <div class="row">
+                    <div class="col-12"  style="position:relative; top:10px; ">
+                        <div class="card card-success">
+                            <div class="card-header col-md-5 " >
+                              <h3 class="card-title">Heure supplémentaire du mois </h3>
 
-
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-
-          </div>
-
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-    <section class="content">
-        <div class="container-fluid">
-        <!-- Info boxes -->
-
-        @if ($data_n_plus_1_count >0)
-            <div class="row">
-            <div class="col-12"  style="position:relative; top:10px; ">
-                <div class="card">
-
-                    <div class="card-header" style=" border: none;background-color:rgb(244,246,249);">
-
-                        <ul class="nav nav-pills card-header-pills breadcrumb float-sm-right" style="background-color:rgb(244,246,249); height:20px;">
-                            <li class="nav-item">
+                            </div>
+                            <div class="card-header" style="background-color:white;">
                                 <form method="POST" action="{{'Validationstore'}}" >
                                     @csrf
-                    @foreach($equipe as $equipes)
 
-                    @if($equipes->agentMatricule_Agent  ==  Auth::user()->id)
-                    <input class="form-control"  name="id" type="hidden" value="{{old('id',$equipes->n_plus_un)}}"" id="example-text-input">
-                    @break
-                    @endif
-                    @endforeach
-                    <input type="hidden" name="role"  value="{{$role->Nom}}">
-                  <button style=" background-color:#F2F2F2;border: none;color: white;">
-                    <div class="info-box bg-success" style="width:100%;position:relative;bottom:25px;">
-                      <div class="info-box-content">
-                        <span class="info-box-text text-center ">Valider</span>
-                        <span class="info-box-number text-center mb-0">Heure supplémentaire</span>
-                      </div>
-                    </div>
-                  </button>
-                  </form>
-                            </li>
+                                    <input type="hidden" name="id"  value="{{$role->Matricule_agent}}">
+                                    <input type="hidden" name="role"  value="{{$role->Nom}}">
+                                <ul class="nav nav-pills card-header-pills breadcrumb float-sm-right" style="background-color:white; height:10px;">
+                                  <li class="nav-item" style="background-color:white;">
+                                    <button style=" background-color:white;border: none;color: white;">
+                                        <div class="info-box bg-success" style="width:100%;position:relative; bottom:30px; ">
+                                          <div class="info-box-content">
+                                            <span class="info-box-text text-center ">Valider</span>
+                                            <span class="info-box-number text-center mb-0">Heure supplémentaire</span>
+                                          </div>
+                                        </div>
+                                      </button>
+                                    </form>
+                                  </li>
 
+                                </ul>
+                              </div>
 
-                          </ul>
+                        <!-- /.card-header -->
 
-                      </div>
+                        <div class="card-body">
 
-                <!-- /.card-header -->
-
-                <div class="card-body"  style="background-color:rgb(244,246,249);">
-
-  @foreach($agent_attribut as $agent_unite)
-
-  @if($agent_unite->n_plus_un ==Auth::user()->id )
-
-                                @foreach($heurre_a_faire as $heure)
-
-                                        @if($agent_unite->Matricule_agent ==$heure->Matricule_agent and $heure->Statut==1 )
+                            <table class="table table-striped table-responsive-md btn-table" style="position:relative; ">
+                                <thead>
+                                <tr>
+                                    <th>Heure nº</th>
+                                    <th>Matricule  </th>
+                                    <th>Nom  </th>
+                                    <th>Nombre d'heure </th>
+                                    <th>Actions </th>
 
 
-<center>
-                                        <section class="content" >
-                                          <div class="card col-11"   >
 
-                                            <div class="card-body">
-                                              <div class="row">
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($heurre_somme_n_plus_un as $heure)
+                                    <tr>
+                                      <td>
+                                        {{$heure->id_heure}}
+                                      </td>
+                                      <td>
+                                        {{$heure->Matricule_Agent}}
+                                      </td>
+                                      <td>
+                                        {{$heure->Nom_Agent}}
+                                      </td>
+                                      <td>
+                                        <button type="submit" class="btn  btn-success "> {{$heure->total}}</button>
+                                      </td>
+                                      <td>
+                                        <form method="POST" action="{{'ValidationInvalideur'}}" class="col-12 col-sm-4"  >
+                                            @csrf
+                                          <input type="hidden" name="id"  value="{{$heure->id_heure}}">
+                                          <input type="hidden" name="role"  value="{{$role->Nom}}">
+                                          <button class="btn  btn-outline-danger">
+                                        Invalider
+                                          </button>
+                                        </form>
 
-                                                  <div class="col-12">
-                                                    <button type="submit" class="btn btn-info">{{$agent_unite->Nom_Agent}}</button>
-                                                    <button type="submit" class="btn btn-outline-info">Heure nº{{$heure->id_heure_a_faire}}</button>
-                                  <div class="card-body table-responsive p-0">
-                                    <table class="table table-hover text-nowrap">
-                                      <thead>
-                                        <tr>
-                                          <th>Date</th>
-                                          <th>De</th>
-                                          <th>A</th>
-                                          <th>Travaux réalisés</th>
-                                          <th>Observations</td>
-                                           <th>Nombre d'heures</td>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        @foreach($heurre_a_faire as $heure)
+                                      </td>
 
-                                        @if($agent_unite->Matricule_agent ==$heure->Matricule_agent)
-                                        <tr>
-                                          <td>
-                                            {{$heure->Date_Heure}}
-                                          </td>
-                                          <td>
-                                            {{$heure->heure_debut}} :00
-                                          </td>
-                                          <td>
-                                            {{$heure->heure_fin}} :00
-                                          </td>
-                                          <td>
-                                            {{$heure->travaux_effectuer}}
-                                          </td>
-                                          <td>
-                                            {{$heure->observations}}
-                                          </td>
-                                          <td>
-                                            <button type="submit" class="btn  btn-info ">{{$heure->total_heures_saisie}}</button>
-                                          </td>
-                                          <td>
-                                              <form method="POST" action="{{'ModifSaisie'}}">
-                                                @csrf
 
-                                              <input type="hidden" name="id"  value="{{$heure->id}}">
-                                                <button type="submit" class="btn  btn-outline-danger ">Supprimer</button>
-                                              </form>
+                                  </tr>
 
-                                            </td>
+                          @endforeach
+                                </tbody>
 
-                                      </tr>
-                                        @endif
-                              @endforeach
+                            </table>
 
-                            </tbody>
-                          </table>
+
                         </div>
-
-                    </div>
-                  </div>
-
-
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-
-          </section>
-        </center>
-          @break
-          @endif
-  @endforeach
-          @endif
-          @endforeach
-          @else
-                    <center>
+                        <!-- /.card-body
+                        <tfoot>
+                            <tr>
+                                <th>Rendering engine</th>
+                                <th>Browser</th>
+                                <th>Platform(s)</th>
+                                <th>Engine version</th>
+                                <th>CSS grade</th>
+                            </tr>
+                            </tfoot> -->
+                        </div>
+                        @else
                         <div class="card card-danger card-outline col-md-7">
                             <div class="card-header">
                               <h5 class="m-0">Validation</h5>
@@ -185,5 +140,16 @@
                             </div>
                           </div>
                         </div>
-                    </center>
                         @endif
+                    </div>
+                    </div>
+
+
+
+
+                    </section>
+
+
+
+
+

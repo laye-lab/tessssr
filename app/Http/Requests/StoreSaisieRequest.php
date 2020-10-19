@@ -33,7 +33,6 @@ class StoreSaisieRequest extends FormRequest
             'heure_fin' => 'required|date_format:H:i|',
             'Date_debut' => 'required',
             'Date_fin' => 'required',
-            'commandeur' => 'required',
             'collaborateur' => 'required',
 
 

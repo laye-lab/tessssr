@@ -8,7 +8,7 @@ use App\User;
 
 class Livesearch extends Component
 {
-    public  $searchmatricule=84385;
+    public  $searchmatricule;
     public  $agents;
 
 
