@@ -201,37 +201,37 @@ $content = "";
         if($datas->month ==  $mois){
             if ($datas->sum15 != 0){
         if ($datas->sum15 >9){
-          $content .= $datas->agent.'HS1000000'.$datas->sum15;
+          $content .= $datas->agent.'HS100000'.$datas->sum15;
           $content  .= "\n";
 
         }
         else
-        { $content .=  $datas->agent.'HS10000000'.$datas->sum15;
+        { $content .=  $datas->agent.'HS1000000'.$datas->sum15;
           $content  .= "\n";
         }
     }
     if ($datas->sum40 != 0){
         if ($datas->sum40>9)
         {
-          $content .=  $datas->agent.'HS2000000'.$datas->sum40;
+          $content .=  $datas->agent.'HS200000'.$datas->sum40;
           $content  .= "\n";
       }
         else  {
-          $content .= $datas->agent.'HS20000000'.$datas->sum40;
+          $content .= $datas->agent.'HS2000000'.$datas->sum40;
           $content  .= "\n";}
         }
 
         if ($datas->sum60 != 0){
         if ($datas->sum60>9)
-        { $content .= $datas->agent.'HS3000000'.$datas->sum60;
+        { $content .= $datas->agent.'HS300000'.$datas->sum60;
           $content  .= "\n";
         }
-        else {  $content .= $datas->agent.'HS30000000'.$datas->sum60;
+        else {  $content .= $datas->agent.'HS3000000'.$datas->sum60;
           $content  .= "\n";}}
           if ($datas->sum100 != 0){
         if ($datas->sum100>9)
-        { $content .= $datas->agent.'HS4000000'.$datas->sum100;   $content  .= "\n";}
-        else {  $content .= $datas->agent.'HS40000000'.$datas->sum100;   $content  .= "\n";}
+        { $content .= $datas->agent.'HS400000'.$datas->sum100;   $content  .= "\n";}
+        else {  $content .= $datas->agent.'HS4000000'.$datas->sum100;   $content  .= "\n";}
 
           }}
 
