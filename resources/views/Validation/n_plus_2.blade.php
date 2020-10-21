@@ -85,6 +85,8 @@
 
                                     <input type="hidden" name="id"  value="{{$role->Matricule_agent}}">
                                     <input type="hidden" name="role"  value="{{$role->Nom}}">
+
+
                                 <ul class="nav nav-pills card-header-pills breadcrumb float-sm-right" style="background-color:white; height:10px;">
                                   <li class="nav-item" style="background-color:white;">
                                     <button style=" background-color:white;border: none;color: white;">
@@ -112,7 +114,7 @@
                                     <th>Matricule  </th>
                                     <th>Nom  </th>
                                     <th>Nombre d'heure </th>
-                                    <th>Actions </th>
+                                    <th colspan="2"> <center>Actions </center> </th>
 
 
 
@@ -140,6 +142,17 @@
                                           <input type="hidden" name="role"  value="{{$role->Nom}}">
                                           <button class="btn  btn-outline-danger">
                                         Invalider
+                                          </button>
+                                        </form>
+
+                                      </td>
+                                      <td>
+                                        <form method="POST" action="{{'Validationdetails'}}" class="col-12 col-sm-4"  >
+                                            @csrf
+                                          <input type="hidden" name="id"  value="{{$heure->id_heure}}">
+                                          <input type="hidden" name="nom"  value="{{$heure->Nom_Agent}}">
+                                          <button class="btn  btn-warning">
+                                        Details
                                           </button>
                                         </form>
 

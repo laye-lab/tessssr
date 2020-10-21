@@ -261,6 +261,7 @@ $content = "";
             ->join('agent','agent.Matricule_Agent' ,'=','users.id')
             ->select('Matricule_agent','Fonction','Statut','Direction','Role.Nom','Nom_Agent','etablissement')
             ->get();
+
       $data = DB::table('heures_supp')
         ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
         ->select(
@@ -273,7 +274,7 @@ $content = "";
             DB::raw('Nom_Agent as Nom'),
             DB::raw('SUM(total_heures_saisie) as total'),
             DB::raw('(Agent_Matricule_Agent) as agent')
-            )->where('Statut', '>', 4)
+            )->where('Statut', '=', 4)
            ->groupBy('year','month','agent')
            ->get();
 

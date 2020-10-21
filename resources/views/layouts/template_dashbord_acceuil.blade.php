@@ -168,7 +168,7 @@
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
-                                  <span class="badge badge-info right">new</span>
+                                  <span class="badge badge-info right"></span>
                                     </p>
                                 </a>
                                 </li>
@@ -183,56 +183,7 @@
                                     </ul>
 
                 @break
-                @case('sec')
-                                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                                        <!-- Add icons to the links using the .nav-icon class
-                                            with font-awesome or any other icon font library -->
-                                            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 
-                                            <div class="nav-link" style="color:white;">
-                                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                            <p > Navigateur</p>
-                                            </div>
-                                            </div>
-                                            <li class="nav-item">
-                                                <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
-                                                    <i class="fas fa-home"></i>
-                                                    <p>
-                                                   Acceuil
-                                                    </p>
-                                                </a>
-                                            </li>
-
-                                    <li class="nav-item">
-                                    <a  href="{{route('homeSaisie')}}" class="nav-link">
-                                        <i class="nav-icon fas fa-pen-alt"></i>
-                                        <p>
-                                        Saisie heure
-                                        </p>
-                                    </a>
-                                </li>
-
-
-                                <li class="nav-item">
-                                <a href="{{route('Validation')}}" class="nav-link">
-                                    <i class="nav-icon fas fa-check-double"></i>
-                                    <p>
-                                    Valider heure
-                                  <span class="badge badge-info right">new</span>
-                                    </p>
-                                </a>
-                                </li>
-                                <li class="nav-item">
-                                <a href="{{route('Validation')}}" class="nav-link">
-                                    <i class="nav-icon fas fa-eye"></i>
-                                    <p>
-                                    Consulter agent
-                                    </p>
-                                </a>
-                                </li>
-                                    </ul>
-
-                @break
             @case('n+2')
                                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                                         <!-- Add icons to the links using the .nav-icon class
@@ -261,15 +212,20 @@
                                                 </p>
                                             </a>
                                         </li>
-
-
-
-
                                     <li class="nav-item">
                                     <a href="{{route('homeSaisie')}}"   class="nav-link">
                                         <i class="nav-icon fas fa-pen-alt"></i>
                                         <p>
                                         Saisie heure
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{route('SuiviCommande')}}"   class="nav-link">
+                                        <i class="nav-icon fas fa-align-left"></i>
+                                        <p>
+                                        Suivi des Commandes
                                         </p>
                                     </a>
                                 </li>
@@ -280,7 +236,7 @@
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
-                                    <span class="badge badge-info right">new</span>
+                                    <span class="badge badge-info right"></span>
                                     </p>
                                 </a>
                                 </li>
@@ -294,46 +250,6 @@
                                 </li>
                                     </ul>
                         @break
-             @case('n+3')
-                                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                                    <!-- Add icons to the links using the .nav-icon class
-                                        with font-awesome or any other icon font library -->
-                                        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-
-                                        <div class="nav-link" style="color:white;">
-                                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                                        <p > Navigateur</p>
-                                        </div>
-                                        </div>
-                                        <li class="nav-item">
-                                            <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
-                                                <i class="fas fa-home"></i>
-                                                <p>
-                                               Acceuil
-                                                </p>
-                                            </a>
-                                        </li>
-
-                                        <li class="nav-item">
-                                        <a  href="{{route('Validation')}}" class="nav-link">
-                                            <i class="nav-icon fas fa-check-double"></i>
-                                            <p>
-                                            Valider heure
-                                          <span class="badge badge-info right">new</span>
-                                            </p>
-                                        </a>
-                                        </li>
-                                        <li class="nav-item">
-                                        <a href="{{route('Validation')}}" class="nav-link">
-                                            <i class="nav-icon fas fa-eye"></i>
-                                            <p>
-                                            Consulter agent
-                                            </p>
-                                        </a>
-                                        </li>
-                                </ul>
-
-                @break
 
              @case('drh')
              <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -390,7 +306,7 @@
             </ul>
 
                 @break
-                @case('dto')
+                @case('dto' or 'dcm' or 'dpd')
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                         with font-awesome or any other icon font library -->
@@ -415,7 +331,7 @@
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
-                                  <span class="badge badge-info right">new</span>
+                                  <span class="badge badge-info right"></span>
                                     </p>
                                 </a>
                                 </li>
@@ -437,52 +353,7 @@
                 </ul>
 
                 @break
-                @case('dcm')
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <!-- Add icons to the links using the .nav-icon class
-                        with font-awesome or any other icon font library -->
-                                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 
-                                <div class="nav-link" style="color:white;">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p > Navigateur</p>
-                                </div>
-                                </div>
-                                  <li class="nav-item">
-                                            <a  href="{{route('Acceuil')}}" href="#" class="nav-link">
-                                                <i class="fas fa-home"></i>
-                                                <p>
-                                               Acceuil
-                                                </p>
-                                            </a>
-                                        </li>
-
-                                <li class="nav-item">
-                                <a  href="{{route('Validation')}}"  class="nav-link">
-                                    <i class="nav-icon fas fa-check-double"></i>
-                                    <p>
-                                    Valider heure
-                                  <span class="badge badge-info right">new</span>
-                                    </p>
-                                </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a  href="{{route('Chartsrh')}}" href="#" class="nav-link">
-                                        <i class="fas fa-chart-bar"></i>
-                                        <p>
-                                            Statistiques
-                                        </p>
-                                    </a>
-                                <li class="nav-item">
-                                <a  href="{{route('Validation')}}" href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-eye"></i>
-                                    <p>
-                                    Consulter agent
-                                    </p>
-                                </a>
-                                </li>
-                </ul>
-                @break
 
 
         @endswitch
@@ -552,34 +423,34 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
    {{-- ChartScript --}}
-   @if(isset($usersChartDiourbel))
-   {!! $usersChartDiourbel->script() !!}
+   @if(isset($usersChartDBL))
+   {!! $usersChartDBL->script() !!}
    @else <script></script>
    @endif
 
-   @if(isset($usersChartKaolack))
-   {!! $usersChartKaolack->script() !!}
+   @if(isset($usersChartKLK))
+   {!! $usersChartKLK->script() !!}
    @else <script></script>
    @endif
 
-   @if(isset($usersChartLouga))
-   {!! $usersChartLouga->script() !!}
+   @if(isset($usersChartLGA))
+   {!! $usersChartLGA->script() !!}
    @else <script></script>
    @endif
 
-   @if(isset($usersChartDakar1))
-   {!! $usersChartDakar1->script() !!}
+   @if(isset($usersChartDK1))
+   {!! $usersChartDK1->script() !!}
    @else <script></script>
    @endif
 
 
-   @if(isset($usersChartRufisque))
-   {!! $usersChartRufisque->script() !!}
+   @if(isset($usersChartRUF))
+   {!! $usersChartRUF->script() !!}
    @else <script></script>
    @endif
 
-   @if(isset($usersChartDakar2))
-   {!! $usersChartDakar2->script() !!}
+   @if(isset($usersChartDK2))
+   {!! $usersChartDK2->script() !!}
    @else <script></script>
    @endif
 
@@ -589,25 +460,25 @@
    @endif
 
 
-   @if(isset($usersChartThies))
-   {!! $usersChartThies->script() !!}
+   @if(isset($usersChartTHS))
+   {!! $usersChartTHS->script() !!}
    @else <script></script>
    @endif
-   @if(isset($usersChartSaint_Louis))
-   {!! $usersChartSaint_Louis->script() !!}
-   @else <script></script>
-   @endif
-
-   @if(isset($usersChartZiguinchor))
-   {!! $usersChartZiguinchor->script() !!}
+   @if(isset($usersChartSTL))
+   {!! $usersChartSTL->script() !!}
    @else <script></script>
    @endif
 
-   @if(isset($usersChartTambacounda))
-   {!! $usersChartTambacounda->script() !!}
+   @if(isset($usersChartZIG))
+   {!! $usersChartZIG->script() !!}
    @else <script></script>
    @endif
-   @if(isset($usersChartNgnith))
-   {!! $usersChartNgnith->script() !!}
+
+   @if(isset($usersChartTBA))
+   {!! $usersChartTBA->script() !!}
+   @else <script></script>
+   @endif
+   @if(isset($usersChartNGN))
+   {!! $usersChartNGN->script() !!}
    @else <script></script>
    @endif

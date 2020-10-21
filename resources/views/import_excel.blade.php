@@ -73,9 +73,7 @@
         <td>{{ $row->CustomerName }}</td>
         <td>{{ $row->Gender }}</td>
         <td>{{ $row->Address }}</td>
-        <td>{{ $row->City }}</td>
-        <td>{{ $row->PostalCode }}</td>
-        <td>{{ $row->Country }}</td>
+
        </tr>
        @endforeach
       </table>

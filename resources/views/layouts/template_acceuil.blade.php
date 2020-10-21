@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V17</title>
+	<title>SenAdmin</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="imagelogs/icons/favicon.ico"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendorlog/bootstrap/css/bootstrap.min.css">
@@ -14,13 +14,13 @@
 	<link rel="stylesheet" type="text/css" href="fontlogs/Linearicons-Free-v1.0.0/icon-font.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendorlog/animate/animate.css">
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendorlog/css-hamburgers/hamburgers.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendorlog/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendorlog/select2/select2.min.css">
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendorlog/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="csslog/util.css">
@@ -49,12 +49,12 @@
 <body>
   @yield('content')
 
-			
-	
-	
+
+
+
 
 	<div id="dropDownSelect1"></div>
-	
+
 <!--===============================================================================================-->
 	<script src="vendorlog/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->

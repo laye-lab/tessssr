@@ -42,7 +42,7 @@
         <!-- Small boxes (Stat box) -->
         <div class="container">
             <div class="card-deck mb-3 text-center">
-                <div class="card mb-4 box-shadow">
+                <div class="card mb-3 box-shadow">
 
                     <div class="card-body"  style="background-color:white;height:220px;
                      background-size: 310px 200px;
@@ -56,7 +56,7 @@
                     </a>
                     </div>
                 </div>
-                <div class="card mb-4 box-shadow">
+                <div class="card mb-3 box-shadow">
 
                     <div class="card-body"  style="background-color:white;height:220px;
                     background-size: 310px 200px;
@@ -70,7 +70,7 @@
                         </a>
                     </div>
                 </div>
-              <div class="card mb-4 box-shadow">
+              <div class="card mb-3 box-shadow">
 
                 <div class="card-body"  style="background-color:white;height:100px;
                   background-size: 310px 200px;

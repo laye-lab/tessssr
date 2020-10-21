@@ -95,12 +95,12 @@
                                         <button type="submit" class="btn  btn-success "> {{$heure->total}}</button>
                                       </td>
                                       <td>
-                                        <form method="POST" action="{{'ValidationInvalideur'}}" class="col-12 col-sm-4"  >
+                                        <form method="POST" action="{{'Validationdetails'}}" class="col-12 col-sm-4"  >
                                             @csrf
                                           <input type="hidden" name="id"  value="{{$heure->id_heure}}">
-                                          <input type="hidden" name="role"  value="{{$role->Nom}}">
-                                          <button class="btn  btn-outline-danger">
-                                        Invalider
+                                          <input type="hidden" name="nom"  value="{{$heure->Nom_Agent}}">
+                                          <button class="btn  btn-warning">
+                                        Details
                                           </button>
                                         </form>
 

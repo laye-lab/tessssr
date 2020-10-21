@@ -20,46 +20,30 @@
       </div><!-- /.container-fluid -->
     </div>
 
-    @foreach($role_account as $role)
-                @if(Auth::user()->id == $role->Matricule_agent)
-                                @if($role->Nom == 'n+3')
-                                    <!-- Main content -->
-                                    @include('Acceuil.n_plus_3')
-                                    @break
-                                            <!-- ./col -->
-                                @endif
 
-                            @if($role->Nom === 'n+2')
-                                    <!-- Main content -->
-                                    @include('Acceuil.n_plus_2')
-                                    @break
-                 <!-- ./col -->
-                                @endif
+     @foreach($role_account as $role)
+     @if(Auth::user()->id == $role->Matricule_agent)
+     @switch($role->Nom)
+                       @case('n+2')
+                             @include('Acceuil.n_plus_2')
+                             @break
 
-                            @if($role->Nom === 'n+1' or $role->Nom === 'sec')
-                                        <!-- Main content -->
-                                    @include('Acceuil.n_plus_1')
-                                    @break
-                                                    <!-- ./col -->
-                                @endif
-
-                            @if($role->Nom === 'dto')
-                                                    <!-- Main content -->
-                                    @include('Acceuil.dto_dcm')
-                                    @break
-                                @endif
-
-                            @if($role->Nom === 'dcm')
-                                <!-- Main content -->
-                             @include('Acceuil.dto_dcm')
+                         @case('n+1')
+                                @include('Acceuil.n_plus_1')
                                 @break
-                            @endif
 
-                            @if($role->Nom === 'drh')
-                                    @include('Acceuil.drh')
-                                    @break
-                                @endif
-                     @endif
-     @endforeach
+                         @case( 'drh')
+                                @include('Acceuil.drh')
+                                @break
 
+                        @case( 'dto' or 'dcm' or 'dpd')
+                        @include('Acceuil.dto_dcm')
+                        @break
+                    @break
+
+
+       @endswitch
+             @break
+               @endif
+                 @endforeach
  @endsection

@@ -23,10 +23,13 @@ class AcceuilController extends Controller
     {
 
 
+
         $users=User::all();
          $user=auth()->user()->id;
         $current_month = date('m');
         $current_year = date("Y");
+        $etablissement_dr =DB::table('agent')->where('Matricule_Agent', '=', $user)->first();
+
         if (null != request('mois')){
 
             $mois=request('mois');
@@ -106,9 +109,11 @@ class AcceuilController extends Controller
                 ->groupBy('Affectations')
                 ->get();
 
+
+
                 $data_dto = DB::table('heures_supp')
                 ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
-                ->where('Direction', '=','DTO')
+                ->where('Direction', '=',$etablissement_dr->Direction)
                 ->select
                     (
                     DB::raw('SUM(total_taux_15) as sum15'),
@@ -120,7 +125,6 @@ class AcceuilController extends Controller
                     )
                     ->groupBy('Affectations')
                     ->get();
-
 
             $data_drh= DB::table('heures_supp')
             ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
@@ -142,7 +146,6 @@ class AcceuilController extends Controller
         $user=auth()->user()->id;
         $current_month = date('m');
         $current_year = date("Y");
-
         $borderColors = [
             "rgba(255, 99, 132, 1.0)",
             "rgba(22,160,133, 1.0)",
@@ -169,100 +172,121 @@ class AcceuilController extends Controller
 
         ];
 
-        $etablissement_dr =DB::table('agent')->where('Matricule_Agent', '=', $user)->first();
+
 
 
         $total_current_month =DB::table('heures_supp')->select('total_heures_saisie')
-        ->whereMonth('Date_Heure', '=',$current_month)->sum('total_heures_saisie');
+        ->whereMonth('Date_Heure', '=',$current_month)->where('heures_supp.Statut', '=',4)->sum('total_heures_saisie');
+
+        $total_current_month_n_plus_3 =DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->select('total_heures_saisie')
+        ->whereMonth('Date_Heure', '=',$current_month)->where([['Direction', '=',$etablissement_dr->Direction],['heures_supp.Statut', '>=',4]])->sum('total_heures_saisie');
 
         $total_current_month_dr=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')
-        ->where('Etablissement', '=',$etablissement_dr->Etablissement)->whereMonth('Date_Heure', '=',$current_month)->sum('total_heures_saisie');
+        ->where([['Etablissement', '=',$etablissement_dr->Etablissement], ['heures_supp.Statut', '=',4]])->whereMonth('Date_Heure', '=',$current_month)->sum('total_heures_saisie');
 
+        $total_current_year_n_plus_3 =DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')
+        ->where([['Direction', '=',$etablissement_dr->Direction],['heures_supp.Statut', '>=',4]])->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+
+        $service=DB::table('affectation');
 
         $total_current_year =DB::table('heures_supp')->select('total_heures_saisie')
-        ->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        ->whereYear('Date_Heure', '=',$current_year)->where('heures_supp.Statut', '=',4)->sum('total_heures_saisie');
 
         $total_current_year_dr =DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')
-        ->where('Etablissement', '=',$etablissement_dr->Etablissement)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        ->where([['Etablissement', '=',$etablissement_dr->Etablissement],['heures_supp.Statut', '=',4]])->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
 
 
 
-        $Ziguinchor=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
+        $zig=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
         '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
-        ->where([['Etablissement', '=',"Ziguinchor"],
-        ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
+        ->where(
+            [['Etablissement', '=',"zig"],
+            ['heures_supp.statut', '>=',4],
+            ['Direction', '=',$etablissement_dr->Direction]]
+        )->whereYear('Date_Heure', '=',$current_year)
         ->sum('total_heures_saisie');
 
-        $Diourbel=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
+        $DBL=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
         '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
-        ->where([['Etablissement', '=',"Diourbel"],
-        ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
+        ->where([['Etablissement', '=',"DBL"],
+        ['heures_supp.statut', '>=',4],
+        ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
         ->sum('total_heures_saisie');
 
-        $Ngnith=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
+        $NGN=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
         '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
-        ->where([['Etablissement', '=',"Ngnith"],
-        ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
+        ->where([['Etablissement', '=',"NGN"],
+        ['heures_supp.statut', '>=',4],
+        ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
         ->sum('total_heures_saisie');
 
-        $Kaolack=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
+        $KLK=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
         '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
-        ->where([['Etablissement', '=',"Kaolack"],
-        ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
+        ->where([['Etablissement', '=',"KLK"],
+        ['heures_supp.statut', '>=',4],
+        ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
         ->sum('total_heures_saisie');
 
-        $Tambacounda=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
+        $TBA=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
         '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
-        ->where([['Etablissement', '=',"Tambacounda"],
-        ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
+        ->where([['Etablissement', '=',"TBA"],
+        ['heures_supp.statut', '>=',4],
+        ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
         ->sum('total_heures_saisie');
 
-        $Dakar1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
+        $DK1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
         '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
-        ->where([['Etablissement', '=',"Dakar 1"],
-        ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
+        ->where([['Etablissement', '=',"DK1"],
+        ['heures_supp.statut', '>=',4],
+        ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
         ->sum('total_heures_saisie');
 
-        $Dakar2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
+        $DK2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
         '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
-        ->where([['Etablissement', '=',"Dakar 2"],
-        ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
+        ->where([['Etablissement', '=',"DK2"],
+        ['heures_supp.statut', '>=',4],
+        ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
         ->sum('total_heures_saisie');
 
-        $Louga=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
+        $LGA=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
         '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
-        ->where([['Etablissement', '=',"Louga"],
-        ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
+        ->where([['Etablissement', '=',"LGA"],
+        ['heures_supp.statut', '>=',4],
+        ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
         ->sum('total_heures_saisie');
 
-        $Rufisque=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
+        $RUF=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
         '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
-        ->where([['Etablissement', '=',"Rufisque"],
-        ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
+        ->where([['Etablissement', '=',"RUF"],
+        ['heures_supp.statut', '>=',4],
+        ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
         ->sum('total_heures_saisie');
 
-        $Thies=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
+        $THS=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
         '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
-        ->where([['Etablissement', '=',"Thiés"],
-        ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
+        ->where([['Etablissement', '=',"THS"],
+        ['heures_supp.statut', '>=',4],
+        ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
         ->sum('total_heures_saisie');
 
-        $Hann=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
+        $HAN=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
         '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
-        ->where([['Etablissement', '=',"Centre de Hann"],
-        ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
+        ->where([['Etablissement', '=',"Centre de HAN"],
+        ['heures_supp.statut', '>=',4],
+        ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
         ->sum('total_heures_saisie');
 
-        $Saint_Louis=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
+        $STL=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
         '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
-        ->where([['Etablissement', '=',"Saint-Louis"],
-        ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
+        ->where([['Etablissement', '=',"STL"],
+        ['heures_supp.statut', '>=',4],
+        ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
         ->sum('total_heures_saisie');
 
-        $usersChartKaolack = new UserChart;
-        $usersChartKaolack->labels(['Kaolack', 'Ziguinchor', 'Ngnith','Diourbel','Tambacounda','Dakar1','Dakar2','Louga','Rufisque','Thies','Hann','Saint_Louis']);
-        $usersChartKaolack->dataset('', 'bar', [ $Kaolack, $Ziguinchor, $Ngnith,$Diourbel,$Tambacounda,$Dakar1,$Dakar2,$Louga,$Rufisque,$Thies,$Hann,$Saint_Louis])
+        $usersChartKLK = new UserChart;
+        $usersChartKLK->labels(['KLK', 'zig', 'NGN','DBL','TBA','DK1','DK2','LGA','RUF','THS','HAN','STL']);
+        $usersChartKLK->dataset('', 'bar', [ $KLK, $zig, $NGN,$DBL,$TBA,$DK1,$DK2,$LGA,$RUF,$THS,$HAN,$STL])
         ->color($borderColors)
         ->backgroundcolor($fillColors);
 
@@ -276,10 +300,12 @@ class AcceuilController extends Controller
 
         return view('Acceuil')->with([
                 'users'=>$users,
-                'usersChartKaolack' =>$usersChartKaolack,
+                'usersChartKLK' =>$usersChartKLK,
                 'data' => $data,
                 'data_dto' => $data_dto,
                 'data_drh' => $data_drh,
+                'total_current_month_n_plus_3'=>$total_current_month_n_plus_3,
+                'total_current_year_n_plus_3'=>$total_current_year_n_plus_3,
                 'total_current_month' =>  $total_current_month,
                 'total_current_month_dr' =>  $total_current_month_dr,
                 'total_current_year' =>  $total_current_year,

@@ -41,11 +41,7 @@
 
                             </div>
                             <div class="card-header" style="background-color:white;">
-                                <form method="POST" action="{{'Validationstore'}}" >
-                                    @csrf
 
-                                    <input type="hidden" name="id"  value="{{$role->Matricule_agent}}">
-                                    <input type="hidden" name="role"  value="{{$etablissement_dr->Direction}}">
                                 <ul class="nav nav-pills card-header-pills breadcrumb float-sm-right" style="background-color:white; height:10px;">
                                   <li class="nav-item" style="background-color:white;">
                                     <button style=" background-color:white;border: none;color: white;">
@@ -56,7 +52,6 @@
                                           </div>
                                         </div>
                                       </button>
-                                    </form>
                                   </li>
 
                                 </ul>

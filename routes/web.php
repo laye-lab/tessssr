@@ -174,6 +174,8 @@ Route::post('/import_excel/import', 'ImportExcelController@import');
 
         Route::post('/Validationstore', 'ValidationController@store');
 
+        Route::any('/Validationdetails', 'ValidationController@details');
+
         Route::post('/ValidationInvalideur', 'ValidationController@Invalideur');
 
         Route::post('/Saisiestore', 'SaisieController@store')->name('Saisiestore');

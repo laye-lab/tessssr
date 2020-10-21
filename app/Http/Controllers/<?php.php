@@ -26,26 +26,23 @@ class ValidationController extends Controller
 
 
         $total_current_month =DB::table('heures_supp')->select('total_heures_saisie')
-        ->whereMonth('Date_Heure', '=',$current_month)->where('heures_supp.Statut', '=',4)->sum('total_heures_saisie');
+        ->whereMonth('Date_Heure', '=',$current_month)->sum('total_heures_saisie');
 
         $total_current_month_n_plus_3 =DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')->select('total_heures_saisie')
-        ->whereMonth('Date_Heure', '=',$current_month)->where([['Direction', '=',$etablissement_dr->Direction],['heures_supp.Statut', '=',4]])->sum('total_heures_saisie');
+        ->whereMonth('Date_Heure', '=',$current_month)->where('Direction', '=',$etablissement_dr->Direction)->sum('total_heures_saisie');
 
         $total_current_month_dr=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')
-        ->where([['Etablissement', '=',$etablissement_dr->Etablissement], ['heures_supp.Statut', '=',4]])->whereMonth('Date_Heure', '=',$current_month)->sum('total_heures_saisie');
+        ->where('Etablissement', '=',$etablissement_dr->Etablissement)->whereMonth('Date_Heure', '=',$current_month)->sum('total_heures_saisie');
 
-        $total_current_year_n_plus_3 =DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')
-        ->where([['Direction', '=',$etablissement_dr->Direction],['heures_supp.Statut', '>=',4]])->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
-
-        $service=DB::table('affectation');
 
         $total_current_year =DB::table('heures_supp')->select('total_heures_saisie')
-        ->whereYear('Date_Heure', '=',$current_year)->where('heures_supp.Statut', '=',4)->sum('total_heures_saisie');
+        ->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
         $total_current_year_dr =DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')
-        ->where([['Etablissement', '=',$etablissement_dr->Etablissement],['heures_supp.Statut', '=',4]])->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
+        ->where('Etablissement', '=',$etablissement_dr->Etablissement)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
-
+        $total_current_year_n_plus_3 =DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,'=','heures_supp.Agent_Matricule_Agent')
+        ->where('Direction', '=',$etablissement_dr->Direction)->whereYear('Date_Heure', '=',$current_year)->sum('total_heures_saisie');
 
         $service=DB::table('affectation')
             ->join('agent','agent.Matricule_Agent','=','affectation.agentMatricule_Agent')
@@ -91,11 +88,7 @@ class ValidationController extends Controller
 
             $data_dto = DB::table('heures_supp')
             ->join('agent','agent.Matricule_Agent' ,'=','Agent_Matricule_Agent')
-            ->whereMonth('Date_Heure', '=',  now()->month)
-            ->where([
-                ['agent.Direction', '=',$etablissement_dr->Direction],
-                ['heures_supp.Statut', '=',3],
-                ])
+            ->where('Direction', '=',$etablissement_dr->Direction)
             ->select
             (
             DB::raw('SUM(total_heures_saisie) as total'),
@@ -104,9 +97,7 @@ class ValidationController extends Controller
             )
             ->groupBy('Etablissements')
             ->get();
-
-
-
+dd($data_dto);
                 $data_dto_count= $data_dto->count();
 
 
@@ -209,291 +200,291 @@ class ValidationController extends Controller
             $NGN=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
             ->where([['Etablissement', '=',"NGN"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $NGN_moins_1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonth()->month)
             ->where([['Etablissement', '=',"NGN"],
-            ['heures_supp.statut', '>=',3],['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $NGN_moins_2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(2)->month)
             ->where([['Etablissement', '=',"NGN"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $NGN_moins_3=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(3)->month)
             ->where([['Etablissement', '=',"NGN"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $DBL=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
             ->where([['Etablissement', '=',"DBL"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $DBL_moins_1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonth()->month)
             ->where([['Etablissement', '=',"DBL"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $DBL_moins_2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(2)->month)
             ->where([['Etablissement', '=',"DBL"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $DBL_moins_3=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(3)->month)
             ->where([['Etablissement', '=',"DBL"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $TBA=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
             ->where([['Etablissement', '=',"TBA"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $TBA_moins_1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonth()->month)
             ->where([['Etablissement', '=',"TBA"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $TBA_moins_2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(2)->month)
             ->where([['Etablissement', '=',"TBA"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $TBA_moins_3=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(3)->month)
             ->where([['Etablissement', '=',"TBA"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $KLK=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
             ->where([['Etablissement', '=',"KLK"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $KLK_moins_1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonth()->month)
             ->where([['Etablissement', '=',"KLK"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $KLK_moins_2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(2)->month)
             ->where([['Etablissement', '=',"KLK"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $KLK_moins_3=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(3)->month)
             ->where([['Etablissement', '=',"KLK"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $DK1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
             ->where([['Etablissement', '=',"DK1"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $DK1_moins_1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonth()->month)
             ->where([['Etablissement', '=',"DK1"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $DK1_moins_2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(2)->month)
             ->where([['Etablissement', '=',"DK1"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $DK1_moins_3=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(3)->month)
             ->where([['Etablissement', '=',"DK1"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $DK2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
             ->where([['Etablissement', '=',"DK2"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $DK2_moins_2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonth()->month)
             ->where([['Etablissement', '=',"DK2"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $DK2_moins_2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(2)->month)
             ->where([['Etablissement', '=',"DK2"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $DK2_moins_3=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(3)->month)
             ->where([['Etablissement', '=',"DK2"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
 
             $LGA=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
             ->where([['Etablissement', '=',"LGA"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $LGA_moins_1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonth()->month)
             ->where([['Etablissement', '=',"LGA"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $LGA_moins_2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(2)->month)
             ->where([['Etablissement', '=',"LGA"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $LGA_moins_3=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(3)->month)
             ->where([['Etablissement', '=',"LGA"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $ZIG=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
             ->where([['Etablissement', '=',"ZIG"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $ZIG_moins_1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonth()->month)
             ->where([['Etablissement', '=',"ZIG"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $ZIG_moins_2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(2)->month)
             ->where([['Etablissement', '=',"ZIG"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $ZIG_moins_3=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(3)->month)
             ->where([['Etablissement', '=',"ZIG"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $RUF=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
             ->where([['Etablissement', '=',"RUF"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $RUF_moins_1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonth()->month)
             ->where([['Etablissement', '=',"RUF"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $RUF_moins_2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(2)->month)
             ->where([['Etablissement', '=',"RUF"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $RUF_moins_3=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(3)->month)
             ->where([['Etablissement', '=',"RUF"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $THS=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
             ->where([['Etablissement', '=',"THS"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $THS_moins_1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonth()->month)
             ->where([['Etablissement', '=',"THS"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $THS_moins_2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(2)->month)
             ->where([['Etablissement', '=',"THS"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $THS_moins_3=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(3)->month)
             ->where([['Etablissement', '=',"THS"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $Hann=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
             ->where([['Etablissement', '=',"Centre de Hann"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $Hann_moins_1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonth()->month)
             ->where([['Etablissement', '=',"Centre de Hann"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $Hann_moins_2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(2)->month)
             ->where([['Etablissement', '=',"Centre de Hann"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $Hann_moins_3=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(3)->month)
             ->where([['Etablissement', '=',"Centre de Hann"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
 
             $STL=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->month)
             ->where([['Etablissement', '=',"STL"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $STL_moins_1=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonth()->month)
             ->where([['Etablissement', '=',"STL"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $STL_moins_2=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(2)->month)
             ->where([['Etablissement', '=',"STL"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
             $STL_moins_3=DB::table('heures_supp')->join('agent','agent.Matricule_Agent' ,
             '=','heures_supp.Agent_Matricule_Agent')->whereMonth('Date_Heure', '=',  now()->subMonths(3)->month)
             ->where([['Etablissement', '=',"STL"],
-            ['heures_supp.statut', '>=',3], ['Direction', '=',$etablissement_dr->Direction]])->whereYear('Date_Heure', '=',$current_year)
+            ['heures_supp.statut', '>=',3]])->whereYear('Date_Heure', '=',$current_year)
             ->sum('total_heures_saisie');
 
 
@@ -577,7 +568,6 @@ class ValidationController extends Controller
                         'usersChartDBL' => $usersChartDBL,
                         'usersChartKLK' => $usersChartKLK,
                         'usersChartDK1' => $usersChartDK1,
-                        'etablissement_dr' => $etablissement_dr,
                         'heurre_somme' => $heurre_somme,
                         'heurre_somme_n_plus_un' => $heurre_somme_n_plus_un,
                         'data_n_plus_2' => $data_n_plus_2,
@@ -642,14 +632,8 @@ class ValidationController extends Controller
         return back();
           break;
         case 'n+2':
-            $user=auth()->user()->id;
-            $etablissement_dr = DB::table('agent')
-            ->where('Matricule_agent', '=', $user)
-            ->select('etablissement')
-            ->first();
-
-
-            if ($etablissement_dr->etablissement == 'HAN') {
+            $etablissement=request('etablissement');
+            if ($etablissement == 'HAN') {
                 $Heures_supp=DB::table('heures_supp')
                 ->where([
                     ['commandeur', '=', $id ],
@@ -677,18 +661,18 @@ class ValidationController extends Controller
 
         return back()->with('success','Toutes les heure Supplémentaire sont maintenant validées ');
               break;
-        case 'DTO' or 'DCM' or 'DPD'  :
+        case 'dto' :
             $Heures_supp=DB::table('agent_Heures_supp_a_faire')
             ->join('agent','agent.Matricule_Agent','=','agent_Heures_supp_a_faire.agentMatricule_Agent')
             ->join('heures_supp','heures_supp.id_heure_a_faire','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
             ->join('Heures_supp_a_faire','Heures_supp_a_faire.ID','=','agent_Heures_supp_a_faire.Heures_supp_a_faireID')
             ->where([
-                ['agent.Direction', '=',$role ],
+                ['agent.Direction', '=', 'DTO' ],
                 ['heures_supp.Statut', '=', 3  ],
                 ])
             ->update(['heures_supp.Statut' => 4]);
 
-            return back()->with('success','Toutes les heure Supplémentaire sont maintenant validées ');
+            return back();
               break;
 
         }

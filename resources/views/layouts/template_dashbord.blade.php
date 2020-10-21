@@ -168,7 +168,7 @@
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
-                                  <span class="badge badge-info right">new</span>
+                                  <span class="badge badge-info right"></span>
                                     </p>
                                 </a>
                                 </li>
@@ -218,7 +218,7 @@
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
-                                  <span class="badge badge-info right">new</span>
+                                  <span class="badge badge-info right"></span>
                                     </p>
                                 </a>
                                 </li>
@@ -272,13 +272,21 @@
                                     </a>
                                 </li>
 
+                                <li class="nav-item">
+                                    <a href="{{route('SuiviCommande')}}"   class="nav-link">
+                                        <i class="nav-icon fas fa-align-left"></i>
+                                        <p>
+                                        Suivi des Commandes
+                                        </p>
+                                    </a>
+                                </li>
 
                                 <li class="nav-item">
                                 <a  href="{{route('Validation')}}" class="nav-link">
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
-                                    <span class="badge badge-info right">new</span>
+                                    <span class="badge badge-info right"></span>
                                     </p>
                                 </a>
                                 </li>
@@ -317,7 +325,7 @@
                                             <i class="nav-icon fas fa-check-double"></i>
                                             <p>
                                             Valider heure
-                                          <span class="badge badge-info right">new</span>
+                                          <span class="badge badge-info right"></span>
                                             </p>
                                         </a>
                                         </li>
@@ -413,7 +421,7 @@
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
-                                  <span class="badge badge-info right">new</span>
+                                  <span class="badge badge-info right"></span>
                                     </p>
                                 </a>
                                 </li>
@@ -460,7 +468,7 @@
                                     <i class="nav-icon fas fa-check-double"></i>
                                     <p>
                                     Valider heure
-                                  <span class="badge badge-info right">new</span>
+                                  <span class="badge badge-info right"></span>
                                     </p>
                                 </a>
                                 </li>

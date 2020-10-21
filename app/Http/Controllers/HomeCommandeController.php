@@ -41,7 +41,7 @@ class HomeCommandeController extends Controller
             ->distinct('Matricule_agent')
             ->first();
 
-            if ($etablissement_user->etablissement === "Centre de Hann"){
+            if ($etablissement_user->etablissement === "HAN"){
 
              $Affectation=DB::table('agent')
              ->select('Affectation')

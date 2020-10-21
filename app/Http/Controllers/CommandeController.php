@@ -40,7 +40,7 @@ class CommandeController extends Controller
         ->get();
 
         $etablissement_user=DB::table('agent')
-        ->select('etablissement')
+        ->select('etablissement','Direction')
         ->where('agent.Matricule_Agent', '=',$user)
         ->distinct('Matricule_agent')
         ->first();
@@ -51,22 +51,49 @@ class CommandeController extends Controller
         ->distinct('Matricule_agent')
         ->first();
 
+        if ($etablissement_user->etablissement === "HAN"){
+            $responsable=DB::table('agent')
+            ->where([
+                ['agent.Statut', '=', 'CAD'],
+                ['agent.Direction', '=',  $etablissement_user->Direction]
+                ])
+            ->distinct('Affectation')
+            ->get();
+           }
+           else{
+
         $responsable=DB::table('agent')
         ->where([
             ['agent.Statut', '=', 'CAD'],
             ['agent.etablissement', '=',  $etablissement_user->etablissement]
             ])
         ->orWhere([
-            ['agent.fonction','=','Responsable administratif' ],
+            ['agent.fonction','=','Responsable admini' ],
             ['agent.etablissement', '=',  $etablissement_user->etablissement]
             ])
             ->orWhere([
-            ['agent.fonction','=','Responsable technique' ],
+                ['agent.fonction','=','Responsable admin' ],
+                ['agent.etablissement', '=',  $etablissement_user->etablissement]
+                ])
+            ->orWhere([
+            ['agent.fonction','=','R.T.' ],
             ['agent.etablissement', '=',  $etablissement_user->etablissement]
             ])
+            ->orWhere([
+                ['agent.fonction','=','Responsable commer' ],
+                ['agent.etablissement', '=',  $etablissement_user->etablissement]
+                ])
+            ->orWhere([
+                ['agent.fonction','=','R.T.' ],
+                ['agent.etablissement', '=',  $etablissement_user->etablissement]
+                ])
+                ->orWhere([
+                    ['agent.fonction','=','RT' ],
+                    ['agent.etablissement', '=',  $etablissement_user->etablissement]
+                    ])
         ->distinct('Affectation')
         ->get();
-
+                }
         $agent_attribut=DB::table('agent')
         ->join('equipe','equipe.agentMatricule_Agent','=','agent.Matricule_Agent')
         ->join('agent_Heures_supp_a_faire','agent_Heures_supp_a_faire.agentMatricule_Agent','=','agent.Matricule_Agent')
